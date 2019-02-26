@@ -1,10 +1,7 @@
 package com.example.witsdaily;
-import android.annotation.SuppressLint;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,7 +12,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,13 +28,11 @@ public class LoginActivity extends AppCompatActivity {
 
     EditText sNum, pWord;
     String type;
-    String response_code;
-    String user_token;
 
     public void doSignIn(View v) {
         // When the user signs in this will execute
-        sNum = (EditText)findViewById(R.id.sNumber);
-        pWord =(EditText) findViewById(R.id.password);
+        sNum = findViewById(R.id.sNumber);
+        pWord = findViewById(R.id.password);
         final String password = pWord.getText().toString();
         final String sNumber = sNum.getText().toString();
 
@@ -47,9 +41,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response){
                         try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String output = jsonObject.getString("response_code");
-                            doOutput(output);
+                            doOutput(response);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -83,58 +75,55 @@ public class LoginActivity extends AppCompatActivity {
 
     // called when a personclicks the register text
     public void doRegister(View v){
-        Intent i = new Intent(LoginActivity.this, LoginActivity.class);
+        Intent i = new Intent(LoginActivity.this, UserRegistration.class);
         startActivity(i);
     }
 
     //this handles the response from the server API
 
-    private void doOutput(String output){
+    private void doOutput(String response) throws JSONException {
 //        type = Character.toString();
+        JSONObject jsonObject = new JSONObject(response);
+        String output = jsonObject.getString("response_code");
         switch (output) {
             case "successful":
-                boolean canNext = true;
-                Intent i = new Intent(LoginActivity.this, UserRegistration.class);
+                String user_token = jsonObject.getString("user_token");
+                Intent i = new Intent(LoginActivity.this, HomeScreen.class);
+                i.putExtra("user_token", user_token);
                 startActivity(i);
 
                 break;
             case "failed_no_user": {
-                canNext = false;
                 String s = "Login failed: Please register";
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
 
                 break;
             }
             case "failed_no_perm": {
-                canNext = false;
                 String s = "Login failed: You do not have the required permissions";
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
 
                 break;
             }
             case "failed_invalid_param": {
-                canNext = false;
                 String s = "Login failed: Please enter a valid username and password";
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
 
                 break;
             }
             case "failed_missing_param": {
-                canNext = false;
                 String s = "Login failed: Please enter a username and password";
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
 
                 break;
             }
             case "failed_unknown": {
-                canNext = false;
                 String s = "Login failed: Please try again";
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
 
                 break;
             }
             default: {
-                canNext = false;
                 String s = "Login failed: Check your connection";
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                 break;
