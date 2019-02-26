@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
         switch (output) {
             case "successful":
                 boolean canNext = true;
-                Intent i = new Intent(LoginActivity.this, HomeScreen.class);
+                Intent i = new Intent(LoginActivity.this, UserRegistration.class);
                 startActivity(i);
 
                 break;
