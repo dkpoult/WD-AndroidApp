@@ -1,22 +1,35 @@
 language: android
+sudo: required
+jdk: oraclejdk8
 
-jdk:
-  - oraclejdk8
+before_cache: # so that caching isn't always uploaded
+ -rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+ -rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+ directories:
+ -$HOME/.gradle/caches/
+ -$HOME/.gradle/wrapper/
+
+env:
+ global:
+ - ANDROID_API=28
+ - EMULATOR_API=22
+ - ANDROID_BUILD_TOOLS=28.0.3 # 24.0.2 maybe
+ - ADB_INSTALL_TIMEOUT=5 # minutes
 
 android:
   components:
     - tools
-    - build-tools-28.0.3
-    - android-28
+    - build-tools-$ANDROID_BUILD_TOOLS
+    - android-$EMULATOR_API_LEVEL
     
     - extra-google-google_play_services
     - extra-google-m2repository
     - extra-android-m2repository
     - extra
     
-    - sys-img-x86-android-28
-    - sys-img-armeabi-v7a-android-17
-    
+    - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API_LEVEL
+    - sys-img-armeabi-v7a-addon-google_apis-google-$EMULATOR_API_LEVEL   
 licenses:
     - 'android-sdk-preview-license-52d11cd2'
     - 'android-sdk-license-.+'
@@ -26,7 +39,7 @@ before_install:
     - chmod +x gradlew
     - yes | sdkmanager "platforms;android-28"
     
-    - echo no | android create avd --force -n test -t android-28 --abi x86 -c 100M
+    - echo no | android create avd --force -n test -t android-28 --abi armeabi-v7a -c 100M
     - emulator -avd test -no-audio -no-window &
     - android-wait-for-emulator
     - adb shell input keyevent 82 &
