@@ -24,6 +24,7 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/rounder_corner"
         android:paddingLeft="10dp"
+        android:maxLength="8"
         android:inputType="textPersonName" />
 
     <EditText
