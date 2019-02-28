@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="20dp">
 
         <ImageView
             android:id="@+id/imageView2"
@@ -44,6 +44,7 @@
                 android:background="@drawable/rounder_corner"
                 android:ems="10"
                 android:hint="@string/personid"
+                android:paddingLeft="10dp"
                 android:textColorHint="#A9A9A9"
                 android:textColor="#000000"
                 android:importantForAutofill="no"
@@ -67,6 +68,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/rounder_corner"
                 android:ems="10"
+                android:paddingLeft="10dp"
                 android:hint="Password"
                 android:textColorHint="#A9A9A9"
                 android:textColor="#000000"

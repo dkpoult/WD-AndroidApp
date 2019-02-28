@@ -1,5 +1,7 @@
 package com.example.witsdaily;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -15,15 +17,14 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class LoginActivity extends AppCompatActivity {
-
+    String user_token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        user_token = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
+
     }
 
     EditText sNum, pWord;
@@ -36,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         final String password = pWord.getText().toString();
         final String sNumber = sNum.getText().toString();
 
-        final StringRequest request = new StringRequest(Request.Method.POST, "https://url.goes.here",
+        final StringRequest request = new StringRequest(Request.Method.POST, "https://wd.dimensionalapps.com/login",
                 new Response.Listener<String>(){
                     @Override
                     public void onResponse(String response){
@@ -51,18 +52,23 @@ public class LoginActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        //If there's a network error.
+
+                        String s = "Login failed";
+                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                     }
                 })
         {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
+            public byte[] getBody() throws AuthFailureError {
+                JSONObject params = new JSONObject();
+                try {
+                    params.put("personNumber", sNumber);
+                    params.put("password", password);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-                params.put("username", sNumber);
-                params.put("password", password);
-
-                return params;
+                return params.toString().getBytes();
             }
         };
 
@@ -84,12 +90,14 @@ public class LoginActivity extends AppCompatActivity {
     private void doOutput(String response) throws JSONException {
 //        type = Character.toString();
         JSONObject jsonObject = new JSONObject(response);
-        String output = jsonObject.getString("response_code");
+        String output = jsonObject.getString("responseCode");
+        System.out.println(output);
         switch (output) {
             case "successful":
-                String user_token = jsonObject.getString("user_token");
+                String user_token = jsonObject.getString("userToken");
+                SharedPreferences sharedPreferences = getSharedPreferences("com.wd", Context.MODE_PRIVATE);
+                sharedPreferences.edit().putString("userToken", user_token).apply();
                 Intent i = new Intent(LoginActivity.this, HomeScreen.class);
-                i.putExtra("user_token", user_token);
                 startActivity(i);
 
                 break;

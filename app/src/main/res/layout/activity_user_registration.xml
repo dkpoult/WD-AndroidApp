@@ -27,6 +27,7 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/rounder_corner"
             android:ems="10"
+            android:paddingLeft="10dp"
             android:hint="PersonID"
             android:inputType="textPersonName" />
 
@@ -37,6 +38,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/rounder_corner"
             android:ems="10"
+            android:paddingLeft="10dp"
             android:hint="Password"
             android:inputType="textPassword" />
 
