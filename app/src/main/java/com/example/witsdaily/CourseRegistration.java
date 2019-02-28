@@ -4,12 +4,15 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class CourseRegistration extends AppCompatActivity {
     TextView tvState = (TextView) findViewById(R.id.tvState);
-
+    EditText edtCourseCode = (EditText)findViewById(R.id.edtCourseCode);
+    EditText edtCourseName = (EditText)findViewById(R.id.edtCourseName);
+    EditText edtCourseDescription = (EditText)findViewById(R.id.edtCourseDescription);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,11 +28,22 @@ public class CourseRegistration extends AppCompatActivity {
 
         }
     }
+    private boolean validString(String currentString){ // consider adding this to a class to handle encryption/hashing/validating
+        return true;
+    }
 
     private boolean validFields() {
         // prevents sql injection, makes sure that passwords match etc
         tvState.setTextColor(Color.RED);
-        tvState.setText("Failed:"); // this should specify what is wrong
+        if (edtCourseCode.getText().length()!=8){
+            tvState.setText("Failed: Course code must be 8 characters long");
+            return false;
+        }
+        if (!validString(edtCourseName.getText().toString())){
+            tvState.setText("Failed: Invalid characters entered");
+            return false;
+        }
+
         return true;
     }
 
