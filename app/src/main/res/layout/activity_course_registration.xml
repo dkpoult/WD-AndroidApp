@@ -53,10 +53,20 @@
         android:id="@+id/btnCreateCourse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#ffffff"
         android:layout_marginTop="20dp"
         android:background="@drawable/rounded_button"
+        android:onClick="clickRegistration"
 
-        android:text="Create Course" />
+        android:text="Create Course"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/tvState"
+        android:layout_width="match_parent"
+        android:textSize="17sp"
+        android:layout_marginTop="5dp"
+        android:layout_height="25dp"
+        android:visibility="invisible"
+        android:text="State" />
 
 </LinearLayout>
