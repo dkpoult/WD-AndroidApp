@@ -14,14 +14,15 @@ android:
     - sys-img-armeabi-v7a-android-17
     - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API_LEVEL
     - sys-img-armeabi-v7a-addon-google_apis-google-$EMULATOR_API_LEVEL
+env:
+  - SYS=25 ABI="google_apis;arm64-v8a"
 before_cache: 
-  - "rm -f $HOME/.gradle/caches/modules-2/modules-2.lock"
-  - "rm -fr $HOME/.gradle/caches/*/plugin-resolution/"
+  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 before_install: 
-  - "chmod +x gradlew"
-  - "yes | sdkmanager \"platforms;android-28\""
-  - "echo no | android create avd --force -n test -t android-28 --abi x86 -c 100M"
-  - "echo no | android create avd --force -n test -t android-28 --abi armeabi-v7a -c 100M"
-  - "emulator -avd test -no-audio -no-window &"
+  - chmod +x gradlew"
+  - yes | sdkmanager "platforms;android-28"
+  - echo no | avdmanager create avd --force -n test -k "system-images;android-$SYS;$ABI
+  - emulator -avd test -no-audio -no-window &
   - android-wait-for-emulator
-  - "adb shell input keyevent 82 &"
+  - adb shell input keyevent 82 &
