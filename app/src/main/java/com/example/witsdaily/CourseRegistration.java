@@ -8,11 +8,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class CourseRegistration extends AppCompatActivity {
     TextView tvState = (TextView) findViewById(R.id.tvState);
     EditText edtCourseCode = (EditText)findViewById(R.id.edtCourseCode);
     EditText edtCourseName = (EditText)findViewById(R.id.edtCourseName);
     EditText edtCourseDescription = (EditText)findViewById(R.id.edtCourseDescription);
+
+    final String userID = ""; // get Dylan to send this to me through activity data
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +38,49 @@ public class CourseRegistration extends AppCompatActivity {
         } else {
 
         }
+
+        // this is basically all sending the network request
+        final String courseName = edtCourseName.getText().toString();
+        final String courseDescription = edtCourseDescription.getText().toString();
+        final String courseCode = edtCourseCode.getText().toString();
+        final StringRequest request = new StringRequest(Request.Method.POST, "https://wd.dimensionalapps.com/createCourse",
+                new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String response){
+                        try {
+                            handleResponse(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        String s = "Course creation failed";
+                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                    }
+                })
+        {
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                JSONObject params = new JSONObject();
+                try {
+                    params.put("courseName", courseName);
+                    params.put("courseDescription", courseDescription);
+                    params.put("courseCode",courseCode);
+                    params.put("userID",userID);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                return params.toString().getBytes();
+            }
+        };
+
+        VolleyRequestManager.getManagerInstance(this.getApplicationContext()).addRequestToQueue(request);
     }
     private boolean validString(String currentString){ // consider adding this to a class to handle encryption/hashing/validating
         return true;
@@ -47,7 +101,9 @@ public class CourseRegistration extends AppCompatActivity {
         return true;
     }
 
-    private void handleResponse(String response) { // handle response once the volley script is complete
+    private void handleResponse(String jResponse) throws JSONException { // handle response once the volley script is complete
+        JSONObject jsonObject = new JSONObject(jResponse);
+        String response = jsonObject.getString("responseCode");
         tvState.setTextColor(Color.RED); // it wont display if successful
         String stateText = "";
         switch (response){
