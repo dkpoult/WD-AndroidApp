@@ -7,17 +7,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class UserRegistration extends AppCompatActivity {
 
@@ -35,12 +30,20 @@ public class UserRegistration extends AppCompatActivity {
 
         // When the user signs in this will execute
 
-        final StringRequest request = new StringRequest(Request.Method.POST, "https://url.goes.here",
-                new Response.Listener<String>(){
+        JSONObject params = new JSONObject();
+        try {
+            params.put("personNumber", personIDValue);
+            params.put("password", passwordValue);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/register", params,
+                new Response.Listener<JSONObject>(){
                     @Override
-                    public void onResponse(String response){
+                    public void onResponse(JSONObject response){
                         try {
-                            doOutput(response);
+                            doOutput(response.toString());
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -50,22 +53,19 @@ public class UserRegistration extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        //If there's a network error.
+                        String s = error.getLocalizedMessage();
+                        System.out.println(s);
+                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                     }
                 })
         {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-
-                params.put("username", personIDValue);
-                params.put("password", passwordValue);
-
-                return params;
-            }
         };
 
         VolleyRequestManager.getManagerInstance(this.getApplicationContext()).addRequestToQueue(request);
+
+
+
+
     }
 
     private void doOutput(String response) throws JSONException {

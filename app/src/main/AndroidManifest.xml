@@ -13,16 +13,17 @@
         <activity
             android:name=".LoginActivity"
             android:label="activity_login"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".UserRegistration"
             android:theme="@style/AppTheme.NoActionBar"
+            android:noHistory="true"
             />
         <activity
             android:name=".HomeScreen"
