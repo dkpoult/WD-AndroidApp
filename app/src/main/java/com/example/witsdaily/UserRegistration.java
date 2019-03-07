@@ -22,9 +22,8 @@ public class UserRegistration extends AppCompatActivity {
         setContentView(R.layout.activity_user_registration);
     }
     public void clickRegister(View v){
-        final EditText personID = (EditText)findViewById(R.id.edtPersonID);
-        EditText personPassword = (EditText)findViewById(R.id.edtPassword);
-
+        final EditText personID = findViewById(R.id.edtPersonID);
+        EditText personPassword = findViewById(R.id.edtPassword);
         final String personIDValue = personID.getText().toString();
         final String passwordValue = personPassword.getText().toString();
 
@@ -43,6 +42,7 @@ public class UserRegistration extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response){
                         try {
+                            System.out.println(response.toString());
                             doOutput(response.toString());
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -70,18 +70,18 @@ public class UserRegistration extends AppCompatActivity {
 
     private void doOutput(String response) throws JSONException {
         JSONObject jsonObject = new JSONObject(response);
-        String output = jsonObject.getString("response_code");
+        String output = jsonObject.getString("responseCode");
 //        type = Character.toString();
         switch (output) {
             case "successful":
-                String user_token = jsonObject.getString("user_token");
+                String user_token = jsonObject.getString("userToken");
                 Intent i = new Intent(UserRegistration.this, HomeScreen.class);
                 i.putExtra("user_token", user_token);
                 startActivity(i);
 
                 break;
             case "failed_already_exists": {
-                String s = "Registration failed: Please register";
+                String s = "Registration failed: Please sign in";
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
 
                 break;

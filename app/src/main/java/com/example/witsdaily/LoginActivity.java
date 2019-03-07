@@ -18,26 +18,30 @@ import org.json.JSONObject;
 public class LoginActivity extends AppCompatActivity {
     String user_token;
     String personNumber;
-    String sNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         user_token = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
-        sNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
-        if(user_token != null && sNumber != null){
-            doValidate();
+        personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
+        System.out.println(personNumber);
+        System.out.println(user_token);
+
+        if(user_token != null && personNumber != null){
+            doValidate(user_token, personNumber);
         }
 
     }
 
     EditText sNum, pWord;
 
-    public void doValidate(){
+    public void doValidate(String user_token, String personNumber){
         JSONObject params = new JSONObject();
+        System.out.println("Test");
         try {
-            params.put("token", user_token);
+            params.put("userToken", user_token);
             params.put("personNumber", personNumber);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -46,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){
+                        System.out.println(response.toString());
                         doValidateMessage(response);
                     }
                 },
@@ -74,13 +79,12 @@ public class LoginActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        System.out.println(output);
         assert output != null;
         switch (output) {
             case "successful":
-                String personNumber =sNumber;
                 SharedPreferences sharedPreferences = getSharedPreferences("com.wd", Context.MODE_PRIVATE);
                 sharedPreferences.edit().putString("userToken", user_token).apply();
+                System.out.println(personNumber);
                 sharedPreferences.edit().putString("personNumber", personNumber).apply();
                 Intent i = new Intent(LoginActivity.this, HomeScreen.class);
                 startActivity(i);
@@ -105,6 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                 break;
             }
             case "failed_missing_param": {
+                System.out.println(output);
                 String s = "Login failed: Please enter a username and password";
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
 
@@ -131,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
         sNum = findViewById(R.id.sNumber);
         pWord = findViewById(R.id.password);
         final String password = pWord.getText().toString();
-        sNumber = sNum.getText().toString();
+        personNumber = sNum.getText().toString();
 
         /*final StringRequest request = new StringRequest(Request.Method.POST, "https://wd.dimensionalapps.com/login",
                 new Response.Listener<String>(){
@@ -182,7 +187,7 @@ public class LoginActivity extends AppCompatActivity {
 
         JSONObject params = new JSONObject();
         try {
-            params.put("personNumber", sNumber);
+            params.put("personNumber", personNumber);
             params.put("password", password);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -234,7 +239,6 @@ public class LoginActivity extends AppCompatActivity {
         switch (output) {
             case "successful":
                 String user_token = jsonObject.getString("userToken");
-                String personNumber =sNumber;
                 SharedPreferences sharedPreferences = getSharedPreferences("com.wd", Context.MODE_PRIVATE);
                 sharedPreferences.edit().putString("userToken", user_token).apply();
                 sharedPreferences.edit().putString("personNumber", personNumber).apply();
@@ -260,7 +264,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 break;
             }
-            case "failed_missing_param": {
+            case "failed_missing_params": {
                 String s = "Login failed: Please enter a username and password";
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
 

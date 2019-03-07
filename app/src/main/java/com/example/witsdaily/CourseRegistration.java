@@ -1,5 +1,7 @@
 package com.example.witsdaily;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,23 +14,31 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class CourseRegistration extends AppCompatActivity {
-    TextView tvState = (TextView) findViewById(R.id.tvState);
-    EditText edtCourseCode = (EditText)findViewById(R.id.edtCourseCode);
-    EditText edtCourseName = (EditText)findViewById(R.id.edtCourseName);
-    EditText edtCourseDescription = (EditText)findViewById(R.id.edtCourseDescription);
+    EditText edtCourseCode;
+    EditText edtCourseName;
+    EditText edtCourseDescription;
+    TextView tvState;
 
-    final String userID = ""; // get Dylan to send this to me through activity data
+    String userID;
+    String userToken;// get Dylan to send this to me through activity data
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_registration);
+        tvState = findViewById(R.id.tvState);
+        edtCourseCode = findViewById(R.id.edtCourseCode);
+        edtCourseName = findViewById(R.id.edtCourseName);
+        edtCourseDescription = findViewById(R.id.edtCourseDescription);
         tvState.setVisibility(View.INVISIBLE);
+        userID = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
+        userToken = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
     }
 
     public void clickRegistration(View v) {
@@ -44,12 +54,36 @@ public class CourseRegistration extends AppCompatActivity {
         final String courseName = edtCourseName.getText().toString();
         final String courseDescription = edtCourseDescription.getText().toString();
         final String courseCode = edtCourseCode.getText().toString();
-        final StringRequest request = new StringRequest(Request.Method.POST, "https://wd.dimensionalapps.com/createCourse",
-                new Response.Listener<String>(){
+        JSONObject params = new JSONObject();
+        try {
+
+            System.out.println(userID);
+            System.out.println(userToken);
+            System.out.println(courseCode);
+            System.out.println(courseName);
+            System.out.println(courseDescription);
+            params.put("personNumber", userID);
+            params.put("userToken", userToken);
+            params.put("courseCode", courseCode);
+            params.put("courseName", courseName);
+            params.put("courseDescription", courseDescription);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (!validFields()) {
+            tvState.setVisibility(View.VISIBLE);
+            return;
+        } else {
+            tvState.setVisibility(View.INVISIBLE);
+        }
+
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/create_course", params,
+                new Response.Listener<JSONObject>(){
                     @Override
-                    public void onResponse(String response){
+                    public void onResponse(JSONObject response){
                         try {
-                            handleResponse(response);
+                            handleResponse(response.toString());
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -59,26 +93,12 @@ public class CourseRegistration extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
-                        String s = "Course creation failed";
+                        String s = error.getLocalizedMessage();
+                        System.out.println(s);
                         Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                     }
                 })
         {
-            @Override
-            public byte[] getBody() throws AuthFailureError {
-                JSONObject params = new JSONObject();
-                try {
-                    params.put("courseName", courseName);
-                    params.put("courseDescription", courseDescription);
-                    params.put("courseCode",courseCode);
-                    params.put("userID",userID);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                return params.toString().getBytes();
-            }
         };
 
         VolleyRequestManager.getManagerInstance(this.getApplicationContext()).addRequestToQueue(request);
@@ -111,14 +131,18 @@ public class CourseRegistration extends AppCompatActivity {
         String response = jsonObject.getString("responseCode");
         tvState.setTextColor(Color.RED); // it wont display if successful
         String stateText = "";
+        System.out.println(response);
         switch (response){
-            case "successful": /*do something*/;
+            case "successful":
                 Toast.makeText(CourseRegistration.this, "Successfully created new course," +
-                        ""      , Toast.LENGTH_LONG).show();;return;
+                        ""      , Toast.LENGTH_LONG).show();
+                Intent i = new Intent(CourseRegistration.this, HomeScreen.class);
+                startActivity(i);
+                return;
             case "failed_already_exists": stateText = "Course already exists";break;
             case "failed_no_perm": stateText = "No permissions to add course";break;
-            case "failed_missing_param": stateText = "Missing parameters";break;
-            case "failed_invalid_param": stateText = "Invalid field";break;
+            case "failed_missing_params": stateText = "Missing parameters";break;
+            case "failed_invalid_params": stateText = "Invalid field";break;
             case "failed_unknown": stateText = "Unknown";break;
         }
         Toast.makeText(CourseRegistration.this, "Failed To Create Course" , Toast.LENGTH_LONG).show();

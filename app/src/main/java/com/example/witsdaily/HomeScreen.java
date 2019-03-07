@@ -6,19 +6,19 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 public class HomeScreen extends AppCompatActivity {
 
     String user_token;
+    String personNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-        Intent intent = getIntent();
         user_token = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
+        personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -28,6 +28,15 @@ public class HomeScreen extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    public void Link(View v){
+        Intent i = new Intent(HomeScreen.this, courseLink.class);
+        startActivity(i);
+    }
+    public void Create(View v){
+        Intent i = new Intent(HomeScreen.this, CourseRegistration.class);
+        startActivity(i);
     }
 
 }
