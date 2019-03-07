@@ -42,7 +42,9 @@ public class courseLink extends AppCompatActivity {
         try {
             params.put("personNumber", userID);
             params.put("userToken", userToken);
-            params.put("courseId", edtCourseCode.toString());
+            params.put("courseId", edtCourseCode.getText().toString());
+
+            System.out.println(userID + " " + userToken + " " + edtCourseCode.getText().toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -95,6 +97,7 @@ public class courseLink extends AppCompatActivity {
     }
 
     private void handleResponse(String jResponse) throws JSONException {
+        System.out.println(jResponse);
         JSONObject jsonObject = new JSONObject(jResponse);
         String response = jsonObject.getString("responseCode");
         tvState.setTextColor(Color.RED); // it wont display if successful
