@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+=======
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+>>>>>>> courseregistration
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
     tools:context=".HomeScreen">
 
     <android.support.design.widget.AppBarLayout
@@ -21,6 +26,11 @@
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_home_screen2" />
+=======
+    android:orientation="vertical"
+    tools:context=".HomeScreen">
+
+>>>>>>> courseregistration
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -30,4 +40,29 @@
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
+<<<<<<< HEAD
 </android.support.design.widget.CoordinatorLayout>
+=======
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/b1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Link Course"
+            android:onClick="Link"/>
+
+        <Button
+            android:id="@+id/b2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create Course"
+            android:onClick="Create"/>
+    </LinearLayout>
+
+
+</LinearLayout>
+>>>>>>> courseregistration
