@@ -1,20 +1,54 @@
 package com.example.witsdaily;
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+import android.content.Context;
+import android.content.Intent;
+>>>>>>> courseregistration
+>>>>>>> dev
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+<<<<<<< HEAD
 import android.support.v7.widget.Toolbar;
+=======
+<<<<<<< HEAD
+import android.support.v7.widget.Toolbar;
+=======
+>>>>>>> courseregistration
+>>>>>>> dev
 import android.view.View;
 
 public class HomeScreen extends AppCompatActivity {
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+    String user_token;
+    String personNumber;
+
+>>>>>>> courseregistration
+>>>>>>> dev
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+<<<<<<< HEAD
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+=======
+<<<<<<< HEAD
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+=======
+        user_token = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
+        personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
+>>>>>>> courseregistration
+>>>>>>> dev
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -26,4 +60,19 @@ public class HomeScreen extends AppCompatActivity {
         });
     }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+    public void Link(View v){
+        Intent i = new Intent(HomeScreen.this, courseLink.class);
+        startActivity(i);
+    }
+    public void Create(View v){
+        Intent i = new Intent(HomeScreen.this, CourseRegistration.class);
+        startActivity(i);
+    }
+
+>>>>>>> courseregistration
+>>>>>>> dev
 }

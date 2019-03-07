@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">WitsDaily</string>
+    <string name="login">login</string>
+    <string name="register">register</string>
+    <string name="password">password</string>
+    <string name="title_activity_home_screen">HomeScreen</string>
+<<<<<<< HEAD
+    <string name="student_number">student number</string>
+    <string name="todo">TODO</string>
+=======
+    <string name="personid">PersonID</string>
+>>>>>>> courseregistration
+</resources>
