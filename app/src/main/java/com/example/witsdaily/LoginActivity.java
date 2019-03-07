@@ -14,26 +14,124 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
+//Test
 public class LoginActivity extends AppCompatActivity {
     String user_token;
+    String personNumber;
+    String sNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         user_token = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
+        sNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
+        if(user_token != null && sNumber != null){
+            doValidate();
+        }
 
     }
 
     EditText sNum, pWord;
-    String type;
+
+    public void doValidate(){
+        JSONObject params = new JSONObject();
+        try {
+            params.put("token", user_token);
+            params.put("personNumber", personNumber);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/validate_token", params,
+                new Response.Listener<JSONObject>(){
+                    @Override
+                    public void onResponse(JSONObject response){
+                        doValidateMessage(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        String s = error.getLocalizedMessage();
+                        System.out.println(s);
+                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                    }
+                })
+        {
+        };
+
+        VolleyRequestManager.getManagerInstance(this.getApplicationContext()).addRequestToQueue(request);
+
+
+
+
+    }
+
+    public void doValidateMessage(JSONObject response){
+        String output = null;
+        try {
+            output = response.getString("responseCode");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        System.out.println(output);
+        assert output != null;
+        switch (output) {
+            case "successful":
+                String personNumber =sNumber;
+                SharedPreferences sharedPreferences = getSharedPreferences("com.wd", Context.MODE_PRIVATE);
+                sharedPreferences.edit().putString("userToken", user_token).apply();
+                sharedPreferences.edit().putString("personNumber", personNumber).apply();
+                Intent i = new Intent(LoginActivity.this, HomeScreen.class);
+                startActivity(i);
+
+                break;
+            case "failed_no_user": {
+                String s = "Login failed: Please register";
+                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+
+                break;
+            }
+            case "failed_no_perm": {
+                String s = "Login failed: You do not have the required permissions";
+                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+
+                break;
+            }
+            case "failed_invalid_token": {
+                String s = "Login failed: Please enter a valid username and password";
+                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+
+                break;
+            }
+            case "failed_missing_param": {
+                String s = "Login failed: Please enter a username and password";
+                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+
+                break;
+            }
+            case "failed_unknown": {
+                String s = "Login failed: Please try again";
+                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+
+                break;
+            }
+            default: {
+                String s = "Login failed: Check your connection";
+                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                break;
+            }
+        }
+
+
+    }
 
     public void doSignIn(View v) {
         // When the user signs in this will execute
         sNum = findViewById(R.id.sNumber);
         pWord = findViewById(R.id.password);
         final String password = pWord.getText().toString();
-        final String sNumber = sNum.getText().toString();
+        sNumber = sNum.getText().toString();
 
         /*final StringRequest request = new StringRequest(Request.Method.POST, "https://wd.dimensionalapps.com/login",
                 new Response.Listener<String>(){
@@ -136,8 +234,10 @@ public class LoginActivity extends AppCompatActivity {
         switch (output) {
             case "successful":
                 String user_token = jsonObject.getString("userToken");
+                String personNumber =sNumber;
                 SharedPreferences sharedPreferences = getSharedPreferences("com.wd", Context.MODE_PRIVATE);
                 sharedPreferences.edit().putString("userToken", user_token).apply();
+                sharedPreferences.edit().putString("personNumber", personNumber).apply();
                 Intent i = new Intent(LoginActivity.this, HomeScreen.class);
                 startActivity(i);
 
