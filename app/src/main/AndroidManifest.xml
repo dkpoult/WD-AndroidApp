@@ -9,22 +9,28 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity
-            android:name=".HomeScreen"
-            android:label="@string/title_activity_home_screen"
+        android:supportsRtl="true">
+        <activity android:name=".courseLink"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".CourseRegistration"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".LoginActivity"
             android:label="activity_login"
-            android:theme="@style/Theme.AppCompat.DayNight">
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".UserRegistration"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".HomeScreen"
+            android:label="@string/title_activity_home_screen"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
