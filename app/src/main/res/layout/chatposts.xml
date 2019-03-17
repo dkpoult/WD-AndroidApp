@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:weightSum="20"
+    android:padding="5dp"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:layout_marginBottom="5dp"
+    android:layout_marginTop="5dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/rounder_corner">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:orientation="horizontal"
+            android:padding="20dp"
+            android:weightSum="20">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/upvote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="20dp"
+                    app:srcCompat="@android:drawable/arrow_up_float" />
+
+                <TextView
+                    android:id="@+id/numUp"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:textAppearance="@style/TextAppearance.AppCompat" />
+
+                <ImageButton
+                    android:id="@+id/downvote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="20dp"
+                    app:srcCompat="@android:drawable/arrow_down_float" />
+
+            </LinearLayout>
+
+            <ScrollView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="18">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:weightSum="20">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:orientation="horizontal"
+                        android:weightSum="20">
+
+                        <TextView
+                            android:id="@+id/title"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="17"
+                            android:background="@drawable/rounder_corner"
+                            android:clickable="true"
+
+                            android:gravity="center"
+                            android:onClick="viewPost" />
+
+                        <CheckBox
+                            android:id="@+id/checkBox1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:button="@android:drawable/ic_lock_lock"
+                            android:checked="false"
+                            android:gravity="center"
+                            android:onClick="setLocked" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/text"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:layout_weight="16"
+                        android:textColor="#003a5e" />
+                </LinearLayout>
+            </ScrollView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:orientation="horizontal"
+            android:paddingLeft="20dp"
+            android:weightSum="20">
+
+            <TextView
+                android:id="@+id/numComments"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:clickable="true"
+                android:gravity="center"
+                app:autoSizeTextType="uniform"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.WindowTitle"
+                android:textColor="#003a5e" />
+
+            <EditText
+                android:id="@+id/addComment"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="15"
+                android:background="@drawable/rounder_corner"
+                android:editable="true"
+                app:autoSizeTextType="uniform"
+                android:gravity="center"
+                android:hint="add a comment"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2" />
+
+                <LinearLayout
+                    android:id="@+id/commentView"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="18"
+                    android:orientation="vertical"></LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+</LinearLayout>

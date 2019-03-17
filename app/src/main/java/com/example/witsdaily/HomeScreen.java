@@ -38,5 +38,9 @@ public class HomeScreen extends AppCompatActivity {
         Intent i = new Intent(HomeScreen.this, CourseRegistration.class);
         startActivity(i);
     }
+    public void test(View v){
+        Intent i = new Intent(HomeScreen.this, LectureCourseForum.class);
+        startActivity(i);
+    }
 
 }
