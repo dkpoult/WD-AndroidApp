@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.LinearLayout;
 
 public class HomeScreen extends AppCompatActivity {
 
@@ -28,6 +29,7 @@ public class HomeScreen extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        addAvailableCourses();
     }
 
     public void Link(View v){
@@ -37,6 +39,13 @@ public class HomeScreen extends AppCompatActivity {
     public void Create(View v){
         Intent i = new Intent(HomeScreen.this, CourseRegistration.class);
         startActivity(i);
+    }
+    private void addAvailableCourses(){
+        View currentLayout = (LinearLayout)findViewById(R.id.llHomeLayout);
+        View courseBrief = getLayoutInflater().inflate(R.layout.briefcoursedisplay, null);
+    }
+    public void courseClicked(View v){
+     // go to that course
     }
 
 }

@@ -10,9 +10,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
-        <activity android:name=".courseLink"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".CourseRegistration"
+        <activity android:name=".CourseDisplay"></activity>
+        <activity
+            android:name=".courseLink"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CourseRegistration"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".LoginActivity"

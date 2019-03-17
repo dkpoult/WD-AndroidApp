@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llHomeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -25,15 +26,15 @@
             android:id="@+id/b1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Link Course"
-            android:onClick="Link"/>
+            android:onClick="Link"
+            android:text="Link Course" />
 
         <Button
             android:id="@+id/b2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Create Course"
-            android:onClick="Create"/>
+            android:onClick="Create"
+            android:text="Create Course" />
     </LinearLayout>
 
 
