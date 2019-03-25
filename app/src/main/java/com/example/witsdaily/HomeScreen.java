@@ -52,8 +52,38 @@ public class HomeScreen extends AppCompatActivity {
        // sendRequest();
     }
 
-    private void syncCourses(){
+    private void syncCourses(){  // discuss with rest how to handle the syncing
 
+        JSONObject params = new JSONObject();
+        System.out.println("Test");
+        try {
+            params.put("userToken", user_token);
+            params.put("personNumber", personNumber);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/sync_courses", params,
+                new Response.Listener<JSONObject>(){
+                    @Override
+                    public void onResponse(JSONObject response){
+                        System.out.println(response.toString());
+                        processRequest(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        String s = error.getLocalizedMessage();
+                        System.out.println(s);
+                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                    }
+                })
+        {
+        };
+
+        VolleyRequestManager.getManagerInstance(this.getApplicationContext()).addRequestToQueue(request);
 
     }
 
@@ -83,6 +113,9 @@ public class HomeScreen extends AppCompatActivity {
     }
     public void courseClicked(View v){
      // go to that course
+        Intent i = new Intent(HomeScreen.this, CourseDisplay.class);
+        i.putExtra("CourseID",v.getId());
+        startActivity(i);
     }
 
     private void sendRequest(){
