@@ -2,12 +2,29 @@ package com.example.witsdaily;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.provider.BaseColumns;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.example.witsdaily.PhoneDatabaseContract.*;
 
 public class HomeScreen extends AppCompatActivity {
 
@@ -29,7 +46,15 @@ public class HomeScreen extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        addAvailableCourses();
+
+       // addAvailableCourses();
+        syncCourses();
+       // sendRequest();
+    }
+
+    private void syncCourses(){
+
+
     }
 
     public void Link(View v){
@@ -41,11 +66,65 @@ public class HomeScreen extends AppCompatActivity {
         startActivity(i);
     }
     private void addAvailableCourses(){
+        PhoneDatabaseHelper dbHelper = new PhoneDatabaseHelper(getApplicationContext());
         View currentLayout = (LinearLayout)findViewById(R.id.llHomeLayout);
         View courseBrief = getLayoutInflater().inflate(R.layout.briefcoursedisplay, null);
+
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("Select * from "+ TableCourse.TABLE_NAME,null); //have to do a better table name here
+
+        List itemIds = new ArrayList<>();
+        while(cursor.moveToNext()) {
+            long itemId = cursor.getLong(
+                    cursor.getColumnIndexOrThrow(TableCourse._ID));
+            itemIds.add(itemId);
+        }
+        cursor.close();
     }
     public void courseClicked(View v){
      // go to that course
+    }
+
+    private void sendRequest(){
+        JSONObject params = new JSONObject();
+        System.out.println("Test");
+        try {
+            params.put("userToken", user_token);
+            params.put("personNumber", personNumber);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/get_courses", params,
+                new Response.Listener<JSONObject>(){
+                    @Override
+                    public void onResponse(JSONObject response){
+                        System.out.println(response.toString());
+                        processRequest(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        String s = error.getLocalizedMessage();
+                        System.out.println(s);
+                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                    }
+                })
+        {
+        };
+
+        VolleyRequestManager.getManagerInstance(this.getApplicationContext()).addRequestToQueue(request);
+
+    }
+    private void processRequest(JSONObject response){
+        String output = null;
+        try {
+            output = response.getString("responseCode");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 }
