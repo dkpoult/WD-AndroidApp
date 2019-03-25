@@ -1,5 +1,6 @@
 package com.example.witsdaily;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -21,6 +22,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,10 +50,38 @@ public class HomeScreen extends AppCompatActivity {
         });
 
        // addAvailableCourses();
-        syncCourses();
+        //syncCourses();
+           // addRow(); assuming it worked
+            testDisplay();
        // sendRequest();
     }
+    private void addRow(){
+        PhoneDatabaseHelper dbHelper = new PhoneDatabaseHelper(getApplicationContext());
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
 
+// Create a new map of values, where column names are the keys
+        ContentValues values = new ContentValues();
+        values.put(TableCourse.COLUMN_NAME_CODE, "COMS1018");
+        values.put(TableCourse.COLUMN_NAME_DESCRIPTION, "This is a cool course where you programme stuff and its a firrst year thing");
+       // values.put(TableCourse.COLUMN_NAME_ID, "");
+        values.put(TableCourse.COLUMN_NAME_LECTURER, "Steve");
+        values.put(TableCourse.COLUMN_NAME_NAME, "Introduction to algorithms and programming");
+        //values.put(TableCourse.COLUMN_NAME_SYNCED, "2016-03-04 11:30");
+
+
+// Insert the new row, returning the primary key value of the new row
+        long newRowId = db.insertOrThrow(TableCourse.TABLE_NAME, null, values);
+        if (newRowId>0)
+            System.out.println("viva");
+        else
+            System.out.println("not cool man");
+
+    }
+    private void testDisplay(){
+        Intent i = new Intent(HomeScreen.this, CourseDisplay.class);
+        i.putExtra("courseID","COMS1018");
+        startActivity(i);
+    }
     private void syncCourses(){  // discuss with rest how to handle the syncing
 
         JSONObject params = new JSONObject();
@@ -114,7 +144,7 @@ public class HomeScreen extends AppCompatActivity {
     public void courseClicked(View v){
      // go to that course
         Intent i = new Intent(HomeScreen.this, CourseDisplay.class);
-        i.putExtra("CourseID",v.getId());
+        i.putExtra("courseID",String.valueOf(v.getId()));
         startActivity(i);
     }
 

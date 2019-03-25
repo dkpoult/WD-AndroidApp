@@ -17,7 +17,7 @@ public class PhoneDatabaseHelper extends SQLiteOpenHelper {
             TableCourse.COLUMN_NAME_NAME+" VARCHAR,"+
             TableCourse.COLUMN_NAME_DESCRIPTION+" VARCHAR,"+
             TableCourse.COLUMN_NAME_LECTURER+" VARCHAR,"+
-            TableCourse.COLUMN_NAME_SYNCED+"DATETIME)";
+            TableCourse.COLUMN_NAME_SYNCED+" DATETIME)";
     public static final String SQL_CREATE_PERSON = "CREATE TABLE "+ TablePerson.TABLE_NAME +
             " (" +TablePerson.COLUMN_NAME_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
             TablePerson.COLUMN_NAME_CODE+" VARCHAR,"+
@@ -32,6 +32,7 @@ public class PhoneDatabaseHelper extends SQLiteOpenHelper {
 
     public PhoneDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+
     }
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_COURSES);
