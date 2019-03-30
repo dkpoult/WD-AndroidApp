@@ -13,6 +13,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -48,29 +49,51 @@ public class HomeScreen extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        //getApplicationContext().deleteDatabase("PhoneDatabase.db");
 
-       // addAvailableCourses();
+        addAvailableCourses();
         //syncCourses();
-           // addRow(); assuming it worked
-            testDisplay();
+        // addRow();// assuming it worked
+
+            //testDisplay();
+            addUserToDB();
        // sendRequest();
     }
+    private void addUserToDB(){ // possibly encrypt student number
+        PhoneDatabaseHelper dbHelper = new PhoneDatabaseHelper(getApplicationContext());
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("Select * From "+TablePerson.TABLE_NAME+" Where "+ TablePerson.COLUMN_NAME_NUMBER+" = " +
+                "?",new String[]{personNumber}); //have to do a better table name here
+
+        if (!cursor.moveToFirst()){
+            //add user
+            db = dbHelper.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(TablePerson.COLUMN_NAME_NUMBER,personNumber);
+            db.insertOrThrow(TablePerson.TABLE_NAME,null,values);
+        }
+
+        cursor.close();
+    }
+
     private void addRow(){
         PhoneDatabaseHelper dbHelper = new PhoneDatabaseHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
 // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
-        values.put(TableCourse.COLUMN_NAME_CODE, "COMS1018");
-        values.put(TableCourse.COLUMN_NAME_DESCRIPTION, "This is a cool course where you programme stuff and its a firrst year thing");
+      //  values.put(TableCourse.COLUMN_NAME_CODE, "COMS1018");
+       // values.put(TableCourse.COLUMN_NAME_DESCRIPTION, "This is a cool course where you programme stuff and its a firrst year thing");
        // values.put(TableCourse.COLUMN_NAME_ID, "");
-        values.put(TableCourse.COLUMN_NAME_LECTURER, "Steve");
-        values.put(TableCourse.COLUMN_NAME_NAME, "Introduction to algorithms and programming");
+       // values.put(TableCourse.COLUMN_NAME_LECTURER, "Steve");
+        //values.put(TableCourse.COLUMN_NAME_NAME, "Introduction to algorithms and programming");
         //values.put(TableCourse.COLUMN_NAME_SYNCED, "2016-03-04 11:30");
 
-
+        values.put(TablePersonCourse.COLUMN_NAME_COURSEID,"COMS1018");
+        values.put(TablePersonCourse.COLUMN_NAME_PERSONNUMBER,personNumber);
 // Insert the new row, returning the primary key value of the new row
-        long newRowId = db.insertOrThrow(TableCourse.TABLE_NAME, null, values);
+        long newRowId = db.insertOrThrow(TablePersonCourse.TABLE_NAME, null, values);
         if (newRowId>0)
             System.out.println("viva");
         else
@@ -128,23 +151,32 @@ public class HomeScreen extends AppCompatActivity {
     private void addAvailableCourses(){
         PhoneDatabaseHelper dbHelper = new PhoneDatabaseHelper(getApplicationContext());
         View currentLayout = (LinearLayout)findViewById(R.id.llHomeLayout);
-        View courseBrief = getLayoutInflater().inflate(R.layout.briefcoursedisplay, null);
-
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("Select * from "+ TableCourse.TABLE_NAME,null); //have to do a better table name here
+        String sql = "Select * from "+ TableCourse.TABLE_NAME
+                +" JOIN "+ TablePersonCourse.TABLE_NAME +" ON " + TableCourse.COLUMN_NAME_ID
+                + " = " + TablePersonCourse.COLUMN_NAME_COURSEID
+                + " WHERE " + TablePersonCourse.COLUMN_NAME_PERSONNUMBER
+                + " = \""+ personNumber+"\"";
+        Cursor cursor = db.rawQuery(sql,null); //have to do a better table name here
 
-        List itemIds = new ArrayList<>();
         while(cursor.moveToNext()) {
-            long itemId = cursor.getLong(
-                    cursor.getColumnIndexOrThrow(TableCourse._ID));
-            itemIds.add(itemId);
+            String courseID = cursor.getString(
+                    cursor.getColumnIndexOrThrow(TablePersonCourse.COLUMN_NAME_COURSEID));
+            View courseBrief = getLayoutInflater().inflate(R.layout.briefcoursedisplay, null);
+            courseBrief.setTag(courseID);
+            TextView name = (TextView)(courseBrief.findViewById(R.id.tvName));
+            TextView description = (TextView)(courseBrief.findViewById(R.id.tvDescription));
+            name.setText(cursor.getString(cursor.getColumnIndexOrThrow(TableCourse.COLUMN_NAME_NAME)));
+            description.setText(cursor.getString(cursor.getColumnIndexOrThrow(TableCourse.COLUMN_NAME_DESCRIPTION)));
+            ((LinearLayout) currentLayout).addView(courseBrief);
         }
         cursor.close();
+
     }
     public void courseClicked(View v){
      // go to that course
         Intent i = new Intent(HomeScreen.this, CourseDisplay.class);
-        i.putExtra("courseID",String.valueOf(v.getId()));
+        i.putExtra("courseID",String.valueOf(v.getTag()));
         startActivity(i);
     }
 
@@ -179,6 +211,9 @@ public class HomeScreen extends AppCompatActivity {
         };
 
         VolleyRequestManager.getManagerInstance(this.getApplicationContext()).addRequestToQueue(request);
+
+    }
+    public void clickViewAllCourses(View v){
 
     }
     private void processRequest(JSONObject response){

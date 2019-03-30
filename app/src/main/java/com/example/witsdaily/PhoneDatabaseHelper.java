@@ -19,13 +19,12 @@ public class PhoneDatabaseHelper extends SQLiteOpenHelper {
             TableCourse.COLUMN_NAME_LECTURER+" VARCHAR,"+
             TableCourse.COLUMN_NAME_SYNCED+" DATETIME)";
     public static final String SQL_CREATE_PERSON = "CREATE TABLE "+ TablePerson.TABLE_NAME +
-            " (" +TablePerson.COLUMN_NAME_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
-            TablePerson.COLUMN_NAME_CODE+" VARCHAR,"+
+            " (" +TablePerson.COLUMN_NAME_NUMBER+" VARCHAR PRIMARY KEY,"+
             TablePerson.COLUMN_NAME_NAME+" VARCHAR)";
 
     public static final String SQL_CREATE_PERSONCOURSE = "CREATE TABLE "+ TablePersonCourse.TABLE_NAME +
-            " (" +TablePersonCourse.COLUMN_NAME_PERSONID+" INTEGER,"+
-            TablePersonCourse.COLUMN_NAME_COURSEID+" INTEGER)"; //  Have to do reference and on delete cascades
+            " (" +TablePersonCourse.COLUMN_NAME_PERSONNUMBER+" VARCHAR,"+
+            TablePersonCourse.COLUMN_NAME_COURSEID+" INTEGER)";
 
 
     private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS "+TableCourse.TABLE_NAME;

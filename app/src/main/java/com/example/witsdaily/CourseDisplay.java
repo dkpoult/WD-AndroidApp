@@ -25,13 +25,13 @@ import java.util.List;
 import static com.example.witsdaily.PhoneDatabaseContract.*;
 
 public class CourseDisplay extends AppCompatActivity {
-    String courseID;
+    int courseID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_display);
         Intent i  = getIntent();
-        courseID = i.getStringExtra("courseID");
+        courseID = Integer.parseInt(i.getStringExtra("courseID"));
         updateFields();
     }
     private void updateFields(){ // fill in values, take from local database
@@ -41,9 +41,9 @@ public class CourseDisplay extends AppCompatActivity {
         TextView courseDescription = (TextView)findViewById(R.id.tvDescription);
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-       // String sqlString  = "Select * from "+ TableCourse.TABLE_NAME
-      //          +" where "+ TableCourse.COLUMN_NAME_CODE+ " = " + courseID;
-        String sqlString  = "Select * from "+TableCourse.TABLE_NAME;
+        String sqlString  = "Select * from "+ TableCourse.TABLE_NAME
+                +" where "+ TableCourse.COLUMN_NAME_ID+ " = " + courseID;
+        //String sqlString  = "Select * from "+TableCourse.TABLE_NAME;
         Cursor cursor = db.rawQuery(sqlString,null); //have to do a better table name here
 
         while(cursor.moveToNext()) {

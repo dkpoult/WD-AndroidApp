@@ -20,14 +20,13 @@ public final class PhoneDatabaseContract {
 
     public static class TablePerson implements BaseColumns {
         public static final String TABLE_NAME = "Person";
-        public static final String COLUMN_NAME_ID = "ID";
-        public static final String COLUMN_NAME_CODE = "Code";
+        public static final String COLUMN_NAME_NUMBER = "Number";
         public static final String COLUMN_NAME_NAME = "Name"; // idk what else the person wants
     }
 
     public static class TablePersonCourse implements BaseColumns{
         public static final String TABLE_NAME = "PersonCourse";
-        public static final String COLUMN_NAME_PERSONID = "PersonID";
+        public static final String COLUMN_NAME_PERSONNUMBER = "PersonNumber";
         public static final String COLUMN_NAME_COURSEID = "CourseID";
     }
     /*
