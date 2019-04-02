@@ -19,6 +19,8 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,6 +60,9 @@ public class HomeScreen extends AppCompatActivity {
             //testDisplay();
             addUserToDB();
        // sendRequest();
+
+        //String customToken = FirebaseAuth.getInstance().createCustomToken(uid);
+
     }
     private void addUserToDB(){ // possibly encrypt student number
         PhoneDatabaseHelper dbHelper = new PhoneDatabaseHelper(getApplicationContext());
@@ -75,6 +80,8 @@ public class HomeScreen extends AppCompatActivity {
         }
 
         cursor.close();
+
+        // add all the known courses
     }
 
     private void addRow(){
