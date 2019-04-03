@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 
@@ -51,8 +52,9 @@ public class HomeScreen extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        //getApplicationContext().deleteDatabase("PhoneDatabase.db");
 
+        //getApplicationContext().deleteDatabase("PhoneDatabase.db");
+        firebaseAuthenticate();
         addAvailableCourses();
         //syncCourses();
         // addRow();// assuming it worked
@@ -63,6 +65,9 @@ public class HomeScreen extends AppCompatActivity {
 
         //String customToken = FirebaseAuth.getInstance().createCustomToken(uid);
 
+    }
+    private void firebaseAuthenticate(){
+        
     }
     private void addUserToDB(){ // possibly encrypt student number
         PhoneDatabaseHelper dbHelper = new PhoneDatabaseHelper(getApplicationContext());
