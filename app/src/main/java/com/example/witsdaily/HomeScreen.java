@@ -224,6 +224,8 @@ public class HomeScreen extends AppCompatActivity {
         Intent i = new Intent(HomeScreen.this, CourseRegistration.class);
         startActivity(i);
     }
+
+
     private void addAvailableCourses(){
         PhoneDatabaseHelper dbHelper = new PhoneDatabaseHelper(getApplicationContext());
         View currentLayout = (LinearLayout)findViewById(R.id.llHomeLayout);
@@ -255,7 +257,12 @@ public class HomeScreen extends AppCompatActivity {
         i.putExtra("courseID",String.valueOf(v.getTag()));
         startActivity(i);
     }
-
+    public void clickAnnouncement(View v){
+        Intent i = new Intent(HomeScreen.this, AnnouncementSender.class);
+        i.putExtra("userToken",user_token);
+        i.putExtra("personNumber",personNumber);
+        startActivity(i);
+    }
     private void sendRequest(){
         JSONObject params = new JSONObject();
         System.out.println("Test");

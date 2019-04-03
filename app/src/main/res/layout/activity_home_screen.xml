@@ -41,7 +41,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="clickViewAllCourses"
-            android:text="Button" />
+            android:text="View all Courses" />
+
+        <Button
+            android:id="@+id/btnAnnouncement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="clickAnnouncement"
+            android:text="Make Announcement" />
     </LinearLayout>
 
 
