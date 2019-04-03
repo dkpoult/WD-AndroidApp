@@ -7,10 +7,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.provider.BaseColumns;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,7 +21,13 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 
@@ -36,7 +44,7 @@ public class HomeScreen extends AppCompatActivity {
 
     String user_token;
     String personNumber;
-
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,10 +60,11 @@ public class HomeScreen extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
         //getApplicationContext().deleteDatabase("PhoneDatabase.db");
+        FirebaseApp.initializeApp(getApplicationContext());
         firebaseAuthenticate();
         addAvailableCourses();
+
         //syncCourses();
         // addRow();// assuming it worked
 
@@ -63,11 +72,66 @@ public class HomeScreen extends AppCompatActivity {
             addUserToDB();
        // sendRequest();
 
-        //String customToken = FirebaseAuth.getInstance().createCustomToken(uid);
-
+    }
+    private void loginCustomTokenFirebase(String mCustomToken){
+        mAuth = FirebaseAuth.getInstance();
+        mAuth.signInWithCustomToken(mCustomToken)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            System.out.println("signInWithCustomToken:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            // updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            System.out.println("signInWithCustomToken:failure :"+ task.getException());
+                            Toast.makeText(HomeScreen.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            //updateUI(null);
+                        }
+                    }
+                });
     }
     private void firebaseAuthenticate(){
-        
+
+        JSONObject params = new JSONObject();
+        try {
+            params.put("userToken", user_token);
+            params.put("personNumber", personNumber);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/notification_token", params,
+                new Response.Listener<JSONObject>(){
+                    @Override
+                    public void onResponse(JSONObject response){
+
+                        try {
+                            System.out.println(response.getString("customToken"));
+                            loginCustomTokenFirebase(response.getString("customToken"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        String s = error.getLocalizedMessage();
+                        System.out.println(s);
+                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                    }
+                })
+        {
+        };
+
+        VolleyRequestManager.getManagerInstance(this.getApplicationContext()).addRequestToQueue(request);
+
     }
     private void addUserToDB(){ // possibly encrypt student number
         PhoneDatabaseHelper dbHelper = new PhoneDatabaseHelper(getApplicationContext());
