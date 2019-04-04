@@ -1,6 +1,8 @@
 package com.example.witsdaily;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
@@ -26,13 +28,22 @@ import static com.example.witsdaily.PhoneDatabaseContract.*;
 
 public class CourseDisplay extends AppCompatActivity {
     int courseID;
+    String courseCodeString;
+    String user_token,personNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_display);
         Intent i  = getIntent();
         courseID = Integer.parseInt(i.getStringExtra("courseID"));
+        user_token = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
+        personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
         updateFields();
+    }
+    public void clickAnnouncement(View v){
+        Intent i = new Intent(CourseDisplay.this, AnnouncementSender.class);
+        i.putExtra("courseCode",courseCodeString);
+        startActivity(i);
     }
     private void updateFields(){ // fill in values, take from local database
         PhoneDatabaseHelper dbHelper = new PhoneDatabaseHelper(getApplicationContext());
@@ -49,6 +60,7 @@ public class CourseDisplay extends AppCompatActivity {
         while(cursor.moveToNext()) {
             courseCode.setText(
                     cursor.getString(cursor.getColumnIndexOrThrow(TableCourse.COLUMN_NAME_CODE)));
+            courseCodeString = courseCode.getText().toString();
             courseName.setText(
                     cursor.getString(cursor.getColumnIndexOrThrow(TableCourse.COLUMN_NAME_NAME)));
             courseDescription.setText(

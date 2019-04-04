@@ -9,12 +9,9 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
-    public MyFirebaseMessagingService() {
-    }
-
     @Override
     public void onNewToken(String token){
         // do something with token
-        System.out.println("");
+        System.out.println("wadup");
     }
 }

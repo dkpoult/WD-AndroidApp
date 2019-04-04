@@ -1,8 +1,11 @@
 package com.example.witsdaily;
 
+import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -10,19 +13,27 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.FirebaseInstanceIdService;
+import com.google.firebase.iid.InstanceIdResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class AnnouncementSender extends AppCompatActivity {
-    String personNumber,userToken;
+
+    String personNumber,user_token,courseCode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_announcement_sender);
         Intent i = getIntent();
-        personNumber = i.getStringExtra("personNumber");
-        userToken = i.getStringExtra("userToken");
+        courseCode = (i.getStringExtra("courseCode"));
+        user_token = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
+        personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
+
     }
     public void clickMakeAnnouncement(View v){
         EditText edtTitle = (EditText)findViewById(R.id.edtTitle);
@@ -30,22 +41,25 @@ public class AnnouncementSender extends AppCompatActivity {
         //personNumber, userToken, courseCode, title, body
         JSONObject params = new JSONObject();
         try {
-            params.put("userToken", userToken);
+            params.put("userToken", user_token);
             params.put("personNumber", personNumber);
             params.put("title", edtTitle.getText().toString());
             params.put("body", edtBody.getText().toString());
-            params.put("courseCode", "TESTCODE");
+            params.put("courseCode", courseCode);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/send_announcement", params,
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/make_announcement", params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){
                         try {
                             processRequest(response.getString("responseCode"));
+                            Toast.makeText(getApplicationContext(), response.getString("responseCode"), Toast.LENGTH_LONG).show();
+                            // sets a listener to determine the change
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -65,6 +79,7 @@ public class AnnouncementSender extends AppCompatActivity {
         VolleyRequestManager.getManagerInstance(this.getApplicationContext()).addRequestToQueue(request);
 
     }
+
 
     private void processRequest(String responseCode){
         System.out.println(responseCode);
