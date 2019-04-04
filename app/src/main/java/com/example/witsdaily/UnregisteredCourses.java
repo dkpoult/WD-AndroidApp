@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -52,8 +53,9 @@ String user_token,personNumber;
     }
     public void courseClicked(View v){ // means they're already enrolled
         // go to that course
-        Intent i = new Intent(UnregisteredCourses.this, CourseDisplay.class);
-        i.putExtra("courseID",String.valueOf(v.getTag()));
+        Intent i = new Intent(UnregisteredCourses.this, EnrollDialog.class);
+        i.putExtra("courseCode",v.getTag().toString()); // course code ?
         startActivity(i);
     }
+
 }

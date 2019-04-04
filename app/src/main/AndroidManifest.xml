@@ -12,9 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
         <activity
+            android:name=".EnrollDialog"
+            android:theme="@style/Theme.AppCompat.Dialog"/>
+        <activity
             android:name=".UnregisteredCourses"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AnnouncementSender"
             android:theme="@style/AppTheme.NoActionBar" />
