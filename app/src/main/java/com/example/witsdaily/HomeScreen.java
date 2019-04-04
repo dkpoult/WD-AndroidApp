@@ -65,8 +65,8 @@ public class HomeScreen extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        //getApplicationContext().deleteDatabase("PhoneDatabase.db");
-
+      //  getApplicationContext().deleteDatabase("PhoneDatabase.db");
+        addUserToDB();
         FirebaseApp.initializeApp(getApplicationContext());
         firebaseAuthenticate();
         getCourses();
@@ -76,13 +76,13 @@ public class HomeScreen extends AppCompatActivity {
         // addRow();// assuming it worked
 
             //testDisplay();
-            addUserToDB();
+
        // sendRequest();
 
     }
     private void updateServerFCMToken(String newToken){
         JSONObject params = new JSONObject();
-        System.out.println("Test");
+        System.out.println("wadup "+newToken);
         try {
             params.put("fcmToken",newToken);
             params.put("userToken", user_token);
@@ -121,6 +121,7 @@ public class HomeScreen extends AppCompatActivity {
                     @Override
                     public void onSuccess(InstanceIdResult instanceIdResult) {
                         String newFCM = instanceIdResult.getToken();
+
                         updateServerFCMToken(newFCM);
                     }
                 });
@@ -133,7 +134,6 @@ public class HomeScreen extends AppCompatActivity {
                             firebaseToken = mCustomToken;
                             System.out.println("signInWithCustomToken:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            // updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             System.out.println("signInWithCustomToken:failure :"+ task.getException());
@@ -279,7 +279,7 @@ public class HomeScreen extends AppCompatActivity {
         cursor.close();
 
     }
-    public void courseClicked(View v){
+    public void courseClicked(View v){ // means they're already enrolled
      // go to that course
         Intent i = new Intent(HomeScreen.this, CourseDisplay.class);
         i.putExtra("courseID",String.valueOf(v.getTag()));
@@ -300,8 +300,8 @@ public class HomeScreen extends AppCompatActivity {
             ContentValues values = new ContentValues();
             values.put(TableCourse.COLUMN_NAME_CODE, response.getString("courseCode"));
             values.put(TableCourse.COLUMN_NAME_DESCRIPTION, response.getString("courseDescription"));
-            values.put(TableCourse.COLUMN_NAME_LECTURER, "lecturer");
-            values.put(TableCourse.COLUMN_NAME_NAME, "courseName");
+            values.put(TableCourse.COLUMN_NAME_LECTURER, response.getString("lecturer"));
+            values.put(TableCourse.COLUMN_NAME_NAME, response.getString("courseName"));
             // other values to add to actual db
 
             long result = db.insertOrThrow(TableCourse.TABLE_NAME, null, values);
@@ -379,7 +379,8 @@ public class HomeScreen extends AppCompatActivity {
 
     }
     public void clickViewAllCourses(View v){
-
+        Intent i = new Intent(HomeScreen.this, UnregisteredCourses.class);
+        startActivity(i);
     }
     private void processRequest(JSONObject response){
         String output = null;
