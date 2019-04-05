@@ -43,12 +43,11 @@
                 android:layout_weight="1"
                 android:background="@drawable/rounder_corner"
                 android:ems="10"
-                android:hint="PersonID"
-                android:paddingLeft="20dp"
-                android:textColorHint="#A9A9A9"
-                android:textColor="#000000"
+                android:hint="@string/personid"
                 android:importantForAutofill="no"
-                android:inputType="textPersonName"
+                android:paddingLeft="10dp"
+                android:textColor="#000000"
+                android:textColorHint="#A9A9A9"
                 android:textSize="18sp" />
         </LinearLayout>
 
@@ -68,7 +67,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/rounder_corner"
                 android:ems="10"
-                android:paddingLeft="20dp"
+                android:paddingLeft="10dp"
                 android:hint="Password"
                 android:textColorHint="#A9A9A9"
                 android:textColor="#000000"
