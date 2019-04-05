@@ -34,6 +34,13 @@
             android:layout_height="wrap_content"
             android:text="Create Course"
             android:onClick="Create"/>
+
+        <Button
+            android:id="@+id/test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Button"
+            android:onClick="test"/>
     </LinearLayout>
 
 

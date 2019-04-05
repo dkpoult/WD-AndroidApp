@@ -42,16 +42,18 @@
         android:paddingLeft="10dp"
         android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/edtCourseDescription"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:ems="10"
-        android:hint="Course Description"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/rounder_corner"
-        android:paddingLeft="10dp"
-        android:inputType="textPostalAddress" />
+        <EditText
+            android:id="@+id/edtCourseDescription"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounder_corner"
+            android:ems="10"
+            android:hint="Course Description"
+            android:inputType="textMultiLine"
+            android:maxHeight="140dp"
+            android:paddingLeft="10dp"
+            android:scrollbars="vertical" />
 
     <Button
         android:id="@+id/btnCreateCourse"
