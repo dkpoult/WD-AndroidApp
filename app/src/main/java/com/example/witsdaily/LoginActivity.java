@@ -24,8 +24,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         user_token = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
-        System.out.println(personNumber);
-        System.out.println(user_token);
 
         if(user_token != null && personNumber != null){
             doValidate(user_token, personNumber);
@@ -37,7 +35,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public void doValidate(String user_token, String personNumber){
         JSONObject params = new JSONObject();
-        System.out.println("Test");
         try {
             params.put("userToken", user_token);
             params.put("personNumber", personNumber);
@@ -50,7 +47,6 @@ public class LoginActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){
-                        System.out.println(response.toString());
                         doValidateMessage(response);
                     }
                 },
@@ -58,7 +54,6 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         String s = error.getLocalizedMessage();
-                        System.out.println(s);
                         Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                     }
                 })

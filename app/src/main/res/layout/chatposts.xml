@@ -37,6 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:onClick="doUpvote"
                     android:padding="20dp"
                     app:srcCompat="@android:drawable/arrow_up_float" />
 
@@ -51,6 +52,7 @@
 
                 <ImageButton
                     android:id="@+id/downvote"
+                    android:onClick="doDownvote"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -96,7 +98,7 @@
                             android:button="@android:drawable/ic_lock_lock"
                             android:checked="false"
                             android:gravity="center"
-                            android:onClick="setLocked" />
+                            android:onClick="setLocked"/>
 
                     </LinearLayout>
 
@@ -113,9 +115,10 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingLeft="20dp"
+            android:layout_gravity="top"
             android:weightSum="20">
 
             <TextView
@@ -125,22 +128,34 @@
                 android:layout_weight="5"
                 android:clickable="true"
                 android:gravity="center"
-                app:autoSizeTextType="uniform"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.WindowTitle"
-                android:textColor="#003a5e" />
+                android:textColor="#003a5e"
+                app:autoSizeTextType="uniform" />
 
             <EditText
                 android:id="@+id/addComment"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="15"
+                android:layout_weight="12"
                 android:background="@drawable/rounder_corner"
                 android:editable="true"
-                app:autoSizeTextType="uniform"
                 android:gravity="center"
                 android:hint="add a comment"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.WindowTitle"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp" />
+                android:paddingRight="20dp"
+                app:autoSizeTextType="uniform" />
+
+            <Button
+                android:id="@+id/sendComment"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="3"
+                android:onClick="makeComment"
+                android:text="Send"
+                android:textSize="10sp"
+                android:textColor="#ffffff"
+                android:background="@drawable/rounded_button"/>
         </LinearLayout>
 
     </LinearLayout>

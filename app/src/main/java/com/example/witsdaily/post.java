@@ -1,18 +1,24 @@
 package com.example.witsdaily;
 
+import android.content.Context;
+import android.database.Cursor;
+
 import java.util.ArrayList;
-import java.util.Date;
+
 import static java.lang.Math.abs;
 import static java.lang.Math.max;
 
-public class post {
-    public Date postDate;
-    private int postID;
-    private int numComments = 0;
-    private int parentId;
+public class post{
+    String postDate;
+    private String postID;
+    public String DovsID;
+    public int voteType;
+    private String parentId;
     private String title;
     private String body;
+    private String sendee;
     private int upvotes = 0 , downvotes = 0;
+    boolean isAnswer = false;
     private double controversy;
 
     {
@@ -20,38 +26,48 @@ public class post {
     }
 
     public boolean isComment, isVoted = false, isLocked = false;
-    private ArrayList<post> comments;
+    private ArrayList<post> comments = new ArrayList<>();
 
-    public post(String title, String body,  Date postDate){
-        this.title = title;
+    post(String postID, String title, String body, String postDate, String postee){
+        this.title = title + " : " + postee;
+        this.postID = postID;
         this.body = body;
         this.isComment = false;
         this.postDate = postDate;
-        comments = new ArrayList<>();
+        this.sendee = postee;
     }
 
-    public post(String title, String body,  Date postDate, int parentId){
-        this.title = title;
+    post(String postID, boolean flag, String body, String postDate, String sendee, String parentId){
+        this.title = sendee;
         this.body = body;
+        this.postID = postID;
         this.isComment = true;
         this.parentId = parentId;
+        this.sendee = sendee;
         this.postDate = postDate;
-        comments = new ArrayList<>();
     }
 
 
-
-    public int getParentId(){
+    public String getSendee(){
+        return sendee;
+    }
+    public void setSendee(String sendee){
+        this.sendee = sendee;
+    }
+    String getParentId(){
         return parentId;
+    }
+    void setAnswer(){
+        this.isAnswer = true;
     }
     public void setParentId(){
         this.parentId = parentId;
     }
-    public int getPostID(){
+    String getPostID(){
         return postID;
     }
-    public int getNumComments(){
-        return numComments;
+    int getNumComments(){
+        return this.comments.size();
     }
     public String getTitle(){
         return title;
@@ -72,28 +88,49 @@ public class post {
     public double getControversy(){
         return controversy;
     }
-    public void addUp() {
+    public void addUp(Context context) {
+        DatabaseHelper myDB = new DatabaseHelper(context, "PhoneDatabase");
         if (this.isVoted) {
             upvotes += 1;
-        }else{
             downvotes -= 1;
+            myDB.doUpdate("UPDATE VOTED SET TYPE = 1 WHERE postID =" + this.postID + ";");
+            myDB.doQuery("INSERT OR IGNORE INTO VOTED VALUES (" + this.postID + ", 1);");
+        }else{
+            upvotes += 1;
+            myDB.doQuery("INSERT OR IGNORE INTO VOTED VALUES (" + this.postID + ", 1);");
         }
+        this.isVoted = true;
+       myDB.doUpdate("UPDATE POST \n" +
+                "SET\n" +
+                "    upVotes = " + this.upvotes + ",\n" +
+                "    downVotes = " + this.downvotes + "\n" +
+                "WHERE\n" +
+                "    postID =" + this.postID + "\n" + ";");
+
+        Cursor c = myDB.doQuery("SELECT * FROM POST WHERE postID ="+ this.postID + ";");
+        c.moveToFirst();
+        System.out.println(c.getString(c.getColumnIndex("postID")));
+        System.out.println(c.getString(c.getColumnIndex("upVotes")));
+        this.voteType = 1;
+        this.setControversy();
+    }
+    public void setControversy(){
+        this.controversy = (double)(upvotes + downvotes) / max(abs(upvotes - downvotes), 1);
     }
     public void setVotes(int upvotes, int downvotes){
         this.upvotes = upvotes;
         this.downvotes = downvotes;
-        this.controversy = (double)(upvotes-downvotes)/max(abs(upvotes-downvotes),1);
+        this.controversy = (double)(upvotes+downvotes)/max(abs(upvotes-downvotes),1);
     }
-    public void setPostDate(Date postDate){
+    public void setPostDate(String  postDate){
         this.postDate = postDate;
     }
-    public void setPostID(int postID){
+    public void setPostID(String postID){
         this.postID = postID;
     }
     public void setNumComments(int numComments){
-        this.numComments = numComments;
     }
-    public void setParentId(int parentId){
+    public void setParentId(String parentId){
         this.parentId = parentId;
     }
     public void setTitle(String title){
@@ -103,22 +140,59 @@ public class post {
         this.body = body;
     }
 
-    public void addDown(){
+    public void addDown(Context context){
+        DatabaseHelper myDB = new DatabaseHelper(context, "PhoneDatabase");
         if (this.isVoted) {
-            downvotes += 1;
-        }else{
             upvotes -= 1;
+            downvotes += 1;
+            myDB.doUpdate("UPDATE VOTED SET TYPE = 0 WHERE postID =" + this.postID + ";");
+            myDB.doQuery("INSERT OR IGNORE INTO VOTED VALUES (" + this.postID + ", 0);");
+        }else{
+            downvotes += 1;
+            myDB.doQuery("INSERT OR IGNORE INTO VOTED VALUES (" + this.postID + ", 0);");
+        }
+        myDB.doUpdate("UPDATE POST \n" +
+                "SET\n" +
+                "    downVotes = " + this.downvotes + ",\n" +
+                "    upVotes = " + this.upvotes + "\n" +
+                "WHERE\n" +
+                "    postID =" + this.postID + "\n" + ";");
+
+
+        this.isVoted = true;
+        this.voteType = 0;
+        this.setControversy();
+    }
+    public void lock(Context context){
+        DatabaseHelper myDB = new DatabaseHelper(context, "PhoneDatabase");
+        this.isLocked = true;
+        myDB.doUpdate("UPDATE POST \n" +
+                "SET\n" +
+                "    isLocked = 1\n" +
+                "WHERE\n" +
+                "    postID =" + this.postID + "\n" + ";");
+        for(post i: comments){
+            i.lock(context);
         }
     }
-    public void lock(){
-        this.isLocked = true;
-    }
-    public void unlock(){
+    void unlock(Context context) {
         this.isLocked = false;
+        DatabaseHelper myDB = new DatabaseHelper(context, "PhoneDatabase");
+            myDB.doUpdate("UPDATE POST \n" +
+                    "SET\n" +
+                    "    isLocked = 0\n" +
+                    "WHERE\n" +
+                    "    postID =" + this.postID + "\n" + ";");
+        for (post i : comments) {
+            i.unlock(context);
+        }
+
     }
-    public void addComment(String title, String body, Date postDate){
-        comments.add(new post(title, body, postDate, this.postID));
-        this.numComments +=1;
+    void addComment(post Post){
+        this.comments.add(Post);
+    }
+    public post getComment(int index){
+        return this.comments.get(index);
     }
 
 }

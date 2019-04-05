@@ -10,7 +10,6 @@
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
     android:clickable="true"
-    android:onClick="viewPost"
     android:layout_marginBottom="5dp"
     android:layout_marginTop="5dp"
     android:background="#C0C0C0"
@@ -34,6 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:onClick="doUpvote"
                 android:padding="20dp"
                 app:srcCompat="@android:drawable/arrow_up_float" />
 
@@ -49,6 +49,7 @@
             <ImageButton
                 android:id="@+id/downvote"
                 android:layout_width="wrap_content"
+                android:onClick="doDownvote"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="20dp"
@@ -81,17 +82,18 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="17"
-                        android:background="@drawable/rounder_corner"
                         android:clickable="true"
+                        android:gravity="center"
                         android:onClick="viewPost"
                         android:text="" />
 
                     <CheckBox
-                        android:id="@+id/checkBox"
+                        android:id="@+id/checkBox1"
                         android:checked="false"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
+                        android:onClick="setLocked"
                         android:button="@android:drawable/ic_lock_lock" />
                 </LinearLayout>
 
@@ -108,7 +110,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:orientation="horizontal"
         android:paddingLeft="20dp"
         android:weightSum="20">
@@ -127,15 +129,22 @@
         <EditText
             android:id="@+id/addComment"
             android:layout_width="0dp"
-            android:layout_height="30dp"
+            android:layout_height="match_parent"
             android:layout_weight="12"
-            android:background="#ffffff"
-            android:editable="true"
+            android:background="@drawable/rounded_test"
             android:gravity="center"
             android:hint="add a comment"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
             app:autoSizeTextType="uniform" />
+
+        <Button
+            android:id="@+id/doComment"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_button"
+            android:text="Send"
+            android:textColor="#ffffff"
+            android:textSize="10sp" />
 
     </LinearLayout>
 

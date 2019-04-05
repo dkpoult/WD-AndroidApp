@@ -40,6 +40,7 @@ public class HomeScreen extends AppCompatActivity {
     }
     public void test(View v){
         Intent i = new Intent(HomeScreen.this, LectureCourseForum.class);
+        i.putExtra("forumCode", "TESTCODE");
         startActivity(i);
     }
 
