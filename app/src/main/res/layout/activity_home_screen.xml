@@ -44,6 +44,12 @@
             android:onClick="clickViewAllCourses"
             android:text="View unregistered Courses" />
 
+        <LinearLayout
+            android:id="@+id/llCourseLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"></LinearLayout>
+
 
     </LinearLayout>
 

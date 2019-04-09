@@ -46,6 +46,7 @@ import static com.example.witsdaily.PhoneDatabaseContract.*;
 
 public class HomeScreen extends AppCompatActivity {
  // FirebaseInstanceId.getInstance().deleteInstanceId(); good for logout button
+    StorageAccessor newAccessor = StorageAccessor.getInstance();
     String user_token;
     String personNumber;
     String firebaseToken;
@@ -70,9 +71,9 @@ public class HomeScreen extends AppCompatActivity {
         FirebaseApp.initializeApp(getApplicationContext());
         firebaseAuthenticate();
         getCourses();
+        getUnenrolledCourses();
         addAvailableCourses();
 
-        //syncCourses();
         // addRow();// assuming it worked
 
             //testDisplay();
@@ -81,38 +82,7 @@ public class HomeScreen extends AppCompatActivity {
 
     }
     private void updateServerFCMToken(String newToken){
-        JSONObject params = new JSONObject();
-        System.out.println("wadup "+newToken);
-        try {
-            params.put("fcmToken",newToken);
-            params.put("userToken", user_token);
-            params.put("personNumber", personNumber);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/set_fcm_token", params,
-                new Response.Listener<JSONObject>(){
-                    @Override
-                    public void onResponse(JSONObject response){
-                        System.out.println(response.toString());
-                        Toast.makeText(getApplicationContext(),response.toString() , Toast.LENGTH_LONG).show();
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        String s = error.getLocalizedMessage();
-                        System.out.println(s);
-                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-                    }
-                })
-        {
-        };
-
-        VolleyRequestManager.getManagerInstance(this.getApplicationContext()).addRequestToQueue(request);
-
+        newAccessor.updateServerFCMToken(newToken);
     }
     private void loginCustomTokenFirebase(final String mCustomToken){
         mAuth = FirebaseAuth.getInstance();
@@ -209,40 +179,6 @@ public class HomeScreen extends AppCompatActivity {
         i.putExtra("courseID","COMS1018");
         startActivity(i);
     }
-    private void syncCourses(){  // discuss with rest how to handle the syncing
-
-        JSONObject params = new JSONObject();
-        System.out.println("Test");
-        try {
-            params.put("userToken", user_token);
-            params.put("personNumber", personNumber);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/sync_courses", params,
-                new Response.Listener<JSONObject>(){
-                    @Override
-                    public void onResponse(JSONObject response){
-                        System.out.println(response.toString());
-                        processRequest(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        String s = error.getLocalizedMessage();
-                        System.out.println(s);
-                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-                    }
-                })
-        {
-        };
-
-        VolleyRequestManager.getManagerInstance(this.getApplicationContext()).addRequestToQueue(request);
-
-    }
 
     public void Link(View v){
         Intent i = new Intent(HomeScreen.this, courseLink.class);
@@ -260,29 +196,29 @@ public class HomeScreen extends AppCompatActivity {
 
 
     private void addAvailableCourses(){
-        PhoneDatabaseHelper dbHelper = new PhoneDatabaseHelper(getApplicationContext());
-        View currentLayout = (LinearLayout)findViewById(R.id.llHomeLayout);
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String sql = "Select * from "+ TableCourse.TABLE_NAME
-                +" JOIN "+ TablePersonCourse.TABLE_NAME +" ON " + TableCourse.COLUMN_NAME_ID
-                + " = " + TablePersonCourse.COLUMN_NAME_COURSEID
-                + " WHERE " + TablePersonCourse.COLUMN_NAME_PERSONNUMBER
-                + " = \""+ personNumber+"\"";
-        Cursor cursor = db.rawQuery(sql,null); //have to do a better table name here
 
-        while(cursor.moveToNext()) {
-            String courseID = cursor.getString(
-                    cursor.getColumnIndexOrThrow(TablePersonCourse.COLUMN_NAME_COURSEID));
-            View courseBrief = getLayoutInflater().inflate(R.layout.briefcoursedisplay, null);
-            courseBrief.setTag(courseID);
-            TextView name = (TextView)(courseBrief.findViewById(R.id.tvName));
-            TextView description = (TextView)(courseBrief.findViewById(R.id.tvDescription));
-            name.setText(cursor.getString(cursor.getColumnIndexOrThrow(TableCourse.COLUMN_NAME_NAME)));
-            description.setText(cursor.getString(cursor.getColumnIndexOrThrow(TableCourse.COLUMN_NAME_DESCRIPTION)));
-            ((LinearLayout) currentLayout).addView(courseBrief);
-        }
-        cursor.close();
+        View currentLayout = (LinearLayout)findViewById(R.id.llCourseLayout);
+        ((LinearLayout) currentLayout).removeAllViews(); // clears this for when async is done
+            JSONArray value = newAccessor.getCourses();
+            for (int i =0;i<value.length();i++){
+                try {
+                    View courseBrief = getLayoutInflater().inflate(R.layout.briefcoursedisplay, null);
+                    TextView name = (TextView)(courseBrief.findViewById(R.id.tvName));
+                    TextView description = (TextView)(courseBrief.findViewById(R.id.tvDescription));
 
+                    String courseID = value.getJSONObject(i).getString(TableCourse.COLUMN_NAME_ID); // or whatever whatever
+                    String courseName = value.getJSONObject(i).getString(TableCourse.COLUMN_NAME_NAME);
+                    String courseDescription = value.getJSONObject(i).getString(TableCourse.COLUMN_NAME_DESCRIPTION);
+
+                    courseBrief.setTag(courseID);
+                    name.setText(courseName);
+                    description.setText(courseDescription);
+                    ((LinearLayout) currentLayout).addView(courseBrief);
+
+                    } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
     }
     public void courseClicked(View v){ // means they're already enrolled
      // go to that course
@@ -290,7 +226,7 @@ public class HomeScreen extends AppCompatActivity {
         i.putExtra("courseID",String.valueOf(v.getTag()));
         startActivity(i);
     }
-    private void processGetCourses(JSONObject response) throws Exception{
+    private void processGetCourses(JSONObject response,boolean enrolled) throws Exception{
         PhoneDatabaseHelper dbHelper = new PhoneDatabaseHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         if (!response.getString("responseCode").equals("successful")){
@@ -313,11 +249,15 @@ public class HomeScreen extends AppCompatActivity {
             if (result <= 0) {
                 return;
             }
+            if (!enrolled){
+                continue;
+            }
             values = new ContentValues();
             values.put(TablePersonCourse.COLUMN_NAME_PERSONNUMBER, personNumber);
             values.put(TablePersonCourse.COLUMN_NAME_COURSEID, getLatestCourseInsertID());
             long result2 = db.insertOrThrow(TablePersonCourse.TABLE_NAME, null, values);
         }
+        addAvailableCourses(); // just to refresh the ui
     }
     private boolean containsCourseCode(String courseCode){
         PhoneDatabaseHelper dbHelper = new PhoneDatabaseHelper(getApplicationContext());
@@ -347,53 +287,34 @@ public class HomeScreen extends AppCompatActivity {
         return latestID;
     }
     private void getCourses(){
-        JSONObject params = new JSONObject();
-        System.out.println("Test");
-        try {
-            params.put("userToken", user_token);
-            params.put("personNumber", personNumber);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/get_courses", params,
-                new Response.Listener<JSONObject>(){
-                    @Override
-                    public void onResponse(JSONObject response){
-                        System.out.println(response);
-                        try {
-                            processGetCourses(response);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        String s = error.getLocalizedMessage();
-                        System.out.println(s);
-                        Toast.makeText(getApplicationContext(), "Error getting courses", Toast.LENGTH_SHORT).show();
-                    }
-                })
-        {
-        };
-
-        VolleyRequestManager.getManagerInstance(this.getApplicationContext()).addRequestToQueue(request);
-
+        newAccessor.addListener(new storageListener() {
+            @Override
+            public void getData(JSONObject data) {
+                try {
+                    processGetCourses(data,true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        newAccessor.getEnrolledCourses();
+    }
+    private void getUnenrolledCourses(){
+        newAccessor.addListener(new storageListener() {
+            @Override
+            public void getData(JSONObject data) {
+                try {
+                    processGetCourses(data,false);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        newAccessor.getUnenrolledCourses();
     }
     public void clickViewAllCourses(View v){
         Intent i = new Intent(HomeScreen.this, UnregisteredCourses.class);
         startActivity(i);
-    }
-    private void processRequest(JSONObject response){
-        String output = null;
-        try {
-            output = response.getString("responseCode");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 
 }

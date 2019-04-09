@@ -24,11 +24,13 @@ import static com.example.witsdaily.PhoneDatabaseContract.*;
 
 public class EnrollDialog extends AppCompatActivity {
     String courseCode,personNumber,user_token,courseID;
+    StorageAccessor newAccess;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.enroll_course);
         Intent i = getIntent();
+        newAccess = StorageAccessor.getInstance();
         courseID = i.getStringExtra("courseCode");
         TextView courseCodeTV = (TextView)findViewById(R.id.tvCourseCode);
         getCourseCode();
@@ -40,41 +42,25 @@ public class EnrollDialog extends AppCompatActivity {
     public void clickEnroll(View v){
         EditText passEdit  = (EditText)findViewById(R.id.edtPassword);
         String password = passEdit.getText().toString();
-        JSONObject params = new JSONObject();
-        try {
-            params.put("personNumber", personNumber);
-            params.put("password", password);
-            params.put("userToken",user_token);
-            params.put("courseCode",courseCode);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/enrol_in_course", params,
-                new Response.Listener<JSONObject>(){
-                    @Override
-                    public void onResponse(JSONObject response){
-                        try {
-                            Toast.makeText(getApplicationContext(),response.getString("responseCode") , Toast.LENGTH_LONG).show();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
+        newAccess.addListener(new storageListener() {
+            @Override
+            public void getData(JSONObject data) {
+                try {
+                    if (data.getString("responseCode").equals("successful")){
+                        linkUser();
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        String s = error.getLocalizedMessage();
-                        System.out.println(s);
-                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-                    }
-                })
-        {
-        };
 
-        VolleyRequestManager.getManagerInstance(this.getApplicationContext()).addRequestToQueue(request);
-
+                    Toast.makeText(EnrollDialog.this, data.getString("responseCode"),
+                            Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        newAccess.enrollUser(password,courseCode);
+    }
+    private void linkUser(){
+        newAccess.linkUserToCourse(courseID);
     }
     private void getCourseCode(){
         PhoneDatabaseHelper dbHelper = new PhoneDatabaseHelper(getApplicationContext());
