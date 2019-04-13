@@ -15,26 +15,32 @@ import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import static com.example.witsdaily.PhoneDatabaseContract.*;
 
 public class UnregisteredCourses extends AppCompatActivity {
-String user_token,personNumber;
-StorageAccessor newAccessor;
+String userToken,personNumber;
+StorageAccessor syncAccessor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_unregistered_courses);
-        user_token = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
+        userToken = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
-        newAccessor = StorageAccessor.getInstance();
+        syncAccessor  = new StorageAccessor(this, personNumber,userToken){
+            @Override
+            void getData(JSONObject data) {
+                System.out.println("Successful sync task complete");
+            }
+        };
         addAvailableCourses();
     }
 
     private void addAvailableCourses(){
         View currentLayout = (LinearLayout)findViewById(R.id.llUnregister);
         ((LinearLayout) currentLayout).removeAllViews(); // clears this for when async is done
-        JSONArray value = newAccessor.getUCourses();
+        JSONArray value = syncAccessor.getUCourses();
         for (int i =0;i<value.length();i++){
             try {
                 View courseBrief = getLayoutInflater().inflate(R.layout.briefcoursedisplay, null);

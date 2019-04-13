@@ -15,32 +15,18 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-interface requestListener{
-    // the do something that happens
-    void getResponse(JSONObject response);
-}
 
-public class NetworkAccessor {
+public abstract class NetworkAccessor {
     private RequestQueue requestQueue;
-    private List<requestListener> listeners = new ArrayList<requestListener>();
     private String personNumber;
     private String userToken;
+    abstract void getResponse(JSONObject data);
 
     public NetworkAccessor(Context context,String pPersonNumber,String pUserToken){
         requestQueue = Volley.newRequestQueue(context.getApplicationContext());
         userToken = pUserToken;
         personNumber = pPersonNumber;
 
-    }
-
-    public void addListener(requestListener toAdd) {
-        listeners.add(toAdd);
-    }
-
-    void processRequest(JSONObject data){
-        requestListener rL = listeners.get(0);
-        listeners.remove(0);
-        rL.getResponse(data);
     }
 
     private void makeRequest(JSONObject params, final String APIUrl, final String errorMessage){ // the bread and butter of all requests
@@ -51,7 +37,7 @@ public class NetworkAccessor {
                     @Override
                     public void onResponse(JSONObject response){
                         System.out.println("successfull "+APIUrl); // possible return, make function instead
-                        processRequest(response);
+                        getResponse(response); // get for outer class
                     }
                 },
                 new Response.ErrorListener() {
@@ -80,6 +66,18 @@ public class NetworkAccessor {
             e.printStackTrace();
         }
         makeRequest(params,"https://wd.dimensionalapps.com/set_fcm_token","FCM Token");
+    }
+
+    public void firebaseAutenticate(){
+        JSONObject params = new JSONObject();
+        try {
+            params.put("userToken", userToken);
+            params.put("personNumber", personNumber);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        makeRequest(params,"https://wd.dimensionalapps.com/notification_token","firebase authenticate error");
     }
 
     public void loginRequest(String password){

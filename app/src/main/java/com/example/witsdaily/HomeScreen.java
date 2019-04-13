@@ -38,6 +38,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,16 +47,16 @@ import static com.example.witsdaily.PhoneDatabaseContract.*;
 
 public class HomeScreen extends AppCompatActivity {
  // FirebaseInstanceId.getInstance().deleteInstanceId(); good for logout button
-    StorageAccessor newAccessor = StorageAccessor.getInstance();
-    String user_token;
+    String userToken;
     String personNumber;
     String firebaseToken;
+    StorageAccessor syncAccessor;
     private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
-        user_token = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
+        userToken = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -66,23 +67,32 @@ public class HomeScreen extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-      //  getApplicationContext().deleteDatabase("PhoneDatabase.db");
+        syncAccessor  = new StorageAccessor(this, personNumber,userToken){
+            @Override
+            void getData(JSONObject data) {
+                System.out.println("Successful sync task complete");
+            }
+        };
+
+
         addUserToDB();
+
         FirebaseApp.initializeApp(getApplicationContext());
         firebaseAuthenticate();
         getCourses();
         getUnenrolledCourses();
         addAvailableCourses();
 
-        // addRow();// assuming it worked
-
-            //testDisplay();
-
-       // sendRequest();
 
     }
     private void updateServerFCMToken(String newToken){
-        newAccessor.updateServerFCMToken(newToken);
+        StorageAccessor dataAccessor = new StorageAccessor(this, personNumber,userToken){
+            @Override
+            void getData(JSONObject data) {
+                System.out.println("Successful fcm change");
+            }
+        };
+        dataAccessor.updateServerFCMToken(newToken);
     }
     private void loginCustomTokenFirebase(final String mCustomToken){
         mAuth = FirebaseAuth.getInstance();
@@ -103,6 +113,7 @@ public class HomeScreen extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             firebaseToken = mCustomToken;
                             System.out.println("signInWithCustomToken:success");
+
                             FirebaseUser user = mAuth.getCurrentUser();
                         } else {
                             // If sign in fails, display a message to the user.
@@ -115,44 +126,20 @@ public class HomeScreen extends AppCompatActivity {
                 });
     }
     private void firebaseAuthenticate(){
+        StorageAccessor dataAccessor = new StorageAccessor(this, personNumber,userToken){
+            @Override
+            void getData(JSONObject data) {
 
-        JSONObject params = new JSONObject();
-        try {
-            params.put("userToken", user_token);
-            params.put("personNumber", personNumber);
+                try {
+                    System.out.println(data.getString("customToken"));
+                    loginCustomTokenFirebase(data.getString("customToken"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/notification_token", params,
-                new Response.Listener<JSONObject>(){
-                    @Override
-                    public void onResponse(JSONObject response){
-
-                        try {
-                            System.out.println(response.getString("customToken"));
-                            loginCustomTokenFirebase(response.getString("customToken"));
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        String s = error.getLocalizedMessage();
-                        System.out.println(s);
-                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-                    }
-                })
-        {
+            }
         };
-
-        VolleyRequestManager.getManagerInstance(this.getApplicationContext()).addRequestToQueue(request);
-
+        dataAccessor.firebaseAuthenticate();
     }
     private void addUserToDB(){ // possibly encrypt student number
         PhoneDatabaseHelper dbHelper = new PhoneDatabaseHelper(getApplicationContext());
@@ -174,12 +161,6 @@ public class HomeScreen extends AppCompatActivity {
         // add all the known courses
     }
 
-    private void testDisplay(){
-        Intent i = new Intent(HomeScreen.this, CourseDisplay.class);
-        i.putExtra("courseID","COMS1018");
-        startActivity(i);
-    }
-
     public void Link(View v){
         Intent i = new Intent(HomeScreen.this, courseLink.class);
         startActivity(i);
@@ -188,18 +169,12 @@ public class HomeScreen extends AppCompatActivity {
         Intent i = new Intent(HomeScreen.this, CourseRegistration.class);
         startActivity(i);
     }
-    public void test(View v){
-        Intent i = new Intent(HomeScreen.this, LectureCourseForum.class);
-        i.putExtra("forumCode", "TESTCODE");
-        startActivity(i);
-    }
-
 
     private void addAvailableCourses(){
 
         View currentLayout = (LinearLayout)findViewById(R.id.llCourseLayout);
         ((LinearLayout) currentLayout).removeAllViews(); // clears this for when async is done
-            JSONArray value = newAccessor.getCourses();
+            JSONArray value = syncAccessor.getLocalCourses();
             for (int i =0;i<value.length();i++){
                 try {
                     View courseBrief = getLayoutInflater().inflate(R.layout.briefcoursedisplay, null);
@@ -229,88 +204,63 @@ public class HomeScreen extends AppCompatActivity {
     private void processGetCourses(JSONObject response,boolean enrolled) throws Exception{
         PhoneDatabaseHelper dbHelper = new PhoneDatabaseHelper(getApplicationContext());
         SQLiteDatabase db = dbHelper.getWritableDatabase();
+
         if (!response.getString("responseCode").equals("successful")){
             return;
         }
         JSONArray coursesList = response.getJSONArray("courses");
         for (int i =0;i<coursesList.length();i++) {
             response = coursesList.getJSONObject(i);
-            if (containsCourseCode(response.getString("courseCode"))){
-                continue;
-            }
+
             ContentValues values = new ContentValues();
-            values.put(TableCourse.COLUMN_NAME_CODE, response.getString("courseCode"));
-            values.put(TableCourse.COLUMN_NAME_DESCRIPTION, response.getString("courseDescription"));
-            values.put(TableCourse.COLUMN_NAME_LECTURER, response.getString("lecturer"));
-            values.put(TableCourse.COLUMN_NAME_NAME, response.getString("courseName"));
-            // other values to add to actual db
-
-            long result = db.insertOrThrow(TableCourse.TABLE_NAME, null, values);
-            if (result <= 0) {
-                return;
+            if (!syncAccessor.containsCourseCode(response.getString("courseCode"))){
+                values.put(TableCourse.COLUMN_NAME_CODE, response.getString("courseCode"));
+                values.put(TableCourse.COLUMN_NAME_DESCRIPTION, response.getString("courseDescription"));
+                values.put(TableCourse.COLUMN_NAME_LECTURER, response.getString("lecturer"));
+                values.put(TableCourse.COLUMN_NAME_NAME, response.getString("courseName"));
+                long result = db.insertOrThrow(TableCourse.TABLE_NAME, null, values);
+                if (result <= 0) {
+                    return;
+                }
             }
-            if (!enrolled){
-                continue;
+            String courseID = syncAccessor.courseCodeToID(response.getString("courseCode"));
+            if (enrolled && !syncAccessor.userLinked(courseID)){
+                values = new ContentValues();
+                values.put(TablePersonCourse.COLUMN_NAME_PERSONNUMBER, personNumber);
+                values.put(TablePersonCourse.COLUMN_NAME_COURSEID, courseID);
+                long result2 = db.insertOrThrow(TablePersonCourse.TABLE_NAME, null, values);
+
             }
-            values = new ContentValues();
-            values.put(TablePersonCourse.COLUMN_NAME_PERSONNUMBER, personNumber);
-            values.put(TablePersonCourse.COLUMN_NAME_COURSEID, getLatestCourseInsertID());
-            long result2 = db.insertOrThrow(TablePersonCourse.TABLE_NAME, null, values);
         }
-        addAvailableCourses(); // just to refresh the ui
+        //addAvailableCourses(); // just to refresh the ui
     }
-    private boolean containsCourseCode(String courseCode){
-        PhoneDatabaseHelper dbHelper = new PhoneDatabaseHelper(getApplicationContext());
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("Select * From "+TableCourse.TABLE_NAME + " where "+TableCourse.COLUMN_NAME_CODE+" = \""+
-                courseCode+"\"",null);
-        if (!cursor.moveToFirst()){
-            cursor.close();
-            return false;
-        }
-        cursor.close();
-        return true;
-    }
-    private int getLatestCourseInsertID(){
-        PhoneDatabaseHelper dbHelper = new PhoneDatabaseHelper(getApplicationContext());
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("Select * From "+TableCourse.TABLE_NAME + " order by "+TableCourse.COLUMN_NAME_ID+" desc",null); //have to do a better table name here
-        int latestID = 0;
-        if (cursor.moveToFirst()){
-            //add user
-            latestID = cursor.getInt(
-                    cursor.getColumnIndexOrThrow(TableCourse.COLUMN_NAME_ID));
-        }
-        cursor.close();
-        return latestID;
-    }
     private void getCourses(){
-        newAccessor.addListener(new storageListener() {
+        StorageAccessor dataAccessor = new StorageAccessor(this, personNumber,userToken){
             @Override
-            public void getData(JSONObject data) {
+            void getData(JSONObject data) {
                 try {
                     processGetCourses(data,true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        });
-        newAccessor.getEnrolledCourses();
+        };
+        dataAccessor.getEnrolledCourses();
     }
     private void getUnenrolledCourses(){
-        newAccessor.addListener(new storageListener() {
+        StorageAccessor dataAccessor = new StorageAccessor(this, personNumber,userToken){
             @Override
-            public void getData(JSONObject data) {
+            void getData(JSONObject data) {
                 try {
                     processGetCourses(data,false);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        });
-        newAccessor.getUnenrolledCourses();
+        };
+        dataAccessor.getUnenrolledCourses();
     }
     public void clickViewAllCourses(View v){
         Intent i = new Intent(HomeScreen.this, UnregisteredCourses.class);

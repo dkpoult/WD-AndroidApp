@@ -2,6 +2,7 @@ package com.example.witsdaily;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.support.design.widget.TabLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,126 +13,87 @@ import java.util.List;
 
 import static com.example.witsdaily.PhoneDatabaseContract.*;
 
-interface storageListener{
-    void getData(JSONObject data);
-}
+public abstract class StorageAccessor{ // singleton class
 
-public class StorageAccessor{ // singleton class
-    private static StorageAccessor single_instance = null;
-    private List<storageListener> listeners = new ArrayList<storageListener>();
-    private NetworkAccessor networkAccessor;
     private DatabaseAccessor databaseAccessor;
     private String personNumber;
     private String userToken;
+    private Context appContext;
 
-    // private constructor restricted to this class itself
-    private StorageAccessor(Context context,String pPersonNumber,String pUserToken)
+    public StorageAccessor(Context context,String pPersonNumber,String pUserToken)
     {
         personNumber = pPersonNumber;
         userToken = pUserToken;
-        networkAccessor  = new NetworkAccessor(context, personNumber,userToken);
+        appContext = context;
         databaseAccessor = new DatabaseAccessor(context);
     }
 
-    public static StorageAccessor getInstance(Context context,String personNumber,String userToken)
-    {
-        if (single_instance == null)
-            single_instance = new StorageAccessor(context,personNumber,userToken);
+    abstract void getData(JSONObject data);
 
-        return single_instance;
-    }
-
-    public static StorageAccessor getInstance()
-    {
-        if (single_instance == null)
-            return null;
-
-        return single_instance;
-    }
-
-    public void addListener(storageListener toAdd) {
-        listeners.add(toAdd);
-    }
-    private void sendData(JSONObject data){
-        storageListener rL = listeners.get(0);
-        listeners.remove(0);
-        rL.getData(data);
-    }
 
     public void login(String password)
     {
-        networkAccessor.addListener(new requestListener(){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext, personNumber,userToken){
             @Override
-            public void getResponse(JSONObject data){
-                // manipulate data in someway here
-                sendData(data);
+            void getResponse(JSONObject data) {
+                getData(data);
             }
-        });
+        };
         networkAccessor.loginRequest(password);
     }
 
     public void updateServerFCMToken(String fcmToken){
-        networkAccessor.addListener(new requestListener(){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext, personNumber,userToken){
             @Override
-            public void getResponse(JSONObject data){
-                // it is only a response, no need to call a method
-                try {
-                    System.out.println(data.getString("responseCode"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            void getResponse(JSONObject data) {
+                getData(data);
             }
-        });
+        };
         networkAccessor.updateServerFCMToken(fcmToken);
     }
 
     public void getEnrolledCourses()
     {
-        networkAccessor.addListener(new requestListener(){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext, personNumber,userToken){
             @Override
-            public void getResponse(JSONObject data){
-                // manipulate data in someway here
-                sendData(data);
-
+            void getResponse(JSONObject data) {
+                getData(data);
             }
-        });
+        };
         networkAccessor.getEnrolledCourses();
     }
     public void getUnenrolledCourses()
     {
-        networkAccessor.addListener(new requestListener(){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext, personNumber,userToken){
             @Override
-            public void getResponse(JSONObject data){
-                // manipulate data in someway here
-                sendData(data);
+            void getResponse(JSONObject data) {
+                getData(data);
             }
-        });
+        };
         networkAccessor.getUnenrolledCourses();
     }
+    public boolean userLinked(String courseID){
+        return databaseAccessor.userLinked(courseID,personNumber);
 
-    public JSONArray getCourses(){
-        String sql = "Select * from "+ TableCourse.TABLE_NAME
-                +" JOIN "+ TablePersonCourse.TABLE_NAME +" ON " + TableCourse.COLUMN_NAME_ID
-                + " = " + TablePersonCourse.COLUMN_NAME_COURSEID
-                + " WHERE " + TablePersonCourse.COLUMN_NAME_PERSONNUMBER
-                + " = \""+ personNumber+"\"";
-        JSONArray values = null;
-        try {
-            values = databaseAccessor.selectRecords(sql);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return values;
+    }
+    public String courseCodeToID(String courseCode){
+        return databaseAccessor.courseCodeToID(courseCode);
+    }
+
+    public JSONArray getLocalCourses(){
+       return databaseAccessor.getLocalCourses(personNumber);
     }
 //
     public JSONArray getUCourses(){
+
         String sql = "Select * From " +TableCourse.TABLE_NAME
                 +" where "+ TableCourse.COLUMN_NAME_CODE+" NOT IN (Select " +
                 TableCourse.COLUMN_NAME_CODE
                 +" From "
                 +TableCourse.TABLE_NAME
                 +" Join "+ TablePersonCourse.TABLE_NAME+" on " +TableCourse.COLUMN_NAME_ID +" = "
-        +TablePersonCourse.COLUMN_NAME_COURSEID+")";
+        +TablePersonCourse.COLUMN_NAME_COURSEID+" where "+TablePersonCourse.COLUMN_NAME_PERSONNUMBER
+                +" = \""+personNumber+"\")";
         JSONArray values = null;
         try {
             values = databaseAccessor.selectRecords(sql);
@@ -149,25 +111,37 @@ public class StorageAccessor{ // singleton class
     }
 
     public void enrollUser(String password,String courseCode){
-        networkAccessor.addListener(new requestListener() {
+
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext, personNumber,userToken){
             @Override
-            public void getResponse(JSONObject data) {
-                sendData(data);
+            void getResponse(JSONObject data) {
+                getData(data);
             }
-        });
+        };
         networkAccessor.enrollUser(password,courseCode);
     }
-    /* template
-    public void nameofprocess(extra paramaters, exclusive of usertoken and person number)
-    {
-        networkAccessor.addListener(new requestListener(){
-            @Override
-            public void getResponse(JSONObject data){
-                // manipulate data in someway here
-                sendData(data);
-            }
-        });
-        networkAccessor.someprocessyouwroteInNetworkAccessor(password);
+
+    public boolean containsCourseCode(String courseCode){
+        return databaseAccessor.containsCourseCode(courseCode);
     }
+
+    public void firebaseAuthenticate()
+    {
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext, personNumber,userToken){
+            @Override
+            void getResponse(JSONObject data) {
+                getData(data);
+            }
+        };
+        networkAccessor.firebaseAutenticate();
+    }
+    /* template
+    NetworkAccessor networkAccessor = new NetworkAccessor(appContext, personNumber,userToken){
+            @Override
+            void getResponse(JSONObject data) {
+                getData(data); // get data for the outer class
+            }
+        };
+        networkAccessor.api();
     * */
 }

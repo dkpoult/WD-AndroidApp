@@ -18,7 +18,6 @@ import org.json.JSONObject;
 public class LoginActivity extends AppCompatActivity {
     String user_token;
     String personNumber;
-    StorageAccessor storageAccessor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         if(user_token != null && personNumber != null){
             doValidate(user_token, personNumber);
         }
-        storageAccessor =  StorageAccessor.getInstance(this,personNumber,user_token);
+
 
     }
 

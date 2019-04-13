@@ -23,28 +23,33 @@ import org.json.JSONObject;
 import static com.example.witsdaily.PhoneDatabaseContract.*;
 
 public class EnrollDialog extends AppCompatActivity {
-    String courseCode,personNumber,user_token,courseID;
-    StorageAccessor newAccess;
+    String courseCode,personNumber,userToken,courseID;
+    StorageAccessor syncAccessor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.enroll_course);
         Intent i = getIntent();
-        newAccess = StorageAccessor.getInstance();
         courseID = i.getStringExtra("courseCode");
         TextView courseCodeTV = (TextView)findViewById(R.id.tvCourseCode);
         getCourseCode();
         courseCodeTV.setText(courseCode);
-        user_token = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
+        userToken = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
+        syncAccessor = new StorageAccessor(this, personNumber,userToken){
+            @Override
+            void getData(JSONObject data) {
+
+            }
+        };
 
     }
     public void clickEnroll(View v){
         EditText passEdit  = (EditText)findViewById(R.id.edtPassword);
         String password = passEdit.getText().toString();
-        newAccess.addListener(new storageListener() {
+        StorageAccessor dataAccessor = new StorageAccessor(this, personNumber,userToken){
             @Override
-            public void getData(JSONObject data) {
+            void getData(JSONObject data) {
                 try {
                     if (data.getString("responseCode").equals("successful")){
                         linkUser();
@@ -56,11 +61,13 @@ public class EnrollDialog extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-        });
-        newAccess.enrollUser(password,courseCode);
+        };
+
+        dataAccessor.enrollUser(password,courseCode);
     }
     private void linkUser(){
-        newAccess.linkUserToCourse(courseID);
+
+        syncAccessor.linkUserToCourse(courseID);
     }
     private void getCourseCode(){
         PhoneDatabaseHelper dbHelper = new PhoneDatabaseHelper(getApplicationContext());
