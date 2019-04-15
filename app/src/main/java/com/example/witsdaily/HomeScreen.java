@@ -396,4 +396,9 @@ public class HomeScreen extends AppCompatActivity {
         }
     }
 
+    public void viewTT(View view){
+        Intent i = new Intent(HomeScreen.this, timetable.class);
+        startActivity(i);
+    }
+
 }

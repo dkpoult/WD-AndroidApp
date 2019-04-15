@@ -38,4 +38,11 @@
         android:onClick="clickAnnouncement"
         android:text="Make Announcement" />
 
+    <Button
+        android:id="@+id/showForum"
+        android:onClick = "doForum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+
 </LinearLayout>

@@ -138,7 +138,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight="12"
                 android:background="@drawable/rounder_corner"
-                android:editable="true"
                 android:gravity="center"
                 android:hint="add a comment"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.WindowTitle"

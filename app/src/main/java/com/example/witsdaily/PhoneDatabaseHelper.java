@@ -37,6 +37,25 @@ public class PhoneDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_COURSES);
         db.execSQL(SQL_CREATE_PERSON);
         db.execSQL(SQL_CREATE_PERSONCOURSE);
+        db.execSQL("CREATE TABLE VOTED(\n" +
+                "    postID INT NOT NULL UNIQUE,\n" +
+                "    TYPE TINYINT(1) NOT NULL\n" +
+                ");");
+        db.execSQL("CREATE TABLE POST(\n" +
+                "    postID INT PRIMARY KEY,\n" +
+                "    dovsID TEXT NOT NULL UNIQUE,\n" +
+                "    courseID INT NOT NULL,\n" +
+                "    title TEXT,\n" +
+                "    body TEXT NOT NULL,\n" +
+                "    isLocked TINYINT(1) NOT NULL,\n" +
+                "    isComment TINYINT(1) NOT NULL,\n" +
+                "    isAnswer TINYINT(1) NOT NULL,\n" +
+                "    postDate DATETIME NOT NULL,\n" +
+                "    parentID INT,\n" +
+                "    sender TEXT NOT NULL,\n" +
+                "    upVotes INT NOT NULL,\n" +
+                "    downVotes INT NOT NULL\n" +
+                ");");
     }
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // This database is only a cache for online data, so its upgrade policy is

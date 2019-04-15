@@ -68,4 +68,11 @@ public class CourseDisplay extends AppCompatActivity {
         }
         cursor.close();
     }
+
+
+    public void doForum(View view){
+        Intent i = new Intent(CourseDisplay.this, LectureCourseForum.class);
+        i.putExtra("forumCode", courseCodeString);
+        startActivity(i);
+    }
 }

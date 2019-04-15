@@ -12,8 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
         <activity
+            android:name=".timetable"
+            android:label="@string/title_activity_timetable"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".EnrollDialog"
-            android:theme="@style/Theme.AppCompat.Dialog"/>
+            android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
             android:name=".UnregisteredCourses"
             android:theme="@style/AppTheme.NoActionBar" />

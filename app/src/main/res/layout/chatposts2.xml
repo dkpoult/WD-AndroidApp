@@ -84,7 +84,6 @@
                         android:layout_weight="17"
                         android:clickable="true"
                         android:gravity="center"
-                        android:onClick="viewPost"
                         android:text="" />
 
                     <CheckBox
@@ -137,12 +136,13 @@
             app:autoSizeTextType="uniform" />
 
         <Button
-            android:id="@+id/doComment"
+            android:id="@+id/sendComment"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_weight="1"
             android:background="@drawable/rounded_button"
             android:text="Send"
+            android:onClick = "makeComment"
             android:textColor="#ffffff"
             android:textSize="10sp" />
 

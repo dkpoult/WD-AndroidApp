@@ -44,6 +44,13 @@
             android:onClick="clickViewAllCourses"
             android:text="View unregistered Courses" />
 
+        <Button
+            android:id="@+id/testTimeTable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TimeTable"
+            android:onClick ="viewTT"/>
+
 
     </LinearLayout>
 
