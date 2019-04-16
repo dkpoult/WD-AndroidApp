@@ -68,4 +68,9 @@ public class CourseDisplay extends AppCompatActivity {
         }
         cursor.close();
     }
+    public void clickChat(View v){
+        Intent i = new Intent(CourseDisplay.this, ChatActivity.class);
+        i.putExtra("courseCode",courseCodeString);
+        startActivity(i);
+    }
 }

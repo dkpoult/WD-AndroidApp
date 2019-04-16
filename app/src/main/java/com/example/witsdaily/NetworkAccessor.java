@@ -1,5 +1,6 @@
 package com.example.witsdaily;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.widget.Toast;
 
@@ -19,11 +20,13 @@ import java.util.List;
 public abstract class NetworkAccessor {
     private RequestQueue requestQueue;
     private String personNumber;
+    private Context context;
     private String userToken;
     abstract void getResponse(JSONObject data);
 
-    public NetworkAccessor(Context context,String pPersonNumber,String pUserToken){
-        requestQueue = Volley.newRequestQueue(context.getApplicationContext());
+    public NetworkAccessor(Context pContext,String pPersonNumber,String pUserToken){
+        context = pContext;
+        requestQueue = Volley.newRequestQueue(pContext.getApplicationContext());
         userToken = pUserToken;
         personNumber = pPersonNumber;
 
@@ -31,12 +34,17 @@ public abstract class NetworkAccessor {
 
     private void makeRequest(JSONObject params, final String APIUrl, final String errorMessage){ // the bread and butter of all requests
         // check errors for params through specific requests
-
+        final ProgressDialog progressBar = new ProgressDialog(context);
+        progressBar.setMessage("Loading");
+        progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressBar.setIndeterminate(true);
+        progressBar.show();
         final JsonObjectRequest request = new JsonObjectRequest(APIUrl, params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){
                         System.out.println("successfull "+APIUrl); // possible return, make function instead
+                        progressBar.dismiss();
                         getResponse(response); // get for outer class
                     }
                 },

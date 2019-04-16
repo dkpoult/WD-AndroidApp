@@ -232,7 +232,7 @@ public class HomeScreen extends AppCompatActivity {
 
             }
         }
-        //addAvailableCourses(); // just to refresh the ui
+        addAvailableCourses(); // just to refresh the ui
     }
 
 
