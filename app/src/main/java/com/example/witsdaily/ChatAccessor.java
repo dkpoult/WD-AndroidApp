@@ -12,6 +12,9 @@ import com.neovisionaries.ws.client.WebSocketAdapter;
 import com.neovisionaries.ws.client.WebSocketFactory;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONStringer;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,6 +31,7 @@ import io.reactivex.schedulers.Schedulers;
 import ua.naiksoftware.stomp.Stomp;
 import ua.naiksoftware.stomp.StompClient;
 import ua.naiksoftware.stomp.dto.LifecycleEvent;
+import ua.naiksoftware.stomp.dto.StompCommand;
 import ua.naiksoftware.stomp.dto.StompHeader;
 import ua.naiksoftware.stomp.dto.StompMessage;
 
@@ -37,15 +41,14 @@ public abstract class ChatAccessor {
     private StompClient mStompClient;
     private CompositeDisposable compositeDisposable;
     String personNumber, userToken, courseCode;
-    public static final String ANDROID_EMULATOR_LOCALHOST = "10.0.2.2";
-    public static final String SERVER_PORT = "8080";
-    String TAG = "websocket connection";
+
+    String TAG = "Websocket connection";
     private Disposable mRestPingDisposable;
     public ChatAccessor(String pPersonNumber, String pUserToken, String pCourseCode) {
         personNumber = pPersonNumber;
         userToken = pUserToken;
         courseCode = pCourseCode;
-        mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "https://wd.dimensionalapps.com/chatsocket");
+        mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "wss://wd.dimensionalapps.com/chatsocket/websocket");
 
         resetSubscriptions();
     }
@@ -70,7 +73,6 @@ public abstract class ChatAccessor {
         headers.add(new StompHeader("personNumber", personNumber));
         headers.add(new StompHeader("userToken", userToken));
         mStompClient.withClientHeartbeat(1000).withServerHeartbeat(1000);
-
         resetSubscriptions();
 
         Disposable dispLifecycle = mStompClient.lifecycle()
@@ -97,34 +99,53 @@ public abstract class ChatAccessor {
                 });
 
         compositeDisposable.add(dispLifecycle);
-
-        // Receive greetings
-        Disposable dispTopic = mStompClient.topic("/topic/"+courseCode)
+        headers.add(new StompHeader("personNumber", personNumber));
+        headers.add(new StompHeader("userToken", userToken));
+        //receiving messages
+        Disposable dispTopic = mStompClient.topic("/topic/"+courseCode,headers)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(topicMessage -> {
+                    onMessage(topicMessage);
                     Log.d(TAG, "Received " + topicMessage.getPayload());
                 }, throwable -> {
                     Log.e(TAG, "Error on subscribe topic", throwable);
                 });
 
+
         compositeDisposable.add(dispTopic);
 
         mStompClient.connect(headers);
-        if (!mStompClient.isConnected())
-            return false;
+
         return true;
     }
 
+
     private void sendEchoViaStomp(String message) {
-//        if (!mStompClient.isConnected()) return;
-        compositeDisposable.add(mStompClient.send("/topic/"+courseCode, message)
-                .compose(applySchedulers())
-                .subscribe(() -> {
-                    Log.d(TAG, "STOMP echo send successfully");
-                }, throwable -> {
-                    Log.e(TAG, "Error send STOMP echo", throwable);
-                }));
+
+        JSONObject messageObject = new JSONObject();
+        List<StompHeader> headers = new ArrayList<>();
+        headers.add(new StompHeader("personNumber", personNumber));
+        headers.add(new StompHeader("userToken", userToken));
+        headers.add(new StompHeader(StompHeader.DESTINATION,"/chat/"+courseCode+"/sendMessage"));
+
+
+        try {
+            messageObject.put("content",message);
+            messageObject.put("messageType","CHAT");
+            StompMessage stompMessage = new StompMessage(StompCommand.SEND,headers,messageObject.toString());
+            compositeDisposable.add(mStompClient.send(stompMessage)
+                    .compose(applySchedulers())
+                    .subscribe(() -> {
+                        Log.d(TAG, "STOMP echo send successfully");
+                    }, throwable -> {
+                        Log.e(TAG, "Error send STOMP echo", throwable);
+                    }));
+            //mStompClient.send(stompMessage).subscribe();
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 

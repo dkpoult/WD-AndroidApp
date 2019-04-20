@@ -43,7 +43,7 @@ public class ChatActivity extends AppCompatActivity {
         newChatAccesor = new ChatAccessor(personNumber,userToken,courseCode) {
             @Override
             void onMessage(StompMessage topicMessage) {
-                System.out.println(topicMessage.getPayload());
+                addSingleMessage(topicMessage.getPayload(),getCurrentTime(),false);
             }
         };
         connected  = newChatAccesor.establishConnection();
@@ -88,12 +88,18 @@ public class ChatActivity extends AppCompatActivity {
         addSingleMessage(message,getCurrentTime(),true);
         if (connected){
             newChatAccesor.sendMessage(message);
-           // newChatAccesor.disconnect();
         }
         edtMessage.setText("");
     }
     public String getCurrentTime() {
         String currentTime = Calendar.getInstance().getTime().toString();
         return currentTime;
+    }
+    @Override
+    public void onBackPressed() {
+        newChatAccesor.onDestroy();
+        this.finish();
+        return;
+
     }
 }
