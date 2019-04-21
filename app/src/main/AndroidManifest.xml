@@ -13,7 +13,7 @@
         android:supportsRtl="true">
         <activity
             android:name=".ChatActivity"
-            android:windowSoftInputMode= "stateAlwaysVisible"
+            android:windowSoftInputMode="adjustResize"
         android:theme="@style/AppTheme.NoActionBar"
             />
 

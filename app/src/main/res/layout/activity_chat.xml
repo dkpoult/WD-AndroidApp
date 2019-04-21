@@ -37,14 +37,14 @@
 
         <EditText
             android:id="@+id/edtMessage"
-            android:layout_width="0dp"
+            android:layout_width="253dp"
             android:layout_height="50dp"
-            android:padding="5dp"
             android:layout_weight="0.9"
             android:background="@drawable/rounder_corner"
             android:ems="10"
             android:hint="Type a message"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:padding="5dp" />
 
         <Button
             android:id="@+id/btnSendMessage"

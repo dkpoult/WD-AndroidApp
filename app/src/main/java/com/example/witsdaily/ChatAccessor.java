@@ -72,7 +72,7 @@ public abstract class ChatAccessor {
         List<StompHeader> headers = new ArrayList<>();
         headers.add(new StompHeader("personNumber", personNumber));
         headers.add(new StompHeader("userToken", userToken));
-        mStompClient.withClientHeartbeat(1000).withServerHeartbeat(1000);
+     //   mStompClient.withClientHeartbeat(1000).withServerHeartbeat(1000);
         resetSubscriptions();
 
         Disposable dispLifecycle = mStompClient.lifecycle()
@@ -99,8 +99,7 @@ public abstract class ChatAccessor {
                 });
 
         compositeDisposable.add(dispLifecycle);
-        headers.add(new StompHeader("personNumber", personNumber));
-        headers.add(new StompHeader("userToken", userToken));
+
         //receiving messages
         Disposable dispTopic = mStompClient.topic("/topic/"+courseCode,headers)
                 .subscribeOn(Schedulers.io())
@@ -133,6 +132,8 @@ public abstract class ChatAccessor {
         try {
             messageObject.put("content",message);
             messageObject.put("messageType","CHAT");
+            messageObject.put("userToken",userToken);
+            messageObject.put("personNumber",personNumber);
             StompMessage stompMessage = new StompMessage(StompCommand.SEND,headers,messageObject.toString());
             compositeDisposable.add(mStompClient.send(stompMessage)
                     .compose(applySchedulers())

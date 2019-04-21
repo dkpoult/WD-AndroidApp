@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.sql.Date;
@@ -43,7 +44,15 @@ public class ChatActivity extends AppCompatActivity {
         newChatAccesor = new ChatAccessor(personNumber,userToken,courseCode) {
             @Override
             void onMessage(StompMessage topicMessage) {
-                addSingleMessage(topicMessage.getPayload(),getCurrentTime(),false);
+                try {
+                    JSONObject jsonMessage = new JSONObject(topicMessage.getPayload());
+                    if (!jsonMessage.getString("personNumber").equals(personNumber))
+                        addSingleMessage(jsonMessage.getString("content"),getCurrentTime(),false);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
             }
         };
         connected  = newChatAccesor.establishConnection();
@@ -92,8 +101,9 @@ public class ChatActivity extends AppCompatActivity {
         edtMessage.setText("");
     }
     public String getCurrentTime() {
-        String currentTime = Calendar.getInstance().getTime().toString();
-        return currentTime;
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        return sdf.format(cal.getTime()) ;
     }
     @Override
     public void onBackPressed() {
