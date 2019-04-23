@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/validate_token", params,
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/auth/validate_token", params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){
@@ -143,7 +143,7 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/login", params,
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/auth/login", params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){

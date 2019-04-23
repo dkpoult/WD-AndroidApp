@@ -73,7 +73,7 @@ public abstract class NetworkAccessor {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        makeRequest(params,"https://wd.dimensionalapps.com/set_fcm_token","FCM Token");
+        makeRequest(params,"https://wd.dimensionalapps.com/push/set_fcm_token","FCM Token");
     }
 
     public void firebaseAutenticate(){
@@ -85,7 +85,7 @@ public abstract class NetworkAccessor {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        makeRequest(params,"https://wd.dimensionalapps.com/notification_token","firebase authenticate error");
+        makeRequest(params,"https://wd.dimensionalapps.com/push/notification_token","firebase authenticate error");
     }
 
     public void loginRequest(String password){
@@ -96,7 +96,7 @@ public abstract class NetworkAccessor {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        makeRequest(params,"https://wd.dimensionalapps.com/login","Login failed");
+        makeRequest(params,"https://wd.dimensionalapps.com/auth/login","Login failed");
 
     }
     public void getEnrolledCourses(){
@@ -108,7 +108,7 @@ public abstract class NetworkAccessor {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        makeRequest(params,"https://wd.dimensionalapps.com/get_courses","Get enrolled failed");
+        makeRequest(params,"https://wd.dimensionalapps.com/course/get_courses","Get enrolled failed");
     }
     public void getUnenrolledCourses(){
         JSONObject params = new JSONObject();
@@ -119,7 +119,7 @@ public abstract class NetworkAccessor {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        makeRequest(params,"https://wd.dimensionalapps.com/get_available_courses",
+        makeRequest(params,"https://wd.dimensionalapps.com/course/get_available_courses",
                 "Get Unenrolled failed");
     }
     public void enrollUser(String password,String courseCode){
@@ -132,6 +132,6 @@ public abstract class NetworkAccessor {
         }catch (JSONException e){
             e.printStackTrace();
         }
-        makeRequest(params,"https://wd.dimensionalapps.com/enrol_in_course","Error enroll");
+        makeRequest(params,"https://wd.dimensionalapps.com/course/enrol_in_course","Error enroll");
     }
 }
