@@ -99,6 +99,16 @@ public abstract class NetworkAccessor {
         makeRequest(params,"https://wd.dimensionalapps.com/auth/login","Login failed");
 
     }
+    public void registerUser(String personIDValue,String passwordValue){
+        JSONObject params = new JSONObject();
+        try {
+            params.put("personNumber", personIDValue);
+            params.put("password", passwordValue);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        makeRequest(params,"https://wd.dimensionalapps.com/auth/register","Register user failed");
+    }
     public void getEnrolledCourses(){
         JSONObject params = new JSONObject();
         try {

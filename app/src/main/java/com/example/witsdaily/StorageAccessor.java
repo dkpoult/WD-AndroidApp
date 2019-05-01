@@ -51,7 +51,15 @@ public abstract class StorageAccessor{ // singleton class
         };
         networkAccessor.updateServerFCMToken(fcmToken);
     }
-
+    public void registerUser(String personIDNumber,String personPassword){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext, personNumber,userToken){
+            @Override
+            void getResponse(JSONObject data) {
+                getData(data);
+            }
+        };
+        networkAccessor.registerUser(personIDNumber,personPassword);
+    }
     public void getEnrolledCourses()
     {
         NetworkAccessor networkAccessor = new NetworkAccessor(appContext, personNumber,userToken){
