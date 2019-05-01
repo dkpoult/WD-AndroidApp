@@ -37,7 +37,7 @@ public class UserRegistration extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/register", params,
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/auth/register", params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){

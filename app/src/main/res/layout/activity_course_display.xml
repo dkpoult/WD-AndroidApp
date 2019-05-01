@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".CourseDisplay">
+    tools:context=".CourseDisplay"
+    android:background="@drawable/rounder_corner">
 
     <TextView
         android:id="@+id/tvCourseName"
@@ -15,7 +16,9 @@
         android:layout_height="wrap_content"
         android:text="Introduction to algorithms and programming"
         android:textSize="50dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:background="@drawable/rounder_corner"
+        android:paddingLeft="10dp"/>
 
     <TextView
         android:id="@+id/tvCourseCode"
@@ -36,13 +39,39 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="clickAnnouncement"
-        android:text="Make Announcement" />
+        android:text="Make Announcement"
+        android:background="@drawable/rounded_button"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/colorWhite"/>
 
     <Button
         android:id="@+id/showForum"
         android:onClick = "doForum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="Button"
+        android:background="@drawable/rounded_button"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/colorWhite"/>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="editSessions"
+        android:text="View Sessions"
+        android:background="@drawable/rounded_button"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/colorWhite"/>
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="EditCourse"
+        android:onClick = "editCourse"
+        android:background="@drawable/rounded_button"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/colorWhite"/>
 
 </LinearLayout>

@@ -78,7 +78,7 @@ public class CourseRegistration extends AppCompatActivity {
             tvState.setVisibility(View.INVISIBLE);
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/create_course", params,
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/course/create_course", params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){

@@ -55,7 +55,7 @@ public class addPost extends Activity {
             t.printStackTrace();
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/make_post", params,
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/forum/make_post", params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){

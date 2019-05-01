@@ -50,7 +50,7 @@ public class EnrollDialog extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/enrol_in_course", params,
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/course/enrol_in_course", params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){

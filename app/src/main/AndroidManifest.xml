@@ -12,9 +12,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
         <activity
+            android:name=".editCourse"
+            android:theme="@style/AppTheme.NoActionBar" ></activity>
+        <activity
+            android:name=".addSession"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".viewSession"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".editSessions"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".timetable"
-            android:label="@string/title_activity_timetable"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".EnrollDialog"
             android:theme="@style/Theme.AppCompat.Dialog" />
@@ -36,6 +47,7 @@
         <activity
             android:name=".LoginActivity"
             android:label="activity_login"
+            android:noHistory = "true"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -49,6 +61,10 @@
         <activity
             android:name=".HomeScreen"
             android:label="@string/title_activity_home_screen"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".LectureCourseForum"
+            android:label="@string/title_activity_lecture_course_forum"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service android:name=".MyFirebaseMessagingService">

@@ -341,7 +341,7 @@ public class addComments extends AppCompatActivity implements View.OnClickListen
             e.printStackTrace();
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/get_post", params,
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/forum/get_post", params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){
@@ -486,7 +486,7 @@ public class addComments extends AppCompatActivity implements View.OnClickListen
             e.printStackTrace();
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/get_post", params,
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/forum/get_post", params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){
@@ -791,7 +791,7 @@ boolean canLock = false;
             e.printStackTrace();
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/set_locked", params,
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/forum/set_locked", params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){
@@ -949,7 +949,7 @@ boolean canLock = false;
             e.printStackTrace();
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/make_vote", params,
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/forum/make_vote", params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){
@@ -1057,7 +1057,7 @@ boolean canLock = false;
             e.printStackTrace();
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/make_comment", params,
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/forum/make_comment", params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){

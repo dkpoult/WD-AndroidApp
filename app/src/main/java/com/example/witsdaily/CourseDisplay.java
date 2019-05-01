@@ -75,4 +75,15 @@ public class CourseDisplay extends AppCompatActivity {
         i.putExtra("forumCode", courseCodeString);
         startActivity(i);
     }
+
+    public void editSessions(View v){
+        Intent i = new Intent(CourseDisplay.this, editSessions.class);
+        i.putExtra("forumCode", courseCodeString);
+        startActivity(i);
+    }
+    public void editCourse(View v){
+        Intent i = new Intent(CourseDisplay.this, editCourse.class);
+        i.putExtra("forumCode", courseCodeString);
+        startActivity(i);
+    }
 }

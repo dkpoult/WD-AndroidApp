@@ -54,7 +54,7 @@ public class courseLink extends AppCompatActivity {
             tvState.setVisibility(View.INVISIBLE);
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/link_course", params,
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/course/link_course", params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){

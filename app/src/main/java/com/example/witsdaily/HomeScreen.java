@@ -57,14 +57,7 @@ public class HomeScreen extends AppCompatActivity {
         user_token = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
       //  getApplicationContext().deleteDatabase("PhoneDatabase.db");
         addUserToDB();
         FirebaseApp.initializeApp(getApplicationContext());
@@ -92,7 +85,7 @@ public class HomeScreen extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/set_fcm_token", params,
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/push/set_fcm_token", params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){
@@ -155,7 +148,7 @@ public class HomeScreen extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/notification_token", params,
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/push/notification_token", params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){
@@ -221,7 +214,7 @@ public class HomeScreen extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/sync_courses", params,
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/course/sync_courses", params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){
@@ -357,7 +350,7 @@ public class HomeScreen extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/get_courses", params,
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/course/get_courses", params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){
