@@ -10,6 +10,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -143,5 +144,30 @@ public abstract class NetworkAccessor {
             e.printStackTrace();
         }
         makeRequest(params,"https://wd.dimensionalapps.com/course/enrol_in_course","Error enroll");
+    }
+    public void getSurvey(String courseCode){
+        JSONObject params = new JSONObject();
+        try{
+            params.put("personNumber", personNumber);
+            params.put("userToken",userToken);
+            params.put("courseCode",courseCode);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        makeRequest(params,"https://wd.dimensionalapps.com/survey/get_survey","Error survey");
+    }
+    public void makeSurvey(String courseCode, String title, JSONArray options){
+        JSONObject params = new JSONObject();
+        try{ //personNumber, userToken, title, options, courseCode
+            params.put("personNumber", personNumber);
+            params.put("title", title);
+            params.put("options", options);
+            params.put("userToken",userToken);
+            params.put("courseCode",courseCode);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        makeRequest(params,"https://wd.dimensionalapps.com/survey/make_survey","Error survey creation");
     }
 }

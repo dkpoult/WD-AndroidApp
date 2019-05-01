@@ -45,4 +45,11 @@
         android:onClick="clickChat"
         android:text="Course Chat" />
 
+    <Button
+        android:id="@+id/btnCreateSurvey"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="clickSurvey"
+        android:text="Create Survey" />
+
 </LinearLayout>

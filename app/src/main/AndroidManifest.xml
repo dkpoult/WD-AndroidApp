@@ -11,11 +11,15 @@
         android:minSdkVersion="8"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
+        <activity android:name=".SurveyCreator"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SurveyDialog"
+            android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
             android:name=".ChatActivity"
-            android:windowSoftInputMode="adjustResize"
-        android:theme="@style/AppTheme.NoActionBar"
-            />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
 
         <service
             android:name=".MyFirebaseMessagingService"

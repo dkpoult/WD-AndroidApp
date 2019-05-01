@@ -2,14 +2,9 @@ package com.example.witsdaily;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.support.design.widget.TabLayout;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.example.witsdaily.PhoneDatabaseContract.*;
 
@@ -142,6 +137,25 @@ public abstract class StorageAccessor{ // singleton class
             }
         };
         networkAccessor.firebaseAutenticate();
+    }
+
+    public void getSurvey(String courseCode){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext, personNumber,userToken) {
+            @Override
+            void getResponse(JSONObject data) {
+                getData(data);
+            }
+        };
+        networkAccessor.getSurvey(courseCode);
+    }
+    public void makeSurvey(String courseCode,String title,JSONArray options){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
+            @Override
+            void getResponse(JSONObject data) {
+                getData(data);
+            }
+        };
+        networkAccessor.makeSurvey(courseCode,title,options);
     }
     /* template
     NetworkAccessor networkAccessor = new NetworkAccessor(appContext, personNumber,userToken){

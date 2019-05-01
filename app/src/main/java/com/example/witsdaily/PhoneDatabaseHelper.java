@@ -3,7 +3,6 @@ package com.example.witsdaily;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.design.widget.TabLayout;
 
 import com.example.witsdaily.PhoneDatabaseContract.*;
 

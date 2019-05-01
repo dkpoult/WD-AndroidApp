@@ -29,6 +29,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
         System.out.println("From: " + remoteMessage.getFrom());
 
+
+
         if (remoteMessage.getNotification() != null) {
             String channelID = "";
             System.out.println( "Message Notification Body: " + remoteMessage.getNotification().getBody());
@@ -46,6 +48,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             manager.notify(0, builder.build());
 
         }
+        else{
+            if (remoteMessage.getData().containsValue("survey")){
+                String courseCode = "";
+                Intent i = new Intent(this,SurveyDialog.class);// hope this works
+                i.putExtra("courseCode",courseCode);
+                startActivity(i);
+            }
+        }
+
 
     }
 }

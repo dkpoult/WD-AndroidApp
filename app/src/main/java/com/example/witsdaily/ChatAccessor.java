@@ -166,7 +166,7 @@ public abstract class ChatAccessor {
         compositeDisposable = new CompositeDisposable();
     }
 
-    protected void onDestroy() {
+    public void onDestroy() {
         mStompClient.disconnect();
 
         if (mRestPingDisposable != null) mRestPingDisposable.dispose();

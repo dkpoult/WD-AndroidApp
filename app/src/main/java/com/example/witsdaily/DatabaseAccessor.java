@@ -4,10 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.provider.ContactsContract;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

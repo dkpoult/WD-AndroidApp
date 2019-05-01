@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context=".SurveyCreator">
+
+    <TextView
+        android:id="@+id/tvCourseCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:text="CourseCode" />
+
+    <EditText
+        android:id="@+id/edtTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Survey Title"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:text="Survey Type:" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <RadioButton
+            android:id="@+id/tbMC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Multiple Choice" />
+
+        <RadioButton
+            android:id="@+id/tbText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Text" />
+
+        <RadioButton
+            android:id="@+id/rbNumeric"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Numeric" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_marginTop="5dp"
+        android:text="Options" />
+
+    <LinearLayout
+        android:id="@+id/llOptions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical">
+
+        <RadioGroup
+            android:id="@+id/rgOptions"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <EditText
+            android:id="@+id/edtOption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Insert Option"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/btnAddOption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="clickAddOption"
+            android:text="Add option" />
+
+        <Button
+            android:id="@+id/btnRemoveSelected"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="clickRemoveOption"
+            android:text="Remove Selected" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnSendSurvey"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:onClick="clickSendSurvey"
+        android:text="Send Survey" />
+</LinearLayout>
