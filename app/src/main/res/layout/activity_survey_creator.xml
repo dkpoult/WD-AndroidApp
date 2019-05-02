@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SurveyCreator">
+    <LinearLayout
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
     android:padding="20dp"
-    tools:context=".SurveyCreator">
+    >
 
     <TextView
         android:id="@+id/tvCourseCode"
@@ -34,19 +38,21 @@
         android:text="Survey Type:" />
 
     <RadioGroup
+        android:id="@+id/rgSurveyType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp">
 
         <RadioButton
-            android:id="@+id/tbMC"
+            android:id="@+id/rbMC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:checked="true"
             android:text="Multiple Choice" />
 
         <RadioButton
-            android:id="@+id/tbText"
+            android:id="@+id/rbText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -58,23 +64,23 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Numeric" />
+
     </RadioGroup>
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:layout_marginTop="5dp"
-        android:text="Options" />
-
     <LinearLayout
-        android:id="@+id/llOptions"
+        android:id="@+id/llMCQ"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
         android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Options"
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/rgOptions"
@@ -111,4 +117,6 @@
         android:layout_marginTop="30dp"
         android:onClick="clickSendSurvey"
         android:text="Send Survey" />
+
 </LinearLayout>
+</ScrollView>

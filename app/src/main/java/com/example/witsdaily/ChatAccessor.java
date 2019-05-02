@@ -72,7 +72,7 @@ public abstract class ChatAccessor {
         List<StompHeader> headers = new ArrayList<>();
         headers.add(new StompHeader("personNumber", personNumber));
         headers.add(new StompHeader("userToken", userToken));
-     //   mStompClient.withClientHeartbeat(1000).withServerHeartbeat(1000);
+        //mStompClient.withClientHeartbeat(1000).withServerHeartbeat(1000);
         resetSubscriptions();
 
         Disposable dispLifecycle = mStompClient.lifecycle()

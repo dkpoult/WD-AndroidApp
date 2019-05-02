@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -17,6 +19,7 @@ import org.json.JSONObject;
 
 public class SurveyCreator extends AppCompatActivity {
     String courseCode,userToken,personNumber;
+    RadioGroup rgOptions;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,12 +30,42 @@ public class SurveyCreator extends AppCompatActivity {
         courseCode = i.getStringExtra("courseCode");
         Button btnRemoveOption = (Button)findViewById(R.id.btnRemoveSelected);
         Button sendSurvey = (Button)findViewById(R.id.btnSendSurvey);
+        TextView tvCourseCode = (TextView)findViewById(R.id.tvCourseCode);
+        tvCourseCode.setText(courseCode);
         btnRemoveOption.setEnabled(false);
         sendSurvey.setEnabled(false);
+        rgOptions = (RadioGroup)findViewById(R.id.rgSurveyType);
+        rgOptions.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId)
+            {
+                LinearLayout mcqLayout = (LinearLayout)findViewById(R.id.llMCQ);
+                int id = rgOptions.getCheckedRadioButtonId();
+                mcqLayout.setVisibility(View.GONE);
+                switch (id){
+                    case R.id.rbMC: setMultipleChoice();break; // then its mcq
+                    case R.id.rbText: setTextType();break; // text
+                    case R.id.rbNumeric: setNumericType();break; // numeric
+                }
+            }
+        });
+
     }
 
+    private void setMultipleChoice(){
+        LinearLayout mcqLayout = (LinearLayout)findViewById(R.id.llMCQ);
+        mcqLayout.setVisibility(View.VISIBLE);
+    }
+    private void setTextType(){
+      //  LinearLayout mcqLayout = (LinearLayout)findViewById(R.id.llMCQ);
+      //  mcqLayout.setVisibility(View.VISIBLE);
+    }
+    private void setNumericType(){
+        //LinearLayout mcqLayout = (LinearLayout)findViewById(R.id.llMCQ);
+       // mcqLayout.setVisibility(View.VISIBLE);
+    }
     public void clickRemoveOption(View v){ // will be enabled if there are options
-        RadioGroup rgOptions = (RadioGroup)findViewById(R.id.rgOptions);
         int id = rgOptions.getCheckedRadioButtonId();
 
         rgOptions.removeView(rgOptions.findViewById(id));

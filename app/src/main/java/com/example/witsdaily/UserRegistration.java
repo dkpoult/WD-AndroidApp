@@ -13,7 +13,6 @@ import org.json.JSONObject;
 public class UserRegistration extends AppCompatActivity {
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +26,7 @@ public class UserRegistration extends AppCompatActivity {
 
         // When the user signs in this will execute
 
-        StorageAccessor dataAccessor = new StorageAccessor(getApplicationContext(),"",""){
+        StorageAccessor dataAccessor = new StorageAccessor(this,"",""){
             @Override
             void getData(JSONObject data) {
                 try {
