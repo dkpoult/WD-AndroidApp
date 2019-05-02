@@ -22,6 +22,7 @@
         android:textSize="25sp"
         android:textStyle="bold" />
 
+
     <EditText
         android:id="@+id/edtTextValue"
         android:layout_width="match_parent"
@@ -50,6 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </ScrollView>
+
 
     <Button
         android:id="@+id/btnSubmit"

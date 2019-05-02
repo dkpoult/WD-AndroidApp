@@ -2,6 +2,7 @@ package com.example.witsdaily.Survey;
 
 import android.content.Context;
 import android.content.Intent;
+
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import org.w3c.dom.Text;
 
 public class SurveyAnswer extends AppCompatActivity {
     String courseCode,userToken,personNumber,surveyType;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,8 +53,10 @@ public class SurveyAnswer extends AppCompatActivity {
                         TextView tvTitle = (TextView)findViewById(R.id.tvSurveyTitle);
                         String title = survey.getString("title");
                         tvTitle.setText(title);
+
                         surveyType = survey.getString("responseType");
                         switch (surveyType){
+
                             case "MC": multipleChoice(survey);break;
                             case "TEXT" : textType(survey);break;
                             case "NUMERIC" : numericalType(survey); break;
@@ -66,6 +70,7 @@ public class SurveyAnswer extends AppCompatActivity {
         dataAccessor.getSurvey(courseCode);
     }
     private void multipleChoice(JSONObject survey){
+
         RadioGroup rgOptions = findViewById(R.id.rgSurveyOptions);
         rgOptions.setVisibility(View.VISIBLE);
         try {
@@ -122,5 +127,6 @@ public class SurveyAnswer extends AppCompatActivity {
         RadioGroup rgOptions = findViewById(R.id.rgSurveyOptions);
         RadioButton selected = rgOptions.findViewById(rgOptions.getCheckedRadioButtonId());
         return rgOptions.indexOfChild(selected);
+
     }
 }
