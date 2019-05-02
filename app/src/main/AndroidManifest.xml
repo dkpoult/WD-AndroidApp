@@ -7,25 +7,33 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="Wits Daily"
         android:minSdkVersion="8"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
         <activity
-            android:name=".editCourse"
-            android:theme="@style/AppTheme.NoActionBar" ></activity>
+            android:name=".Survey.SurveyAnswer"
+            android:theme="@style/Theme.AppCompat.Dialog"
+            />
         <activity
-            android:name=".addSession"
+            android:name=".Survey.SurveyCreator"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".viewSession"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".Survey.SurveyViewer"
+            android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
-            android:name=".editSessions"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".timetable"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".ChatActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
+
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".EnrollDialog"
             android:theme="@style/Theme.AppCompat.Dialog" />
@@ -47,7 +55,6 @@
         <activity
             android:name=".LoginActivity"
             android:label="activity_login"
-            android:noHistory = "true"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -62,16 +69,13 @@
             android:name=".HomeScreen"
             android:label="@string/title_activity_home_screen"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".LectureCourseForum"
-            android:label="@string/title_activity_lecture_course_forum"
-            android:theme="@style/AppTheme.NoActionBar" />
 
-        <service android:name=".MyFirebaseMessagingService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
+        <meta-data
+            android:name="firebase_messaging_auto_init_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="false" />
     </application>
 
 </manifest>

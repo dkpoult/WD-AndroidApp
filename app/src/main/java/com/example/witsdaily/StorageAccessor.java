@@ -2,14 +2,9 @@ package com.example.witsdaily;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.support.design.widget.TabLayout;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.example.witsdaily.PhoneDatabaseContract.*;
 
@@ -28,7 +23,7 @@ public abstract class StorageAccessor{ // singleton class
         databaseAccessor = new DatabaseAccessor(context);
     }
 
-    abstract void getData(JSONObject data);
+    public abstract void getData(JSONObject data);
 
 
     public void login(String password)
@@ -51,7 +46,15 @@ public abstract class StorageAccessor{ // singleton class
         };
         networkAccessor.updateServerFCMToken(fcmToken);
     }
-
+    public void registerUser(String personIDNumber,String personPassword){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext, personNumber,userToken){
+            @Override
+            void getResponse(JSONObject data) {
+                getData(data);
+            }
+        };
+        networkAccessor.registerUser(personIDNumber,personPassword);
+    }
     public void getEnrolledCourses()
     {
         NetworkAccessor networkAccessor = new NetworkAccessor(appContext, personNumber,userToken){
@@ -81,9 +84,9 @@ public abstract class StorageAccessor{ // singleton class
     }
 
     public JSONArray getLocalCourses(){
-        return databaseAccessor.getLocalCourses(personNumber);
+       return databaseAccessor.getLocalCourses(personNumber);
     }
-    //
+//
     public JSONArray getUCourses(){
 
         String sql = "Select * From " +TableCourse.TABLE_NAME
@@ -92,7 +95,7 @@ public abstract class StorageAccessor{ // singleton class
                 +" From "
                 +TableCourse.TABLE_NAME
                 +" Join "+ TablePersonCourse.TABLE_NAME+" on " +TableCourse.COLUMN_NAME_ID +" = "
-                +TablePersonCourse.COLUMN_NAME_COURSEID+" where "+TablePersonCourse.COLUMN_NAME_PERSONNUMBER
+        +TablePersonCourse.COLUMN_NAME_COURSEID+" where "+TablePersonCourse.COLUMN_NAME_PERSONNUMBER
                 +" = \""+personNumber+"\")";
         JSONArray values = null;
         try {
@@ -135,13 +138,60 @@ public abstract class StorageAccessor{ // singleton class
         };
         networkAccessor.firebaseAutenticate();
     }
-    /* template
-    NetworkAccessor networkAccessor = new NetworkAccessor(appContext, personNumber,userToken){
+
+    public void getSurvey(String courseCode){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext, personNumber,userToken) {
             @Override
             void getResponse(JSONObject data) {
-                getData(data); // get data for the outer class
+                getData(data);
             }
         };
-        networkAccessor.api();
-    * */
+        networkAccessor.getSurvey(courseCode);
+    }
+    public void makeSurvey(String courseCode,String title,JSONArray options,String surveyType){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
+            @Override
+            void getResponse(JSONObject data) {
+                getData(data);
+            }
+        };
+        networkAccessor.makeSurvey(courseCode,title,options,surveyType);
+    }
+    public void setSurveyAnswer(String courseCode, String answer){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
+            @Override
+            void getResponse(JSONObject data) {
+                getData(data);
+            }
+        };
+        networkAccessor.setSurveyAnswer(courseCode,answer);
+    }
+
+    public void closeSurvey(String courseCode){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken){
+            @Override
+            void getResponse(JSONObject data) {
+                getData(data);
+            }
+        };
+        networkAccessor.closeSurvey(courseCode);
+    }
+    public void getSurveyResults(String courseCode){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken){
+            @Override
+            void getResponse(JSONObject data) {
+                getData(data);
+            }
+        };
+        networkAccessor.getSurveyResults(courseCode);
+    }
+    public void sendAnswer(String answer, String courseCode){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
+            @Override
+            void getResponse(JSONObject data) {
+                getData(data);
+            }
+        };
+        networkAccessor.sendAnswer(answer,courseCode);
+    }
 }

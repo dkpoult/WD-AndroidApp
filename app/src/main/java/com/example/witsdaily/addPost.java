@@ -5,10 +5,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,7 +53,7 @@ public class addPost extends Activity {
             t.printStackTrace();
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/forum/make_post", params,
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/make_post", params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){

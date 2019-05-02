@@ -22,12 +22,14 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         user_token = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
 
         if(user_token != null && personNumber != null){
             doValidate(user_token, personNumber);
         }
+
 
     }
 
@@ -92,36 +94,32 @@ public class LoginActivity extends AppCompatActivity {
                 break;
             }
             case "failed_no_perm": {
-                String s = "Login failed: No permission";
+                String s = "Login failed: You do not have the required permissions";
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
 
                 break;
             }
-            case "failed_invalid_params": {
+            case "failed_invalid_token": {
                 String s = "Login failed: Please enter a valid username and password";
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
 
                 break;
             }
-            case "failed_missing_params": {
+            case "failed_missing_param": {
                 System.out.println(output);
                 String s = "Login failed: Please enter a username and password";
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
 
                 break;
             }
-            case "failed_missing_perms": {
-                String s = "Login failed: Missing perms";
+            case "failed_unknown": {
+                String s = "Login failed: Please try again";
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
 
                 break;
             }
-            case "failed_unknown":{
-                String s = "Login failed: unknown";
-                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-            }
             default: {
-                String s = "Login failed";
+                String s = "Login failed: Check your connection";
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                 break;
             }
@@ -136,53 +134,6 @@ public class LoginActivity extends AppCompatActivity {
         pWord = findViewById(R.id.password);
         final String password = pWord.getText().toString();
         personNumber = sNum.getText().toString();
-
-        /*final StringRequest request = new StringRequest(Request.Method.POST, "https://wd.dimensionalapps.com/login",
-                new Response.Listener<String>(){
-                    @Override
-                    public void onResponse(String response){
-                        try {
-                            doOutput(response);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        String s = error.getLocalizedMessage();
-                        System.out.println(s);
-                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-                    }
-                })
-        {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-
-                headers.put("Content-Type", "application/json");
-
-                return headers;
-            }
-
-            @Override
-            public byte[] getBody() throws AuthFailureError {
-                JSONObject params = new JSONObject();
-                try {
-                    params.put("personNumber", sNumber);
-                    params.put("password", password);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                System.out.println(params.toString());
-
-                return params.toString().getBytes();
-            }
-        };*/
-
 
         JSONObject params = new JSONObject();
         try {

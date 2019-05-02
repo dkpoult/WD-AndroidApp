@@ -1,0 +1,10 @@
+# pack-refs with: peeled fully-peeled sorted 
+3aef592b930b67a229f9810be24f6e69905258b0 refs/remotes/origin/LoginRegister
+ce5121d4817e73134bafb2a39ea1486111eca8f5 refs/remotes/origin/coursedisplaying
+2afe71115de6eea50565fe74a23ad539e970c6d2 refs/remotes/origin/courseregistration
+f0e6e8bc4d9bb1b714260b7e31dd5ff38953ec3b refs/remotes/origin/dev
+e5db67082b500c9e95dbbd51d70165be53195284 refs/remotes/origin/master
+63dc728f2108e1de54135cacb01589e1d83d2553 refs/remotes/origin/notifications
+ee51d511089fd5f1af70672371cc31c75418feca refs/remotes/origin/questionforum
+e5db67082b500c9e95dbbd51d70165be53195284 refs/tags/0.2.1
+138bb14a82ac84af5695ac8b7572f46a0e2e6cee refs/tags/v0.1

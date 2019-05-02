@@ -35,7 +35,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="45"
             android:ems="10"
-            android:padding = "10dp"
             android:background="@drawable/rounder_corner"
             android:inputType="textMultiLine"
             android:maxHeight="140dp"

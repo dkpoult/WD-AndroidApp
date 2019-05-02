@@ -7,14 +7,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class UserRegistration extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,52 +26,26 @@ public class UserRegistration extends AppCompatActivity {
 
         // When the user signs in this will execute
 
-        JSONObject params = new JSONObject();
-        try {
-            params.put("personNumber", personIDValue);
-            params.put("password", passwordValue);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/auth/register", params,
-                new Response.Listener<JSONObject>(){
-                    @Override
-                    public void onResponse(JSONObject response){
-                        try {
-                            System.out.println(response.toString());
-                            doOutput(response.toString());
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        String s = error.getLocalizedMessage();
-                        System.out.println(s);
-                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-                    }
-                })
-        {
+        StorageAccessor dataAccessor = new StorageAccessor(this,"",""){
+            @Override
+            public void getData(JSONObject data) {
+                try {
+                    doOutput(data);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
         };
-
-        VolleyRequestManager.getManagerInstance(this.getApplicationContext()).addRequestToQueue(request);
-
-
-
-
+        dataAccessor.registerUser(personIDValue,passwordValue);
     }
 
-    private void doOutput(String response) throws JSONException {
-        JSONObject jsonObject = new JSONObject(response);
-        String output = jsonObject.getString("responseCode");
+    private void doOutput(JSONObject response) throws JSONException {
+
+        String output = response.getString("responseCode");
 //        type = Character.toString();
         switch (output) {
             case "successful":
-                String user_token = jsonObject.getString("userToken");
+                String user_token = response.getString("userToken");
                 Intent i = new Intent(UserRegistration.this, HomeScreen.class);
                 i.putExtra("user_token", user_token);
                 startActivity(i);

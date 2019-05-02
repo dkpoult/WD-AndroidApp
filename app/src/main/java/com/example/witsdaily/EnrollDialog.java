@@ -8,14 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,7 +17,8 @@ import org.json.JSONObject;
 import static com.example.witsdaily.PhoneDatabaseContract.*;
 
 public class EnrollDialog extends AppCompatActivity {
-    String courseCode,personNumber,user_token,courseID;
+    String courseCode,personNumber,userToken,courseID;
+    StorageAccessor syncAccessor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,48 +28,41 @@ public class EnrollDialog extends AppCompatActivity {
         TextView courseCodeTV = (TextView)findViewById(R.id.tvCourseCode);
         getCourseCode();
         courseCodeTV.setText(courseCode);
-        user_token = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
+        userToken = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
+        syncAccessor = new StorageAccessor(this, personNumber,userToken){
+            @Override
+            public void getData(JSONObject data) {
+
+            }
+        };
 
     }
     public void clickEnroll(View v){
         EditText passEdit  = (EditText)findViewById(R.id.edtPassword);
         String password = passEdit.getText().toString();
-        JSONObject params = new JSONObject();
-        try {
-            params.put("personNumber", personNumber);
-            params.put("password", password);
-            params.put("userToken",user_token);
-            params.put("courseCode",courseCode);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/course/enrol_in_course", params,
-                new Response.Listener<JSONObject>(){
-                    @Override
-                    public void onResponse(JSONObject response){
-                        try {
-                            Toast.makeText(getApplicationContext(),response.getString("responseCode") , Toast.LENGTH_LONG).show();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+        StorageAccessor dataAccessor = new StorageAccessor(this, personNumber,userToken){
+            @Override
+            public void getData(JSONObject data) {
+                try {
+                    if (data.getString("responseCode").equals("successful")){
+                        linkUser();
 
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        String s = error.getLocalizedMessage();
-                        System.out.println(s);
-                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-                    }
-                })
-        {
+
+                    Toast.makeText(EnrollDialog.this, data.getString("responseCode"),
+                            Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
         };
 
-        VolleyRequestManager.getManagerInstance(this.getApplicationContext()).addRequestToQueue(request);
+        dataAccessor.enrollUser(password,courseCode);
+    }
+    private void linkUser(){
 
+        syncAccessor.linkUserToCourse(courseID);
     }
     private void getCourseCode(){
         PhoneDatabaseHelper dbHelper = new PhoneDatabaseHelper(getApplicationContext());

@@ -10,12 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -78,7 +75,7 @@ public class CourseRegistration extends AppCompatActivity {
             tvState.setVisibility(View.INVISIBLE);
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/course/create_course", params,
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/create_course", params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){

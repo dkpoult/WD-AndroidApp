@@ -9,9 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Pair;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,12 +23,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.KeyStoreException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
-import java.util.zip.Inflater;
 
 public class addComments extends AppCompatActivity implements View.OnClickListener {
     CheckBox cb;
@@ -48,13 +44,12 @@ public class addComments extends AppCompatActivity implements View.OnClickListen
     ImageButton up;
     ImageButton down;
     ArrayList<Pair<String, String>> voted = new ArrayList<>();
-    View l;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent = getIntent();
         postID = intent.getStringExtra("postID");
-        System.out.println(forumCode);
+        System.out.println(postID);
         isAdmin = intent.getStringExtra("isAdmin");
         forumCode = intent.getStringExtra("forumCode");
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
@@ -62,7 +57,7 @@ public class addComments extends AppCompatActivity implements View.OnClickListen
         testPosts = new HashMap<>();
         super.onCreate(savedInstanceState);
         myDB = new DatabaseHelper(this, "PhoneDatabase");
-        try (Cursor c = myDB.doQuery("SELECT (dovsID) FROM POST WHERE postID =" + postID + ";")) {
+        try(Cursor c = myDB.doQuery("SELECT (dovsID) FROM POST WHERE postID =" + postID + ";")){
             c.moveToNext();
             dovsID = c.getString(c.getColumnIndex("dovsID"));
             System.out.println(dovsID);
@@ -77,8 +72,8 @@ public class addComments extends AppCompatActivity implements View.OnClickListen
         TextView edit;
         ImageButton button1;
         ImageButton button2;
-        try (Cursor c = myDB.doQuery("SELECT * FROM VOTED WHERE postID =" + postID + ";")) {
-            while (c.moveToNext()) {
+        try(Cursor c = myDB.doQuery("SELECT * FROM VOTED WHERE postID =" + postID + ";")){
+            while(c.moveToNext()){
                 voted.add(new Pair<>(c.getString(c.getColumnIndex("postID")), c.getString(c.getColumnIndex("TYPE"))));
             }
         }
@@ -149,37 +144,32 @@ public class addComments extends AppCompatActivity implements View.OnClickListen
             }
         }
 
-        for (Pair x : voted) {
-            if (testPosts.containsKey(x.first)) {
+        for(Pair x: voted){
+            if(testPosts.containsKey(x.first)) {
                 Objects.requireNonNull(testPosts.get(x.first)).isVoted = true;
                 Objects.requireNonNull(testPosts.get(x.first)).voteType = Integer.parseInt((String) x.second);
             }
         }
-        for (String i : testPosts.keySet()) {
-            System.out.println("test");
-            System.out.println(i + " " + testPosts.get(i).getTitle());
+        for(String i: testPosts.keySet()){
+            System.out.println(i + " "+testPosts.get(i).getTitle());
         }
-        if (testPosts.get(postID).isVoted) {
-            if (testPosts.get(postID).voteType == 1) {
+        if(testPosts.get(postID).isVoted){
+            if(testPosts.get(postID).voteType == 1) {
                 up = findViewById(R.id.upvote);
                 up.setClickable(false);
                 up.setBackground(getResources().getDrawable(R.drawable.green_background));
-            } else if (testPosts.get(postID).voteType == 0) {
+            }else if(testPosts.get(postID).voteType == 0) {
                 down = findViewById(R.id.downvote);
                 down.setClickable(false);
                 down.setBackground(getResources().getDrawable(R.drawable.red_background));
             }
         }
-        if (testPosts.get(postID).isLocked) {
+        if(testPosts.get(postID).isLocked){
             testPosts.get(postID).lock(this);
         }
         button1 = findViewById(R.id.upvote);
         button2 = findViewById(R.id.downvote);
         LinearLayout mainLayout = findViewById(R.id.commentView);
-        Button b = findViewById(R.id.sendComment);
-        b.setTag("send");
-        b.setId(Integer.parseInt(testPosts.get(postID).getPostID()));
-
         titleBody = findViewById(R.id.title);
         titleBody.setId(Integer.parseInt(Objects.requireNonNull(testPosts.get(postID)).getPostID()));
         titleBody.setTag(testPosts.get(postID).getPostID());
@@ -214,23 +204,20 @@ public class addComments extends AppCompatActivity implements View.OnClickListen
             button1.setClickable(false);
             button2.setClickable(false);
         }
-        edit = findViewById(R.id.addComment);
-        edit.setTag("text");
-        edit.setId(Integer.parseInt(testPosts.get(postID).getPostID()));
         if (isAdmin.equals("true")) {
             cb.setClickable(true);
-        } else {
+        }else{
             cb.setClickable(false);
         }
         for (post i : Objects.requireNonNull(testPosts.get(postID)).getComments()) {
             View inflate = getLayoutInflater().inflate(R.layout.chatposts2, mainLayout, false);
             mainLayout.addView(inflate);
-            if (i.isVoted) {
-                if (i.voteType == 1) {
+            if(i.isVoted){
+                if(i.voteType == 1) {
                     up = inflate.findViewById(R.id.upvote);
                     up.setClickable(false);
                     up.setBackground(getResources().getDrawable(R.drawable.green_background));
-                } else if (i.voteType == 0) {
+                }else if(i.voteType == 0) {
                     down = inflate.findViewById(R.id.downvote);
                     down.setClickable(false);
                     down.setBackground(getResources().getDrawable(R.drawable.red_background));
@@ -242,10 +229,6 @@ public class addComments extends AppCompatActivity implements View.OnClickListen
             }
             button1 = inflate.findViewById(R.id.upvote);
             button2 = inflate.findViewById(R.id.downvote);
-            b = inflate.findViewById(R.id.sendComment);
-            b.setTag("send");
-            b.setId(Integer.parseInt(i.getPostID()));
-
             titleBody = inflate.findViewById(R.id.title);
             titleBody.setId(Integer.parseInt(i.getPostID()));
             titleBody.setTag("title");
@@ -280,196 +263,60 @@ public class addComments extends AppCompatActivity implements View.OnClickListen
                 button1.setClickable(false);
                 button2.setClickable(false);
             }
-            edit = inflate.findViewById(R.id.addComment);
-            edit.setTag("text");
-            edit.setId(Integer.parseInt(i.getPostID()));
-            l = inflate;
-            comRequest(dovsID);
-
-        }
-    }
-
-
-    public void getComments(JSONObject r) {
-        System.out.println(r.toString());
-        String code = null;
-        String title = null;
-        String body = null;
-        String poster = null;
-        String time = null;
-        boolean locked = false;
-        String parentID = null;
-        int upscore = 0, downscore = 0, voted = 0;
-        JSONArray comments = null;
-        JSONObject answer = null;
-        try {
-            String responseCode = r.getString("responseCode");
-            if (responseCode.equals("successful")) {
-                JSONObject e = r.getJSONArray("posts").getJSONObject(0);
-                code = e.getString("code");
-                title = e.getString("title");
-                body = e.getString("body");
-                poster = e.getString("poster");
-                time = e.getString("time");
-                locked = e.getBoolean("locked");
-                upscore = e.getInt("upscore");
-                downscore = e.getInt("downscore");
-                comments = e.getJSONArray("comments");
-                voted = e.getInt("voted");
-                myDB = new DatabaseHelper(this, "PhoneDatabase");
-                SQLiteDatabase db = myDB.getDB();
-                post post = new post(postID, false, body, time, poster, forumCode);
-                if(comments.length()>0){
-                    recDrawComs(comments, l);
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void comRequest(String dovsCode){
-        JSONObject params = new JSONObject();
-        try {
-            params.put("userToken", user_token);
-            params.put("personNumber", personNumber);
-            params.put("postCode", dovsCode);
-
-            System.out.println(user_token + " : " + personNumber + " : " +  dovsID /*+ " : " + body*/);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/forum/get_post", params,
-                new Response.Listener<JSONObject>(){
-                    @Override
-                    public void onResponse(JSONObject response){
-                        getComments(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        String s = error.getLocalizedMessage();
-                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-                    }
-                })
-        {
-        };
-
-        VolleyRequestManager.getManagerInstance(this.getApplicationContext()).addRequestToQueue(request);
-    }
-
-
-    public void recDrawComs(JSONArray r, View v){
-        LinearLayout secondLayout;
-        System.out.println("recDrawing");
-
-        if(r.length() == 0){
-            return;
-        }
-        for(int i = 0; i < r.length(); i++) {
-            try {
-                JSONObject e = r.getJSONObject(i);
-                String code = e.getString("code");
-                String body = e.getString("body");
-                String poster = e.getString("poster");
-                String time = e.getString("time");
-                Boolean locked;
-                int upscore = e.getInt("upscore");
-                int downscore = e.getInt("downscore");
-                JSONArray comments = e.getJSONArray("comments");
-                int voted = e.getInt("voted");
-                myDB = new DatabaseHelper(this, "PhoneDatabase");
-                SQLiteDatabase db = myDB.getDB();
-                secondLayout = v.findViewById(R.id.commentView);
+            int numSubComs = i.getNumComments();
+            if (numSubComs > 0) {
+                LinearLayout secondLayout = inflate.findViewById(R.id.commentView);
                 View inflator2 = getLayoutInflater().inflate(R.layout.chatposts2, secondLayout, false);
-                if (voted != 0) {
-                    if (voted == 1) {
+                if(i.getComments().get(0).isVoted){
+                    if(i.getComments().get(0).voteType == 1) {
                         up = inflator2.findViewById(R.id.upvote);
                         up.setClickable(false);
                         up.setBackground(getResources().getDrawable(R.drawable.green_background));
-                    } else if (voted == -1) {
+                    }else if(i.getComments().get(0).voteType == 0) {
                         down = inflator2.findViewById(R.id.downvote);
                         down.setClickable(false);
                         down.setBackground(getResources().getDrawable(R.drawable.red_background));
                     }
                 }
-                boolean isNew = true;
-                String key = null;
-                for(String l: testPosts.keySet()){
-                     if(testPosts.get(l).DovsID.equals(dovsID)){
-                        isNew = false;
-                        key = l;
-                    }
-                }
-                post k;
-                if(isNew){
-                    k = new post(Integer.toString(testPosts.size()), false, body, time, poster, postID);
-                }else{
-                    k = new post(testPosts.get(key).getPostID(), false, body, time, poster, postID);
-                }
-                if(testPosts.get(postID).isLocked){
-                    locked = true;
-                }
                 secondLayout.addView(inflator2);
-                Button button1 = inflator2.findViewById(R.id.upvote);
-                Button button2 = inflator2.findViewById(R.id.downvote);
-                Button b = inflator2.findViewById(R.id.sendComment);
-                b.setTag("send");
-                b.setId(Integer.parseInt(k.getPostID()));
-                EditText edit = inflator2.findViewById(R.id.addComment);
-                edit.setTag("text");
-                edit.setId(Integer.parseInt(k.getPostID()));
+                button1 = inflator2.findViewById(R.id.upvote);
+                button2 = inflator2.findViewById(R.id.downvote);
                 titleBody = inflator2.findViewById(R.id.title);
-                titleBody.setId(Integer.parseInt(k.getPostID()));
+                titleBody.setId(Integer.parseInt(i.getComments().get(0).getPostID()));
                 titleBody.setTag("title");
-                titleBody.setText(Objects.requireNonNull(k.getTitle()));
+                titleBody.setText(Objects.requireNonNull(i.getComments().get(0).getTitle()));
                 titleBody = inflator2.findViewById(R.id.text);
-                titleBody.setText(Objects.requireNonNull(k.getBody()));
+                titleBody.setText(Objects.requireNonNull(i.getBody()));
                 titleBody = inflator2.findViewById(R.id.numUp);
                 titleBody.setTag("text");
                 up = inflator2.findViewById(R.id.upvote);
 //                up.setOnClickListener(this);
                 up.setTag("Up");
-                up.setId(Integer.parseInt(k.getPostID()));
+                up.setId(Integer.parseInt(i.getComments().get(0).getPostID()));
                 down = inflator2.findViewById(R.id.downvote);
 //                down.setOnClickListener(this);
                 down.setTag("Down");
-                down.setId(Integer.parseInt(k.getPostID()));
-                int var = k.getNumComments();
-                int numLikes = k.getUpvotes();
-                String text = "View " + var + " comments";
+                down.setId(Integer.parseInt(i.getComments().get(0).getPostID()));
+                var = i.getNumComments();
+                numLikes = i.getUpvotes();
+                text = "View " + var + " comments";
                 edit = inflator2.findViewById(R.id.numComments);
                 edit.setText(text);
                 edit = inflator2.findViewById(R.id.numUp);
                 edit.setText(Integer.toString(numLikes));
                 CheckBox cb3 = inflator2.findViewById(R.id.checkBox1);
-                cb3.setTag(k.getPostID());
+                cb3.setTag(i.getComments().get(0).getPostID());
                 cb3.setClickable(false);
-                if (k.isLocked) {
+                if (i.getComments().get(0).isLocked){
                     edit = inflator2.findViewById(R.id.addComment);
                     edit.setEnabled(false);
-                    k.lock(this);
+                    i.getComments().get(0).lock(this);
                     cb3.setBackground(getResources().getDrawable(R.drawable.red_background));
                     button1.setClickable(false);
                     button2.setClickable(false);
                 }
-                if(k.getNumComments()>0){
-                    recDrawComs(comments, inflator2);
-                }else{
-                    return;
-                }
-            }catch (JSONException e){
-                e.printStackTrace();
             }
-
-
-            }
-
-
-
+        }
     }
 
 
@@ -479,14 +326,15 @@ public class addComments extends AppCompatActivity implements View.OnClickListen
             params.put("userToken", user_token);
             params.put("personNumber", personNumber);
             params.put("postCode", dovsID);
-
-            System.out.println(user_token + " : " + personNumber + " : " +  dovsID /*+ " : " + body*/);
+            System.out.println(user_token);
+            System.out.println(personNumber);
+            System.out.println(dovsID);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/forum/get_post", params,
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/get_post", params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){
@@ -509,11 +357,11 @@ public class addComments extends AppCompatActivity implements View.OnClickListen
 
 
     public void sync(JSONObject r){
-        System.out.println(r.toString());
         String code = null;
         String title = null;
         String body = null;
         String poster = null;
+        String postID = null;
         String time = null;
         boolean locked = false;
         String parentID = null;
@@ -536,7 +384,7 @@ public class addComments extends AppCompatActivity implements View.OnClickListen
                 voted = e.getInt("voted");
                 myDB=new DatabaseHelper(this, "PhoneDatabase");
                 SQLiteDatabase db = myDB.getDB();
-                post post = new post(postID, false, body, time, poster, forumCode);
+                post post = new post(postID, false, body, time, poster, parentID);
                 if (e.has("answer")) {
                     answer = e.getJSONObject("answer");
                 }
@@ -576,10 +424,11 @@ public class addComments extends AppCompatActivity implements View.OnClickListen
                     testPosts.put(Integer.toString(Integer.parseInt(postID) +1), post2);
                 }
                 testPosts.put(postID, post);
-                if(comments.length() > 0) {
-                    System.out.println("syncing comments ");
-                    recSync(comments, postID);
+                System.out.println(comments.toString());
+                for(String i: testPosts.keySet()){
+                    System.out.println(i + "; " + testPosts.get(i).getTitle());
                 }
+                recSync(comments, postID);
                 for(String i : testPosts.keySet()){
                     ContentValues vals = new ContentValues();
                     vals.put("postID", i);
@@ -591,6 +440,7 @@ public class addComments extends AppCompatActivity implements View.OnClickListen
                     }else{
                         vals.put("isLocked", 0);
                     }
+                    System.out.println(i);
                     if(testPosts.get(i).isComment) {
                         vals.put("isComment", 1);
                     }else{
@@ -609,7 +459,7 @@ public class addComments extends AppCompatActivity implements View.OnClickListen
                         db.insert("VOTED",null, temp);
                     }
                     vals.put("postDate", time);
-                    vals.put("parentID", postID);
+                    vals.put("parentID", forumCode);
                     vals.put("sender", poster);
                     vals.put("upVotes", upscore);
                     vals.put("downVotes", downscore);
@@ -645,11 +495,6 @@ public class addComments extends AppCompatActivity implements View.OnClickListen
     }
 
     public void recSync(JSONArray r, String postID){
-        System.out.println("syncing comments ");
-        System.out.println(r.toString());
-        if(r == null || postID == null || r.length() <= 0){
-            return;
-        }
         myDB = new DatabaseHelper(this, "PhoneDatabase");
         SQLiteDatabase db = myDB.getDB();
         String code = null;
@@ -663,18 +508,10 @@ public class addComments extends AppCompatActivity implements View.OnClickListen
         JSONArray comments = null;
         JSONObject answer = null;
         post post = testPosts.get(postID);
-        int k=0;
-        try (Cursor c = myDB.doQuery("SELECT postID FROM POST")) {
-            while (c.moveToNext()) {
-                System.out.println(c.getString(c.getColumnIndex("postID")));
-                k++;
-            }
-        }
+        System.out.println("test");
+        System.out.println(r.toString());
+        for(int j = 2; j < 2 + r.length(); j++){
 
-        for(int j = 0; j < r.length(); j++){
-
-            boolean ifTrue = false;
-            String ifCode = "";
             try {
                 JSONObject e = r.getJSONObject(j);
                 code = e.getString("code");
@@ -685,19 +522,7 @@ public class addComments extends AppCompatActivity implements View.OnClickListen
                 downscore = e.getInt("downscore");
                 comments = e.getJSONArray("comments");
                 voted = e.getInt("voted");
-                System.out.println(code);
-                post post2 = null;
-                try (Cursor c = myDB.doQuery("SELECT postID FROM POST where dovsID = " + code + ";")) {
-                    if(c != null){
-                        while(c.moveToNext()) {
-                            ifCode = c.getString(c.getColumnIndex("postID"));
-                            post2 = new post(ifCode, false, body, time, poster, postID);
-                            ifTrue = true;
-                        }
-                    }else{
-                        post2 = new post(Integer.toString(Integer.parseInt(postID) + k + j), false, body, time, poster, postID);
-                    }
-                }
+                post post2 = new post(Integer.toString(j), false, body, time, poster, postID);
                 post2.DovsID = code;
                 if (e.has("answer")) {
                     answer = e.getJSONObject("answer");
@@ -712,14 +537,10 @@ public class addComments extends AppCompatActivity implements View.OnClickListen
                     post2.isVoted = false;
                 }
                 post2.isComment = true;
-                System.out.println("added a comment to post");
-                post.addComment(post2);
                 post2.setVotes(upscore, downscore);
-                testPosts.get(postID).addComment(post2);
-                System.out.println(testPosts.get(postID).getComments().get(0).getTitle());
-                testPosts.put(post2.getPostID(), post2);
+                testPosts.put(Integer.toString(j), post);
                 ContentValues vals = new ContentValues();
-                vals.put("postID", j+k+Integer.parseInt(postID));
+                vals.put("postID", j);
                 vals.put("courseID", forumCode);
                 vals.put("title", title);
                 vals.put("body", body);
@@ -728,11 +549,10 @@ public class addComments extends AppCompatActivity implements View.OnClickListen
                 }else{
                     vals.put("isLocked", 0);
                 }
+                System.out.println(j);
                     vals.put("isComment", 1);
-                    vals.put("isAnswer", 0);
                 vals.put("postDate", time);
-                vals.put("dovsID", code);
-                vals.put("parentID", postID);
+                vals.put("parentID", forumCode);
                 vals.put("sender", poster);
                 vals.put("upVotes", upscore);
                 vals.put("downVotes", downscore);
@@ -740,11 +560,7 @@ public class addComments extends AppCompatActivity implements View.OnClickListen
             }catch (JSONException e){
                 e.printStackTrace();
             }
-            if(comments.length() > 0) {
-                recSync(comments, Integer.toString(j + k + Integer.parseInt(postID)));
-            }else {
-                recSync(comments, ifCode);
-            }
+            recSync(comments, Integer.toString(j+1));
         }
     }
 
@@ -791,7 +607,7 @@ boolean canLock = false;
             e.printStackTrace();
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/forum/set_locked", params,
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/set_locked", params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){
@@ -949,7 +765,7 @@ boolean canLock = false;
             e.printStackTrace();
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/forum/make_vote", params,
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/make_vote", params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){
@@ -1020,62 +836,6 @@ boolean canLock = false;
             }
         }
         resp = "";
-    }
-
-    public void makeComment(View v){
-        TextView text = ((View)v.getParent()).findViewWithTag("text");
-        String body = text.getText().toString();
-        Button b = v.findViewWithTag("send");
-        String dovsID;
-        int id = b.getId();
-        try(Cursor c = myDB.doQuery("SELECT (dovsID) FROM POST WHERE postID =" + id + ";")){
-            c.moveToNext();
-            dovsID = c.getString(c.getColumnIndex("dovsID"));
-            System.out.println(dovsID);
-        }
-        doComment(dovsID, body);
-        if(resp.equals("successful")){
-            text.setText("");
-        }
-        Intent i = getIntent();
-        System.out.println(forumCode + " forumcode");
-        i.putExtra("forumCode", forumCode);
-        finish();
-        startActivity(i);
-    }
-
-    public void doComment(String code, String body){
-        JSONObject params = new JSONObject();
-        try {
-            params.put("userToken", user_token);
-            System.out.println(user_token + " : " + personNumber + " : " +  code + " : " + body);
-            params.put("personNumber", personNumber);
-            params.put("postCode", code);
-            params.put("body", body);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/forum/make_comment", params,
-                new Response.Listener<JSONObject>(){
-                    @Override
-                    public void onResponse(JSONObject response){
-                        System.out.println(response.toString());
-                        tempFunction(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        String s = error.getLocalizedMessage();
-                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-                    }
-                })
-        {
-        };
-        VolleyRequestManager.getManagerInstance(this.getApplicationContext()).addRequestToQueue(request);
-
     }
 
     @Override

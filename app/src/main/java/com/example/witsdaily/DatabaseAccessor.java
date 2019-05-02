@@ -4,10 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.provider.ContactsContract;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,12 +18,12 @@ public class DatabaseAccessor {
     public void insertValues(ContentValues values,String tableName){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        long result = db.insertOrThrow(tableName, null, values);
-        if (result <= 0) {
-            return;
-        }
-        System.out.println("Successfull insert");
-        values = new ContentValues();
+            long result = db.insertOrThrow(tableName, null, values);
+            if (result <= 0) {
+                return;
+            }
+            System.out.println("Successfull insert");
+            values = new ContentValues();
     }
 
     public JSONArray selectRecords(String sqlStatement)throws Exception{
@@ -56,7 +52,7 @@ public class DatabaseAccessor {
                     TableCourse.TABLE_NAME+" where "+ TableCourse.COLUMN_NAME_CODE+" = \""+courseCode+"\"";
             records = selectRecords(sql);
             if (records.length()>0)
-                return records.getJSONObject(0).getString(TableCourse.COLUMN_NAME_ID);
+               return records.getJSONObject(0).getString(TableCourse.COLUMN_NAME_ID);
             else
                 return "-1";
         } catch (Exception e) {
