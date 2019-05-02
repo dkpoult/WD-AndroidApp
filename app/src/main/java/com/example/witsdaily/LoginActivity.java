@@ -92,32 +92,36 @@ public class LoginActivity extends AppCompatActivity {
                 break;
             }
             case "failed_no_perm": {
-                String s = "Login failed: You do not have the required permissions";
+                String s = "Login failed: No permission";
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
 
                 break;
             }
-            case "failed_invalid_token": {
+            case "failed_invalid_params": {
                 String s = "Login failed: Please enter a valid username and password";
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
 
                 break;
             }
-            case "failed_missing_param": {
+            case "failed_missing_params": {
                 System.out.println(output);
                 String s = "Login failed: Please enter a username and password";
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
 
                 break;
             }
-            case "failed_unknown": {
-                String s = "Login failed: Please try again";
+            case "failed_missing_perms": {
+                String s = "Login failed: Missing perms";
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
 
                 break;
             }
+            case "failed_unknown":{
+                String s = "Login failed: unknown";
+                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+            }
             default: {
-                String s = "Login failed: Check your connection";
+                String s = "Login failed";
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                 break;
             }

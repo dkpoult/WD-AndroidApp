@@ -3,6 +3,7 @@ package com.example.witsdaily;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -393,5 +394,13 @@ public class HomeScreen extends AppCompatActivity {
         Intent i = new Intent(HomeScreen.this, timetable.class);
         startActivity(i);
     }
+
+    public void logOut(View v){
+        SharedPreferences.Editor settings = getSharedPreferences("com.wd", Context.MODE_PRIVATE).edit();
+        settings.clear().apply();
+        Intent i = new Intent(HomeScreen.this, LoginActivity.class);
+        startActivity(i);
+    }
+
 
 }

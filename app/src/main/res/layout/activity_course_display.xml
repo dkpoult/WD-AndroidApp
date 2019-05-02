@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/llCourseLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -10,15 +9,18 @@
     tools:context=".CourseDisplay"
     android:background="@drawable/rounder_corner">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/llCourseLayout"
+        android:orientation="vertical">
     <TextView
         android:id="@+id/tvCourseName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Introduction to algorithms and programming"
         android:textSize="50dp"
-        android:textStyle="bold"
-        android:background="@drawable/rounder_corner"
-        android:paddingLeft="10dp"/>
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/tvCourseCode"
@@ -34,15 +36,6 @@
         android:layout_height="wrap_content"
         android:text="Description - This is an introduction course for programming but since I probably dont want to see it all the time i should give the user the ability to hide it or show @string/title_activity_home_screen" />
 
-    <Button
-        android:id="@+id/btnAnnouncement"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="clickAnnouncement"
-        android:text="Make Announcement"
-        android:background="@drawable/rounded_button"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/colorWhite"/>
 
     <Button
         android:id="@+id/showForum"
@@ -74,4 +67,15 @@
         android:layout_marginTop="10dp"
         android:textColor="@color/colorWhite"/>
 
-</LinearLayout>
+    <Button
+        android:id="@+id/btnAnnouncement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="clickAnnouncement"
+        android:text="Make Announcement"
+        android:background="@drawable/rounded_button"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/colorWhite"/>
+    </LinearLayout>
+
+</ScrollView>

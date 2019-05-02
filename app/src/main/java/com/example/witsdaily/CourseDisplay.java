@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +40,50 @@ public class CourseDisplay extends AppCompatActivity {
         user_token = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
         updateFields();
+
+        NetworkAccessor NA = new NetworkAccessor(this, personNumber, user_token) {
+            @Override
+            void getResponse(JSONObject data) {
+                Button announcement = findViewById(R.id.btnAnnouncement);
+                announcement.setVisibility(View.GONE);
+                try {
+                    System.out.println(data.toString());
+                    if(data.getString("responseCode").equals("successful")){
+                        JSONArray course = data.getJSONArray("courses");
+                        JSONObject Course = course.getJSONObject(0);
+                        JSONObject pNum = Course.getJSONObject("lecturer");
+                        String pNumb = pNum.getString("personNumber");
+                        System.out.println(pNumb + " " + personNumber);
+                        if(pNumb.equals(personNumber)){
+                            announcement.setVisibility(View.VISIBLE);
+                        }
+                    }else{
+                        String s = data.getString("responseCode");
+                        switch (s) {
+                            case "failed_unknown":
+                                s = "Failed to show announcement button: ";
+                                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                                break;
+                            case "failed_invalid_params":
+                                s = "Failed to show announcement button: " + data.getString("responseCode");
+                                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                                break;
+                            case "failed_missing_params":
+                                s = "Failed to show announcement button: " + data.getString("responseCode");
+                                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                                break;
+                            case "failed_missing_perms":
+                                s = "Failed to show announcement button: " + data.getString("responseCode");
+                                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        NA.getCourse(courseCodeString);
     }
     public void clickAnnouncement(View v){
         Intent i = new Intent(CourseDisplay.this, AnnouncementSender.class);

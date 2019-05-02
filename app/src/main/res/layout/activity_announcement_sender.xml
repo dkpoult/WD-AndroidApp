@@ -29,5 +29,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="clickMakeAnnouncement"
-        android:text="Create Announcement" />
+        android:text="Create Announcement"
+        android:background="@drawable/rounded_button"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/colorWhite" />
 </LinearLayout>
