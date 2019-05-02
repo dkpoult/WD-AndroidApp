@@ -2,14 +2,12 @@ package com.example.witsdaily;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.Service;
 import android.content.Intent;
 import android.os.Build;
-import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
-import com.google.firebase.messaging.FirebaseMessaging;
+import com.example.witsdaily.Survey.SurveyAnswer;
+import com.example.witsdaily.Survey.SurveyViewer;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -44,14 +42,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 NotificationChannel channel = new NotificationChannel(channelID, "Default channel", NotificationManager.IMPORTANCE_DEFAULT);
                 manager.createNotificationChannel(channel);
+                manager.notify(0, builder.build());
             }
-            manager.notify(0, builder.build());
+
+            builder.build();
 
         }
         else{
             if (remoteMessage.getData().containsValue("survey")){
                 String courseCode = "";
-                Intent i = new Intent(this,SurveyDialog.class);// hope this works
+                Intent i = new Intent(this, SurveyAnswer.class);// hope this works
                 i.putExtra("courseCode",courseCode);
                 startActivity(i);
             }

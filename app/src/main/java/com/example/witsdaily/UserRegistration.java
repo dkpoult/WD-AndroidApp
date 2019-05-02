@@ -28,7 +28,7 @@ public class UserRegistration extends AppCompatActivity {
 
         StorageAccessor dataAccessor = new StorageAccessor(this,"",""){
             @Override
-            void getData(JSONObject data) {
+            public void getData(JSONObject data) {
                 try {
                     doOutput(data);
                 } catch (JSONException e) {

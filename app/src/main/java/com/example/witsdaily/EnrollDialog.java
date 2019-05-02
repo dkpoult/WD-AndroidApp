@@ -32,7 +32,7 @@ public class EnrollDialog extends AppCompatActivity {
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
         syncAccessor = new StorageAccessor(this, personNumber,userToken){
             @Override
-            void getData(JSONObject data) {
+            public void getData(JSONObject data) {
 
             }
         };
@@ -43,10 +43,11 @@ public class EnrollDialog extends AppCompatActivity {
         String password = passEdit.getText().toString();
         StorageAccessor dataAccessor = new StorageAccessor(this, personNumber,userToken){
             @Override
-            void getData(JSONObject data) {
+            public void getData(JSONObject data) {
                 try {
                     if (data.getString("responseCode").equals("successful")){
                         linkUser();
+
                     }
 
                     Toast.makeText(EnrollDialog.this, data.getString("responseCode"),

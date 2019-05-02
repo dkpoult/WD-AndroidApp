@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SurveyCreator">
+    tools:context=".Survey.SurveyCreator">
     <LinearLayout
     android:layout_width="match_parent"
     android:orientation="vertical"
@@ -110,13 +110,38 @@
             android:text="Remove Selected" />
     </LinearLayout>
 
-    <Button
+        <ProgressBar
+            android:id="@+id/pbInProgress"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:indeterminate="true" />
+
+        <TextView
+            android:id="@+id/tvProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:gravity="center"
+            android:text="Survey In progress" />
+
+        <Button
         android:id="@+id/btnSendSurvey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:onClick="clickSendSurvey"
         android:text="Send Survey" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btnEndSurvey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="clickEndSurvey"
+            android:enabled="false"
+            android:text="End/Get Results" />
+
+    </LinearLayout>
 </ScrollView>

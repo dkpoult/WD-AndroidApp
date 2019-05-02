@@ -11,10 +11,15 @@
         android:minSdkVersion="8"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
-        <activity android:name=".SurveyCreator"
+        <activity
+            android:name=".Survey.SurveyAnswer"
+            android:theme="@style/Theme.AppCompat.Dialog"
+            />
+        <activity
+            android:name=".Survey.SurveyCreator"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".SurveyDialog"
+            android:name=".Survey.SurveyViewer"
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
             android:name=".ChatActivity"

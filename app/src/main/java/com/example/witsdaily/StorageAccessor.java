@@ -23,7 +23,7 @@ public abstract class StorageAccessor{ // singleton class
         databaseAccessor = new DatabaseAccessor(context);
     }
 
-    abstract void getData(JSONObject data);
+    public abstract void getData(JSONObject data);
 
 
     public void login(String password)
@@ -148,22 +148,41 @@ public abstract class StorageAccessor{ // singleton class
         };
         networkAccessor.getSurvey(courseCode);
     }
-    public void makeSurvey(String courseCode,String title,JSONArray options){
+    public void makeSurvey(String courseCode,String title,JSONArray options,String surveyType){
         NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
             @Override
             void getResponse(JSONObject data) {
                 getData(data);
             }
         };
-        networkAccessor.makeSurvey(courseCode,title,options);
+        networkAccessor.makeSurvey(courseCode,title,options,surveyType);
     }
-    /* template
-    NetworkAccessor networkAccessor = new NetworkAccessor(appContext, personNumber,userToken){
+    public void setSurveyAnswer(String courseCode, String answer){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
             @Override
             void getResponse(JSONObject data) {
-                getData(data); // get data for the outer class
+                getData(data);
             }
         };
-        networkAccessor.api();
-    * */
+        networkAccessor.setSurveyAnswer(courseCode,answer);
+    }
+
+    public void closeSurvey(String courseCode){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken){
+            @Override
+            void getResponse(JSONObject data) {
+                getData(data);
+            }
+        };
+        networkAccessor.closeSurvey(courseCode);
+    }
+    public void getSurveyResults(String courseCode){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken){
+            @Override
+            void getResponse(JSONObject data) {
+                getData(data);
+            }
+        };
+        networkAccessor.getSurveyResults(courseCode);
+    }
 }

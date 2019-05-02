@@ -26,7 +26,7 @@ StorageAccessor syncAccessor;
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
         syncAccessor  = new StorageAccessor(this, personNumber,userToken){
             @Override
-            void getData(JSONObject data) {
+            public void getData(JSONObject data) {
                 System.out.println("Successful sync task complete");
             }
         };
@@ -60,11 +60,16 @@ StorageAccessor syncAccessor;
             }
         }
     }
-    public void courseClicked(View v){ // means they're already enrolled
+    public void courseClicked(View v){
         // go to that course
         Intent i = new Intent(UnregisteredCourses.this, EnrollDialog.class);
         i.putExtra("courseCode",v.getTag().toString()); // course code ?
         startActivity(i);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        addAvailableCourses();
+    }
 }

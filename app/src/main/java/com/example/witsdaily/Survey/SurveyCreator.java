@@ -1,4 +1,4 @@
-package com.example.witsdaily;
+package com.example.witsdaily.Survey;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,18 +8,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.witsdaily.R;
+import com.example.witsdaily.StorageAccessor;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class SurveyCreator extends AppCompatActivity {
-    String courseCode,userToken,personNumber;
-    RadioGroup rgOptions;
+    String courseCode,userToken,personNumber,surveyType;
+    RadioGroup rgSurveyType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,19 +38,20 @@ public class SurveyCreator extends AppCompatActivity {
         tvCourseCode.setText(courseCode);
         btnRemoveOption.setEnabled(false);
         sendSurvey.setEnabled(false);
-        rgOptions = (RadioGroup)findViewById(R.id.rgSurveyType);
-        rgOptions.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        surveyType = "MC";
+        rgSurveyType = (RadioGroup)findViewById(R.id.rgSurveyType);
+        rgSurveyType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId)
             {
                 LinearLayout mcqLayout = (LinearLayout)findViewById(R.id.llMCQ);
-                int id = rgOptions.getCheckedRadioButtonId();
+                int id = rgSurveyType.getCheckedRadioButtonId();
                 mcqLayout.setVisibility(View.GONE);
                 switch (id){
-                    case R.id.rbMC: setMultipleChoice();break; // then its mcq
-                    case R.id.rbText: setTextType();break; // text
-                    case R.id.rbNumeric: setNumericType();break; // numeric
+                    case R.id.rbMC: surveyType = "MC";setMultipleChoice();break; // then its mcq
+                    case R.id.rbText: surveyType = "TEXT";setTextType();break; // text
+                    case R.id.rbNumeric: surveyType = "NUMERIC";setNumericType();break; // numeric
                 }
             }
         });
@@ -66,6 +71,7 @@ public class SurveyCreator extends AppCompatActivity {
        // mcqLayout.setVisibility(View.VISIBLE);
     }
     public void clickRemoveOption(View v){ // will be enabled if there are options
+        RadioGroup rgOptions = findViewById(R.id.rgOptions);
         int id = rgOptions.getCheckedRadioButtonId();
 
         rgOptions.removeView(rgOptions.findViewById(id));
@@ -111,15 +117,55 @@ public class SurveyCreator extends AppCompatActivity {
         }
         StorageAccessor dataAccessor = new StorageAccessor(this,personNumber,userToken) {
             @Override
-            void getData(JSONObject data){
+            public void getData(JSONObject data){
                 try {
                     Toast.makeText(SurveyCreator.this, data.getString("responseCode"),
                             Toast.LENGTH_SHORT).show();
+                    if (data.getString("responseCode").equals("successful")){
+                        surveyInProgress();
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         };
-        dataAccessor.makeSurvey(courseCode,edtTitle.getText().toString(),options);
+        dataAccessor.makeSurvey(courseCode,edtTitle.getText().toString(),options,surveyType);
+    }
+    private void surveyInProgress(){
+        TextView tvProgress = (TextView)findViewById(R.id.tvProgress);
+        ProgressBar pbProgress = (ProgressBar)findViewById(R.id.pbInProgress);
+        tvProgress.setVisibility(View.VISIBLE);
+        pbProgress.setVisibility(View.VISIBLE);
+        Button endSurvey = (Button)findViewById(R.id.btnEndSurvey);
+        endSurvey.setEnabled(true);
+    }
+    public void clickEndSurvey(View v){
+
+        StorageAccessor dataAccessor = new StorageAccessor(this,personNumber,userToken) {
+            @Override
+            public void getData(JSONObject data){
+                try {
+                    Toast.makeText(SurveyCreator.this, data.getString("responseCode"),
+                            Toast.LENGTH_SHORT).show();
+                    if (data.getString("responseCode").equals("successful")){
+                        TextView tvProgress = (TextView)findViewById(R.id.tvProgress);
+                        ProgressBar pbProgress = (ProgressBar)findViewById(R.id.pbInProgress);
+                        tvProgress.setVisibility(View.GONE);
+                        pbProgress.setVisibility(View.GONE);
+                       //  v.setEnabled(false);
+                        displayData();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        dataAccessor.closeSurvey(courseCode);
+    }
+    private void displayData(){
+        Intent i = new Intent(SurveyCreator.this, SurveyViewer.class);
+        i.putExtra("courseCode",courseCode);
+        startActivity(i);
+
     }
 }

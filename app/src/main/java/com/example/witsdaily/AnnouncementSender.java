@@ -44,7 +44,7 @@ public class AnnouncementSender extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/make_announcement", params,
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/push/make_announcement", params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){

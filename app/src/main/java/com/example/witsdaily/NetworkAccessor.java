@@ -157,7 +157,7 @@ public abstract class NetworkAccessor {
 
         makeRequest(params,"https://wd.dimensionalapps.com/survey/get_survey","Error survey");
     }
-    public void makeSurvey(String courseCode, String title, JSONArray options){
+    public void makeSurvey(String courseCode, String title, JSONArray options,String responseType){
         JSONObject params = new JSONObject();
         try{ //personNumber, userToken, title, options, courseCode
             params.put("personNumber", personNumber);
@@ -165,9 +165,46 @@ public abstract class NetworkAccessor {
             params.put("options", options);
             params.put("userToken",userToken);
             params.put("courseCode",courseCode);
+            params.put("responseType",responseType);
         }catch (JSONException e){
             e.printStackTrace();
         }
         makeRequest(params,"https://wd.dimensionalapps.com/survey/make_survey","Error survey creation");
     }
+    public void setSurveyAnswer(String courseCode, String answer){
+        JSONObject params = new JSONObject();
+        try{ //personNumber, userToken, title, options, courseCode
+            params.put("personNumber", personNumber);
+            params.put("userToken",userToken);
+            params.put("courseCode",courseCode);
+            params.put("answer",answer);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        makeRequest(params,"https://wd.dimensionalapps.com/survey/send_answer","Error sending answer");
+    }
+    public void closeSurvey(String courseCode){
+        JSONObject params = new JSONObject();
+        try{
+            params.put("personNumber", personNumber);
+            params.put("userToken",userToken);
+            params.put("courseCode",courseCode);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        makeRequest(params,"https://wd.dimensionalapps.com/survey/close_survey","Error closing survey");
+    }
+    public void getSurveyResults(String courseCode){
+        JSONObject params = new JSONObject();
+        try{
+            params.put("personNumber", personNumber);
+            params.put("userToken",userToken);
+            params.put("courseCode",courseCode);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        makeRequest(params,"https://wd.dimensionalapps.com/survey/get_results","Error getting survey results");
+    }
 }
+/*For MC, answer should be the zero-
+based index of the selected option. For text and numeric the answer should simply be the user given answer.*/

@@ -55,7 +55,7 @@ public class HomeScreen extends AppCompatActivity {
         });
         syncAccessor  = new StorageAccessor(this, personNumber,userToken){
             @Override
-            void getData(JSONObject data) {
+            public void getData(JSONObject data) {
                 System.out.println("Successful sync task complete");
             }
         };
@@ -71,10 +71,17 @@ public class HomeScreen extends AppCompatActivity {
 
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        addAvailableCourses();
+    }
+
     private void updateServerFCMToken(String newToken){
         StorageAccessor dataAccessor = new StorageAccessor(this, personNumber,userToken){
             @Override
-            void getData(JSONObject data) {
+            public void getData(JSONObject data) {
                 System.out.println("Successful fcm change");
             }
         };
@@ -114,7 +121,7 @@ public class HomeScreen extends AppCompatActivity {
     private void firebaseAuthenticate(){
         StorageAccessor dataAccessor = new StorageAccessor(this, personNumber,userToken){
             @Override
-            void getData(JSONObject data) {
+            public void getData(JSONObject data) {
 
                 try {
                     System.out.println(data.getString("customToken"));
@@ -225,7 +232,7 @@ public class HomeScreen extends AppCompatActivity {
     private void getCourses(){
         StorageAccessor dataAccessor = new StorageAccessor(this, personNumber,userToken){
             @Override
-            void getData(JSONObject data) {
+            public void getData(JSONObject data) {
                 try {
                     processGetCourses(data,true);
                 } catch (Exception e) {
@@ -238,7 +245,7 @@ public class HomeScreen extends AppCompatActivity {
     private void getUnenrolledCourses(){
         StorageAccessor dataAccessor = new StorageAccessor(this, personNumber,userToken){
             @Override
-            void getData(JSONObject data) {
+            public void getData(JSONObject data) {
                 try {
                     processGetCourses(data,false);
                 } catch (Exception e) {
