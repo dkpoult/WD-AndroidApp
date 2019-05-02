@@ -61,14 +61,20 @@ public class SurveyCreator extends AppCompatActivity {
     private void setMultipleChoice(){
         LinearLayout mcqLayout = (LinearLayout)findViewById(R.id.llMCQ);
         mcqLayout.setVisibility(View.VISIBLE);
+        Button sendSurvey = (Button)findViewById(R.id.btnSendSurvey);
+        sendSurvey.setEnabled(false);
     }
     private void setTextType(){
       //  LinearLayout mcqLayout = (LinearLayout)findViewById(R.id.llMCQ);
       //  mcqLayout.setVisibility(View.VISIBLE);
+        Button sendSurvey = (Button)findViewById(R.id.btnSendSurvey);
+        sendSurvey.setEnabled(true);
     }
     private void setNumericType(){
         //LinearLayout mcqLayout = (LinearLayout)findViewById(R.id.llMCQ);
        // mcqLayout.setVisibility(View.VISIBLE);
+        Button sendSurvey = (Button)findViewById(R.id.btnSendSurvey);
+        sendSurvey.setEnabled(true);
     }
     public void clickRemoveOption(View v){ // will be enabled if there are options
         RadioGroup rgOptions = findViewById(R.id.rgOptions);
