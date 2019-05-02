@@ -205,6 +205,7 @@ public abstract class NetworkAccessor {
         }
         makeRequest(params,"https://wd.dimensionalapps.com/survey/get_results","Error getting survey results");
     }
+
     public void sendAnswer(String answer,String courseCode){
         JSONObject params = new JSONObject();
         try{
@@ -217,6 +218,7 @@ public abstract class NetworkAccessor {
         }
         makeRequest(params,"https://wd.dimensionalapps.com/survey/send_answer,","Error setting survey answer");
     }
+
 }
 /*For MC, answer should be the zero-
 based index of the selected option. For text and numeric the answer should simply be the user given answer.*/

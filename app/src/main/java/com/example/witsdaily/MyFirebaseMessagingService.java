@@ -42,7 +42,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 NotificationChannel channel = new NotificationChannel(channelID, "Default channel", NotificationManager.IMPORTANCE_DEFAULT);
                 manager.createNotificationChannel(channel);
+
              //   manager.notify(0, builder.build());
+
             }
 
             builder.build();
@@ -50,6 +52,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
         else{
             if (remoteMessage.getData().containsValue("survey")){
+
                 String courseCode;
                 courseCode  = remoteMessage.getData().get("body").split(" ")[0];
                 String type = remoteMessage.getData().get("body").split(" ")[1];
