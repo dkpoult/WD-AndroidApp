@@ -185,6 +185,7 @@ public abstract class StorageAccessor{ // singleton class
         };
         networkAccessor.getSurveyResults(courseCode);
     }
+
     public void sendAnswer(String answer, String courseCode){
         NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
             @Override
@@ -194,4 +195,5 @@ public abstract class StorageAccessor{ // singleton class
         };
         networkAccessor.sendAnswer(answer,courseCode);
     }
+
 }
