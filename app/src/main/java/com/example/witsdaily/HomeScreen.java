@@ -3,11 +3,11 @@ package com.example.witsdaily;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -45,14 +45,6 @@ public class HomeScreen extends AppCompatActivity {
         userToken = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         syncAccessor  = new StorageAccessor(this, personNumber,userToken){
             @Override
             public void getData(JSONObject data) {
@@ -257,6 +249,25 @@ public class HomeScreen extends AppCompatActivity {
     }
     public void clickViewAllCourses(View v){
         Intent i = new Intent(HomeScreen.this, UnregisteredCourses.class);
+        startActivity(i);
+    }    private void processRequest(JSONObject response){
+        String output = null;
+        try {
+            output = response.getString("responseCode");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void viewTT(View view){
+        Intent i = new Intent(HomeScreen.this, timetable.class);
+        startActivity(i);
+    }
+
+    public void logOut(View v){
+        SharedPreferences.Editor settings = getSharedPreferences("com.wd", Context.MODE_PRIVATE).edit();
+        settings.clear().apply();
+        Intent i = new Intent(HomeScreen.this, LoginActivity.class);
         startActivity(i);
     }
 
