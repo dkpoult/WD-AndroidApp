@@ -77,7 +77,7 @@ public class LectureCourseForum extends AppCompatActivity  {
             e.printStackTrace();
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/get_posts", params,
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/forum/get_posts", params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){
@@ -547,7 +547,7 @@ public void vote(String postCode, int vote){
         e.printStackTrace();
     }
 
-    final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/make_vote", params,
+    final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/forum/make_vote", params,
             new Response.Listener<JSONObject>(){
                 @Override
                 public void onResponse(JSONObject response){
@@ -655,7 +655,7 @@ public void vote(String postCode, int vote){
             e.printStackTrace();
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/make_comment", params,
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/forum/make_comment", params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){
