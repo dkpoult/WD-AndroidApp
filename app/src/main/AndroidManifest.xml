@@ -53,6 +53,22 @@
             android:name=".CourseRegistration"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".viewSession"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".editSessions"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".editCourse"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".addSession"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".timetable"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
             android:name=".LoginActivity"
             android:label="activity_login"
             android:theme="@style/Theme.AppCompat.NoActionBar">

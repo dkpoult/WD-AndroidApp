@@ -220,6 +220,90 @@ public abstract class NetworkAccessor {
         makeRequest(params,"https://wd.dimensionalapps.com/survey/send_answer","Error setting survey answer");
     }
 
+
+
+
+    public void getSessions(String courseCode){
+        JSONObject params = new JSONObject();
+        try{
+            params.put("personNumber", personNumber);
+            params.put("userToken", userToken);
+            params.put("courseCode", courseCode);
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
+        makeRequest(params,"https://wd.dimensionalapps.com/course/get_course","get_Session error");
+    }
+
+    public void addSession(String courseCode, String venue, String type, int Freq, String Occurence, String sType, int duration){
+        JSONObject params = new JSONObject();
+
+        try{
+            params.put("personNumber", personNumber);
+            params.put("userToken",userToken);
+            params.put("courseCode",courseCode);
+
+            JSONObject session = new JSONObject();
+
+            session.put("venue", venue);
+            session.put("repeatType", type);
+            session.put("sessionType", sType);
+            session.put("repeatGap", Freq);
+            session.put("nextDate", Occurence);
+            session.put("duration", duration);
+            params.put("session", session);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        makeRequest(params,"https://wd.dimensionalapps.com/course/add_session","add_session error");
+    }
+
+public void getCourse(String courseCode){
+        JSONObject params = new JSONObject();
+
+        try {
+            params.put("userToken", userToken);
+            params.put("personNumber", personNumber);
+            params.put("courseCode", courseCode);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        makeRequest(params,"https://wd.dimensionalapps.com/course/get_course","Get course failed");
+    }
+
+public void updateCourse(String courseCode, String couseDesc, String courseName, String newKey){
+        JSONObject params = new JSONObject();
+
+        try {
+            params.put("userToken", userToken);
+            params.put("personNumber", personNumber);
+            params.put("courseCode", courseCode);
+            params.put("courseName", courseName);
+            params.put("courseDescription", couseDesc);
+            params.put("password", newKey);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        makeRequest(params,"https://wd.dimensionalapps.com/course/update_course","Update course failed");
+    }
+
+    public void editSessions(String courseCode, JSONArray sessions){
+        JSONObject params = new JSONObject();
+
+        try {
+            params.put("userToken", userToken);
+            params.put("personNumber", personNumber);
+            params.put("courseCode", courseCode);
+            params.put("sessions", sessions);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        makeRequest(params,"https://wd.dimensionalapps.com/course/update_sessions ","Update sessions failed");
+    }
+
 }
 /*For MC, answer should be the zero-
 based index of the selected option. For text and numeric the answer should simply be the user given answer.*/

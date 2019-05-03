@@ -1,55 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/llCourseLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp"
     tools:context=".CourseDisplay">
 
-    <TextView
-        android:id="@+id/tvCourseName"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Introduction to algorithms and programming"
-        android:textSize="50dp"
-        android:textStyle="bold" />
+        android:id="@+id/llCourseLayout"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvCourseCode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="- COMS1018"
-        android:textSize="30dp" />
+        <TextView
+            android:id="@+id/tvCourseName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Introduction to algorithms and programming"
+            android:textSize="50dp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tvDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Description - This is an introduction course for programming but since I probably dont want to see it all the time i should give the user the ability to hide it or show @string/title_activity_home_screen" />
+        <TextView
+            android:id="@+id/tvCourseCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="- COMS1018"
+            android:textSize="30dp" />
 
-    <Button
-        android:id="@+id/btnAnnouncement"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="clickAnnouncement"
-        android:text="Make Announcement" />
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description - This is an introduction course for programming but since I probably dont want to see it all the time i should give the user the ability to hide it or show @string/title_activity_home_screen" />
 
-    <Button
-        android:id="@+id/btnChat"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="clickChat"
-        android:text="Course Chat" />
+        <Button
+            android:id="@+id/btnAnnouncement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="clickAnnouncement"
+            android:text="Make Announcement"
+            android:background="@drawable/rounded_button"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorWhite"/>
 
-    <Button
-        android:id="@+id/btnCreateSurvey"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="clickSurvey"
-        android:text="Create Survey" />
+        <Button
+            android:id="@+id/btnChat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="clickChat"
+            android:text="Course Chat"
+            android:background="@drawable/rounded_button"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorWhite" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btnCreateSurvey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="clickSurvey"
+            android:text="Create Survey"
+            android:background="@drawable/rounded_button"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorWhite" />
+
+        <Button
+            android:id="@+id/showForum"
+            android:onClick = "doForum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Forum"
+            android:background="@drawable/rounded_button"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorWhite" />
+
+        <Button
+            android:id="@+id/editSession"
+            android:onClick = "editSessions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit Sessions"
+            android:background="@drawable/rounded_button"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorWhite" />
+
+        <Button
+            android:id="@+id/editCourse"
+            android:onClick = "editCourse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit Course"
+            android:background="@drawable/rounded_button"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorWhite" />
+
+    </LinearLayout>
+
+</ScrollView>
