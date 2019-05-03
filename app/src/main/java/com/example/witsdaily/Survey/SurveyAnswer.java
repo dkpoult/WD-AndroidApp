@@ -102,6 +102,7 @@ public class SurveyAnswer extends AppCompatActivity {
                 try {
                     Toast.makeText(SurveyAnswer.this,data.getString("responseCode"),
                             Toast.LENGTH_SHORT).show();
+                    finish();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -121,7 +122,7 @@ public class SurveyAnswer extends AppCompatActivity {
             return;
         }
         dataAccessor.sendAnswer(answer,courseCode);
-        finish();
+
     }
     private int getMCAnswer(){
         RadioGroup rgOptions = findViewById(R.id.rgSurveyOptions);
