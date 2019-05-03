@@ -14,8 +14,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.witsdaily.LoginActivity;
 import com.example.witsdaily.R;
 import com.example.witsdaily.StorageAccessor;
+import com.example.witsdaily.UserRegistration;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -167,6 +169,10 @@ public class SurveyCreator extends AppCompatActivity {
             }
         };
         dataAccessor.closeSurvey(courseCode);
+        Intent i = new Intent(SurveyCreator.this, SurveyViewer.class);
+        i.putExtra("courseCode",courseCode);
+        startActivity(i);
+
     }
 
 }

@@ -50,7 +50,7 @@ public class SurveyViewer extends AppCompatActivity {
                         TextView tvTitle = (TextView)findViewById(R.id.tvSurveyTitle);
                         String title = survey.getString("title");
                         tvTitle.setText(title);
-//https://wd.dimensionalapps.com/survey/send_answer
+
                         switch (survey.getString("responseType")){
                             case "MC": multipleChoice(survey);break;
                             case "TEXT" : textType(survey);break;
@@ -79,7 +79,7 @@ public class SurveyViewer extends AppCompatActivity {
 
             for (int i =0;i<results.length();i++){
                 TextView oneOption = new TextView(SurveyViewer.this);
-                oneOption.setText(options.getString(i));
+                oneOption.setText(results.getString(i));
                 oneOption.setTextSize(15);
                 answerLayout.addView(oneOption);
             }
