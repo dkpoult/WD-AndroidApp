@@ -216,7 +216,7 @@ public abstract class NetworkAccessor {
         }catch (JSONException e){
             e.printStackTrace();
         }
-        makeRequest(params,"https://wd.dimensionalapps.com/survey/send_answer,","Error setting survey answer");
+        makeRequest(params,"https://wd.dimensionalapps.com/survey/send_answer","Error setting survey answer");
     }
 
 

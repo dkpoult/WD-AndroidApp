@@ -43,7 +43,7 @@ public class Session implements Comparable<Session>{
     @Override
     public int compareTo(Session session) {
         if(dayVal == session.dayVal){
-            return Math.toIntExact(this.time.getTime() - session.time.getTime());
+            return (int)(this.time.getTime() - session.time.getTime());
         }else {
             return this.dayVal - session.dayVal;
         }

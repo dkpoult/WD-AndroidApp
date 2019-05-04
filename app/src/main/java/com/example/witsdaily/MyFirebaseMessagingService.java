@@ -56,11 +56,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 String courseCode;
                 courseCode  = remoteMessage.getData().get("body").split(" ")[0];
                 String type = remoteMessage.getData().get("body").split(" ")[1];
-                if (type.equals("closed")){
+                if (type.equals("closed")){ // next sprint add this as an option
 
-                    Intent i = new Intent(this, SurveyViewer.class);// hope this works
-                    i.putExtra("courseCode",courseCode);
-                    startActivity(i);
+             //       Intent i = new Intent(this, SurveyViewer.class);// hope this works
+             //       i.putExtra("courseCode",courseCode);
+             //       startActivity(i);
                 }else{
 
                     Intent i = new Intent(this, SurveyAnswer.class);// hope this works
