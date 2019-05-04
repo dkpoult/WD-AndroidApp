@@ -171,18 +171,7 @@ public abstract class NetworkAccessor {
         }
         makeRequest(params,"https://wd.dimensionalapps.com/survey/make_survey","Error survey creation");
     }
-    public void setSurveyAnswer(String courseCode, String answer){
-        JSONObject params = new JSONObject();
-        try{ //personNumber, userToken, title, options, courseCode
-            params.put("personNumber", personNumber);
-            params.put("userToken",userToken);
-            params.put("courseCode",courseCode);
-            params.put("answer",answer);
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
-        makeRequest(params,"https://wd.dimensionalapps.com/survey/send_answer","Error sending answer");
-    }
+
     public void closeSurvey(String courseCode){
         JSONObject params = new JSONObject();
         try{
