@@ -67,5 +67,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:onClick="clickSubmit"
+        android:background="@drawable/rounded_button"
         android:text="Submit Answer" />
 </LinearLayout>

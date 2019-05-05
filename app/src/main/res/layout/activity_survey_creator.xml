@@ -100,12 +100,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="clickAddOption"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/colorWhite"
+            android:layout_marginTop="10dp"
             android:text="Add option" />
 
         <Button
             android:id="@+id/btnRemoveSelected"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/colorWhite"
+            android:layout_marginTop="10dp"
             android:onClick="clickRemoveOption"
             android:text="Remove Selected" />
     </LinearLayout>
@@ -131,8 +137,10 @@
         android:id="@+id/btnSendSurvey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:onClick="clickSendSurvey"
+        android:background="@drawable/rounded_button"
+        android:textColor="@color/colorWhite"
+        android:layout_marginTop="10dp"
         android:text="Send Survey" />
 
         <Button
@@ -141,6 +149,9 @@
             android:layout_height="wrap_content"
             android:onClick="clickEndSurvey"
             android:enabled="false"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/colorWhite"
+            android:layout_marginTop="10dp"
             android:text="End/Get Results" />
 
     </LinearLayout>

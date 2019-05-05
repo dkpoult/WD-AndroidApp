@@ -2,6 +2,7 @@ package com.example.witsdaily.Survey;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -14,10 +15,18 @@ import android.widget.Toast;
 
 import com.example.witsdaily.R;
 import com.example.witsdaily.StorageAccessor;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SurveyViewer extends AppCompatActivity {
     String courseCode,userToken,personNumber;
@@ -66,23 +75,24 @@ public class SurveyViewer extends AppCompatActivity {
     }
     private void multipleChoice(JSONObject survey){
         try {
-            LinearLayout answerLayout = (LinearLayout)findViewById(R.id.llOptions);
-            JSONArray options  = survey.getJSONArray("options");
-            RadioGroup rgOptions = findViewById(R.id.rgSurveyOptions);
-            for (int i =0;i<options.length();i++){
-                RadioButton oneOption = new RadioButton(SurveyViewer.this);
-                oneOption.setText(options.getString(i));
-                rgOptions.addView(oneOption);
+            PieChart newPie = (PieChart)findViewById(R.id.resultPie);
+            newPie.setVisibility(View.VISIBLE);
 
-            }
+            JSONArray options  = survey.getJSONArray("options");
             JSONArray results  = survey.getJSONArray("results");
 
+            List<PieEntry> pieEntries = new ArrayList<>();
             for (int i =0;i<results.length();i++){
-                TextView oneOption = new TextView(SurveyViewer.this);
-                oneOption.setText(results.getString(i));
-                oneOption.setTextSize(15);
-                answerLayout.addView(oneOption);
+                pieEntries.add(new PieEntry(results.getInt(i),options.getString(i)));
             }
+            PieDataSet pieDataSet = new PieDataSet(pieEntries,"Results for multiple choice");
+            pieDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+            PieData data = new PieData(pieDataSet);
+            newPie.setData(data);
+            newPie.setDrawHoleEnabled(true);//Theme.AppCompat.Dialog
+            newPie.setHoleColor(Color.DKGRAY);//
+            newPie.animateY(1000);
+            newPie.invalidate();
         } catch (JSONException e) {
             e.printStackTrace();
         }

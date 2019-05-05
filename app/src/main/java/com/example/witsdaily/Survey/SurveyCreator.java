@@ -62,9 +62,16 @@ public class SurveyCreator extends AppCompatActivity {
 
     private void setMultipleChoice(){
         LinearLayout mcqLayout = (LinearLayout)findViewById(R.id.llMCQ);
+        RadioGroup rgOptions = findViewById(R.id.rgOptions);
         mcqLayout.setVisibility(View.VISIBLE);
         Button sendSurvey = (Button)findViewById(R.id.btnSendSurvey);
-        sendSurvey.setEnabled(false);
+      
+        if (rgOptions.getChildCount()==0){
+            sendSurvey.setEnabled(false);
+        }
+        else{
+            sendSurvey.setEnabled(true);
+        }
     }
     private void setTextType(){
       //  LinearLayout mcqLayout = (LinearLayout)findViewById(R.id.llMCQ);
@@ -114,8 +121,10 @@ public class SurveyCreator extends AppCompatActivity {
     public void clickSendSurvey(View v){
         JSONArray options = new JSONArray();
         RadioGroup rgOptions = (RadioGroup)findViewById(R.id.rgOptions);
-        for (int i =0;i<rgOptions.getChildCount();i++){
-            options.put(((RadioButton)rgOptions.getChildAt(i)).getText().toString());
+        if (surveyType.equals("MC")){
+            for (int i =0;i<rgOptions.getChildCount();i++){
+                options.put(((RadioButton)rgOptions.getChildAt(i)).getText().toString());
+            }
         }
         EditText edtTitle = (EditText)findViewById(R.id.edtTitle);
         if (edtTitle.getText().toString().equals("")){
