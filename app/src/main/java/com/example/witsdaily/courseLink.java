@@ -10,12 +10,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,8 +40,6 @@ public class courseLink extends AppCompatActivity {
             params.put("personNumber", userID);
             params.put("userToken", userToken);
             params.put("courseId", edtCourseCode.getText().toString());
-
-            System.out.println(userID + " " + userToken + " " + edtCourseCode.getText().toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -56,7 +51,7 @@ public class courseLink extends AppCompatActivity {
             tvState.setVisibility(View.INVISIBLE);
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/link_course", params,
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com//course/link_course", params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){
@@ -97,10 +92,10 @@ public class courseLink extends AppCompatActivity {
     }
 
     private void handleResponse(String jResponse) throws JSONException {
-        System.out.println(jResponse);
         JSONObject jsonObject = new JSONObject(jResponse);
         String response = jsonObject.getString("responseCode");
         tvState.setTextColor(Color.RED); // it wont display if successful
+        System.out.println(response);
         String stateText = "";
         switch (response){
             case "successful":

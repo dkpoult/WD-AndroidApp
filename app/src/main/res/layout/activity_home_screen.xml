@@ -1,22 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".HomeScreen">
-	
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
 
     <LinearLayout
+        android:id="@+id/llHomeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -25,16 +17,60 @@
             android:id="@+id/b1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="Link"
             android:text="Link Course"
-            android:onClick="Link"/>
+            android:background="@drawable/rounded_button"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/colorWhite"/>
 
         <Button
             android:id="@+id/b2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="Create"
             android:text="Create Course"
-            android:onClick="Create"/>
+            android:background="@drawable/rounded_button"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/colorWhite"/>
+
+        <Button
+            android:id="@+id/btnViewAllCourses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="clickViewAllCourses"
+            android:text="View unregistered Courses"
+            android:background="@drawable/rounded_button"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/colorWhite"/>
+
+        <Button
+            android:id="@+id/testTimeTable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TimeTable"
+            android:onClick ="viewTT"
+            android:background="@drawable/rounded_button"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/colorWhite"/>
+
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="logout"
+            android:onClick ="logOut"
+            android:background="@drawable/rounded_button"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/colorWhite"/>
+
+        <LinearLayout
+            android:id="@+id/llCourseLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"/>
+
+
     </LinearLayout>
 
 
-</LinearLayout>
+</ScrollView>

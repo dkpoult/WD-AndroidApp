@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:weightSum="20"
+    android:padding="0dp"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:clickable="true"
+    android:layout_marginBottom="5dp"
+    android:layout_marginTop="5dp"
+    android:background="#C0C0C0"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="horizontal"
+        android:padding="20dp"
+        android:weightSum="20">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/upvote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="doUpvote"
+                android:padding="20dp"
+                app:srcCompat="@android:drawable/arrow_up_float" />
+
+            <TextView
+                android:id="@+id/numUp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat" />
+
+            <ImageButton
+                android:id="@+id/downvote"
+                android:layout_width="wrap_content"
+                android:onClick="doDownvote"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="20dp"
+                app:srcCompat="@android:drawable/arrow_down_float" />
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="18">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="20">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:weightSum="20"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="17"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:onClick="viewPost"
+                        android:text="" />
+
+                    <CheckBox
+                        android:id="@+id/checkBox1"
+                        android:checked="false"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:onClick="setLocked"
+                        android:button="@android:drawable/ic_lock_lock" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/text"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_weight="16"
+                    android:textColor="#003a5e" />
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal"
+        android:paddingLeft="20dp"
+        android:weightSum="20">
+
+        <TextView
+            android:id="@+id/numComments"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:clickable="true"
+            android:gravity="center"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.WindowTitle"
+            android:textColor="#003a5e"
+            app:autoSizeTextType="uniform" />
+
+        <EditText
+            android:id="@+id/addComment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="12"
+            android:background="@drawable/rounded_test"
+            android:gravity="center"
+            android:hint="add a comment"
+            app:autoSizeTextType="uniform" />
+
+        <Button
+            android:id="@+id/doComment"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_button"
+            android:text="Send"
+            android:textColor="#ffffff"
+            android:textSize="10sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2" />
+
+        <LinearLayout
+            android:id="@+id/commentView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="18"
+            android:orientation="vertical"></LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

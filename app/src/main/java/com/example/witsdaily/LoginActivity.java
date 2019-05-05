@@ -1,5 +1,4 @@
 package com.example.witsdaily;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,19 +18,25 @@ import org.json.JSONObject;
 public class LoginActivity extends AppCompatActivity {
     String user_token;
     String personNumber;
-    boolean canNext;
-	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        user_token = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
+        personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
+
+        if(user_token != null && personNumber != null){
+            doValidate(user_token, personNumber);
+        }
+
+
     }
-	
+
     EditText sNum, pWord;
 
     public void doValidate(String user_token, String personNumber){
         JSONObject params = new JSONObject();
-        System.out.println("Test");
         try {
             params.put("userToken", user_token);
             params.put("personNumber", personNumber);
@@ -40,11 +45,10 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/validate_token", params,
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/auth/validate_token", params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){
-                        System.out.println(response.toString());
                         doValidateMessage(response);
                     }
                 },
@@ -52,7 +56,6 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         String s = error.getLocalizedMessage();
-                        System.out.println(s);
                         Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -60,6 +63,8 @@ public class LoginActivity extends AppCompatActivity {
         };
 
         VolleyRequestManager.getManagerInstance(this.getApplicationContext()).addRequestToQueue(request);
+
+
 
 
     }
@@ -119,6 +124,8 @@ public class LoginActivity extends AppCompatActivity {
                 break;
             }
         }
+
+
     }
 
     public void doSignIn(View v) {
@@ -128,57 +135,6 @@ public class LoginActivity extends AppCompatActivity {
         final String password = pWord.getText().toString();
         personNumber = sNum.getText().toString();
 
-        /*final StringRequest request = new StringRequest(Request.Method.POST, "https://wd.dimensionalapps.com/login",
-                new Response.Listener<String>(){
-                    @Override
-                    public void onResponse(String response){
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String output = jsonObject.getString("response_code");
-                            doOutput(output);
-                            doOutput(response);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //If there's a network error.
-                        String s = error.getLocalizedMessage();
-                        System.out.println(s);
-                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-                    }
-                })
-        {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-
-                headers.put("Content-Type", "application/json");
-
-                return headers;
-            }
-
-            @Override
-            public byte[] getBody() throws AuthFailureError {
-                JSONObject params = new JSONObject();
-                try {
-                    params.put("personNumber", sNumber);
-                    params.put("password", password);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                System.out.println(params.toString());
-
-                return params.toString().getBytes();
-            }
-        };*/
-
-
         JSONObject params = new JSONObject();
         try {
             params.put("personNumber", personNumber);
@@ -187,7 +143,7 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/login", params,
+        final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/auth/login", params,
                 new Response.Listener<JSONObject>(){
                     @Override
                     public void onResponse(JSONObject response){
@@ -206,11 +162,14 @@ public class LoginActivity extends AppCompatActivity {
                         System.out.println(s);
                         Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                     }
-                });
+                })
         {
         };
 
         VolleyRequestManager.getManagerInstance(this.getApplicationContext()).addRequestToQueue(request);
+
+
+
 
     }
 
@@ -221,6 +180,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     //this handles the response from the server API
+
     private void doOutput(String response) throws JSONException {
 //        type = Character.toString();
         JSONObject jsonObject = new JSONObject(response);
@@ -237,22 +197,18 @@ public class LoginActivity extends AppCompatActivity {
 
                 break;
             case "failed_no_user": {
-                canNext = false;
                 String s = "Login failed: Please register";
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
 
                 break;
             }
             case "failed_no_perm": {
-
-                canNext = false;
                 String s = "Login failed: You do not have the required permissions";
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
 
                 break;
             }
-            case "failed_invalid_param": {
-                canNext = false;
+            case "failed_invalid_params": {
                 String s = "Login failed: Please enter a valid username and password";
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
 
@@ -265,14 +221,12 @@ public class LoginActivity extends AppCompatActivity {
                 break;
             }
             case "failed_unknown": {
-                canNext = false;
                 String s = "Login failed: Please try again";
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
 
                 break;
             }
             default: {
-                canNext = false;
                 String s = "Login failed: Check your connection";
                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                 break;

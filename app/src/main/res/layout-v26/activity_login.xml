@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -17,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="20dp">
 
         <ImageView
             android:id="@+id/imageView2"
@@ -27,7 +26,7 @@
             android:contentDescription="TODO"
             android:padding="10dp"
             app:srcCompat="@drawable/logo" />
-			
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="10dp" />
@@ -39,14 +38,17 @@
 
             <EditText
                 android:id="@+id/sNumber"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="@drawable/rounder_corner"
                 android:ems="10"
-                android:hint="@string/student_number"
+                android:hint="PersonID"
+                android:paddingLeft="20dp"
                 android:textColorHint="#A9A9A9"
                 android:textColor="#000000"
                 android:importantForAutofill="no"
+                android:inputType="textPersonName"
                 android:textSize="18sp" />
         </LinearLayout>
 
@@ -66,6 +68,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/rounder_corner"
                 android:ems="10"
+                android:paddingLeft="20dp"
                 android:hint="Password"
                 android:textColorHint="#A9A9A9"
                 android:textColor="#000000"
@@ -130,6 +133,5 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
         </LinearLayout>
-		
     </LinearLayout>
 </ScrollView>

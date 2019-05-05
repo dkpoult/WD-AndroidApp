@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Survey.SurveyCreator">
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    >
+
+    <TextView
+        android:id="@+id/tvCourseCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:text="CourseCode" />
+
+    <EditText
+        android:id="@+id/edtTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Survey Title"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:text="Survey Type:" />
+
+    <RadioGroup
+        android:id="@+id/rgSurveyType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <RadioButton
+            android:id="@+id/rbMC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="Multiple Choice" />
+
+        <RadioButton
+            android:id="@+id/rbText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Text" />
+
+        <RadioButton
+            android:id="@+id/rbNumeric"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Numeric" />
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/llMCQ"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Options"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/rgOptions"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <EditText
+            android:id="@+id/edtOption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Insert Option"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/btnAddOption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="clickAddOption"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/colorWhite"
+            android:layout_marginTop="10dp"
+            android:text="Add option" />
+
+        <Button
+            android:id="@+id/btnRemoveSelected"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/colorWhite"
+            android:layout_marginTop="10dp"
+            android:onClick="clickRemoveOption"
+            android:text="Remove Selected" />
+    </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/pbInProgress"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:indeterminate="true" />
+
+        <TextView
+            android:id="@+id/tvProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:gravity="center"
+            android:text="Survey In progress" />
+
+        <Button
+        android:id="@+id/btnSendSurvey"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="clickSendSurvey"
+        android:background="@drawable/rounded_button"
+        android:textColor="@color/colorWhite"
+        android:layout_marginTop="10dp"
+        android:text="Send Survey" />
+
+        <Button
+            android:id="@+id/btnEndSurvey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="clickEndSurvey"
+            android:enabled="false"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/colorWhite"
+            android:layout_marginTop="10dp"
+            android:text="End/Get Results" />
+
+    </LinearLayout>
+</ScrollView>
