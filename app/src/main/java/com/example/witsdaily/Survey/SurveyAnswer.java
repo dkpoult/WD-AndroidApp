@@ -121,7 +121,7 @@ public class SurveyAnswer extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
             return;
         }
-        dataAccessor.sendAnswer(answer,courseCode);
+        dataAccessor.sendAnswer(answer,courseCode,surveyType);
 
     }
     private int getMCAnswer(){
