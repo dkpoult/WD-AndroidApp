@@ -14,8 +14,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.witsdaily.LoginActivity;
 import com.example.witsdaily.R;
 import com.example.witsdaily.StorageAccessor;
+import com.example.witsdaily.UserRegistration;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,14 +63,20 @@ public class SurveyCreator extends AppCompatActivity {
     private void setMultipleChoice(){
         LinearLayout mcqLayout = (LinearLayout)findViewById(R.id.llMCQ);
         mcqLayout.setVisibility(View.VISIBLE);
+        Button sendSurvey = (Button)findViewById(R.id.btnSendSurvey);
+        sendSurvey.setEnabled(false);
     }
     private void setTextType(){
       //  LinearLayout mcqLayout = (LinearLayout)findViewById(R.id.llMCQ);
       //  mcqLayout.setVisibility(View.VISIBLE);
+        Button sendSurvey = (Button)findViewById(R.id.btnSendSurvey);
+        sendSurvey.setEnabled(true);
     }
     private void setNumericType(){
         //LinearLayout mcqLayout = (LinearLayout)findViewById(R.id.llMCQ);
        // mcqLayout.setVisibility(View.VISIBLE);
+        Button sendSurvey = (Button)findViewById(R.id.btnSendSurvey);
+        sendSurvey.setEnabled(true);
     }
     public void clickRemoveOption(View v){ // will be enabled if there are options
         RadioGroup rgOptions = findViewById(R.id.rgOptions);
@@ -161,6 +169,10 @@ public class SurveyCreator extends AppCompatActivity {
             }
         };
         dataAccessor.closeSurvey(courseCode);
+        Intent i = new Intent(SurveyCreator.this, SurveyViewer.class);
+        i.putExtra("courseCode",courseCode);
+        startActivity(i);
+
     }
 
 }

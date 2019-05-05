@@ -186,14 +186,14 @@ public abstract class StorageAccessor{ // singleton class
         networkAccessor.getSurveyResults(courseCode);
     }
 
-    public void sendAnswer(String answer, String courseCode){
+    public void sendAnswer(String answer, String courseCode,String surveyType){
         NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
             @Override
             void getResponse(JSONObject data) {
                 getData(data);
             }
         };
-        networkAccessor.sendAnswer(answer,courseCode);
+        networkAccessor.sendAnswer(answer,courseCode,surveyType);
     }
 
 }

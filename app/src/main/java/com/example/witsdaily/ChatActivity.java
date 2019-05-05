@@ -70,6 +70,14 @@ public class ChatActivity extends AppCompatActivity {
     }
     private void addSingleMessage(String message, String timeStamp,boolean outgoing) {
         View newMessage = getLayoutInflater().inflate(R.layout.chat_message, null);
+        newMessage.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                view.setVisibility(View.GONE);
+
+                return false;
+            }
+        });
         TextView messageContents = newMessage.findViewById(R.id.tvMessageContents);
         TextView time = newMessage.findViewById(R.id.tvTime);
         if (outgoing)

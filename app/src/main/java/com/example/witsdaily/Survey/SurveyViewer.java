@@ -7,6 +7,8 @@ import android.os.Bundle;
 
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,8 +66,23 @@ public class SurveyViewer extends AppCompatActivity {
     }
     private void multipleChoice(JSONObject survey){
         try {
-
+            LinearLayout answerLayout = (LinearLayout)findViewById(R.id.llOptions);
             JSONArray options  = survey.getJSONArray("options");
+            RadioGroup rgOptions = findViewById(R.id.rgSurveyOptions);
+            for (int i =0;i<options.length();i++){
+                RadioButton oneOption = new RadioButton(SurveyViewer.this);
+                oneOption.setText(options.getString(i));
+                rgOptions.addView(oneOption);
+
+            }
+            JSONArray results  = survey.getJSONArray("results");
+
+            for (int i =0;i<results.length();i++){
+                TextView oneOption = new TextView(SurveyViewer.this);
+                oneOption.setText(results.getString(i));
+                oneOption.setTextSize(15);
+                answerLayout.addView(oneOption);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -74,7 +91,7 @@ public class SurveyViewer extends AppCompatActivity {
     private void textType(JSONObject survey){
         try {
             LinearLayout answerLayout = (LinearLayout)findViewById(R.id.llOptions);
-            JSONArray options  = survey.getJSONArray("options");
+            JSONArray options  = survey.getJSONArray("results");
             for (int i =0;i<options.length();i++){
                 TextView oneOption = new TextView(SurveyViewer.this);
                 oneOption.setText(options.getString(i));
@@ -89,7 +106,7 @@ public class SurveyViewer extends AppCompatActivity {
     private void numericalType(JSONObject survey){
         try {
             LinearLayout answerLayout = (LinearLayout)findViewById(R.id.llOptions);
-            JSONArray options  = survey.getJSONArray("options");
+            JSONArray options  = survey.getJSONArray("results");
             for (int i =0;i<options.length();i++){
                 TextView oneOption = new TextView(SurveyViewer.this);
                 oneOption.setText(String.valueOf(options.getDouble(i)));

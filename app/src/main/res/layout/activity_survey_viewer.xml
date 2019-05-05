@@ -26,21 +26,23 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="170dp">
+        android:layout_height="170dp"
+        android:background="@drawable/clear_background">
 
         <LinearLayout
             android:id="@+id/llOptions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"></LinearLayout>
+            android:orientation="vertical">
+
+            <RadioGroup
+                android:id="@+id/rgSurveyOptions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </RadioGroup>
+        </LinearLayout>
     </ScrollView>
-
-    <RadioGroup
-        android:id="@+id/rgSurveyOptions"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-    </RadioGroup>
 
     <Button
         android:id="@+id/btnClickOkay"
