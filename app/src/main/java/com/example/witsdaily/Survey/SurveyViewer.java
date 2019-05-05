@@ -75,7 +75,6 @@ public class SurveyViewer extends AppCompatActivity {
     }
     private void multipleChoice(JSONObject survey){
         try {
-
             PieChart newPie = (PieChart)findViewById(R.id.resultPie);
             newPie.setVisibility(View.VISIBLE);
 
@@ -94,7 +93,6 @@ public class SurveyViewer extends AppCompatActivity {
             newPie.setHoleColor(Color.DKGRAY);//
             newPie.animateY(1000);
             newPie.invalidate();
-
         } catch (JSONException e) {
             e.printStackTrace();
         }

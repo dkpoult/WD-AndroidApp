@@ -65,6 +65,7 @@ public class SurveyCreator extends AppCompatActivity {
         RadioGroup rgOptions = findViewById(R.id.rgOptions);
         mcqLayout.setVisibility(View.VISIBLE);
         Button sendSurvey = (Button)findViewById(R.id.btnSendSurvey);
+      
         if (rgOptions.getChildCount()==0){
             sendSurvey.setEnabled(false);
         }
