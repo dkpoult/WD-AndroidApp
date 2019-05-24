@@ -186,5 +186,31 @@ public abstract class StorageAccessor{ // singleton class
         };
         networkAccessor.sendAnswer(answer,courseCode,surveyType);
     }
-
+    public void getPosts(String forumCode){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
+            @Override
+            void getResponse(JSONObject data) {
+                getData(data);
+            }
+        };
+        networkAccessor.getPosts(forumCode);
+    }
+    public void getPost(String postCode){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
+            @Override
+            void getResponse(JSONObject data) {
+                getData(data);
+            }
+        };
+        networkAccessor.getPost(postCode);
+    }
+    public void makePost(String forumCode,String title, String body){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
+            @Override
+            void getResponse(JSONObject data) {
+                getData(data);
+            }
+        };
+        networkAccessor.makePost(forumCode,title,body);
+    }
 }

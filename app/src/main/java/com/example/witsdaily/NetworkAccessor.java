@@ -292,6 +292,48 @@ public void updateCourse(String courseCode, String couseDesc, String courseName,
 
         makeRequest(params,"https://wd.dimensionalapps.com/course/update_sessions ","Update sessions failed");
     }
+    public void getPosts(String forumCode){
+        JSONObject params = new JSONObject();
+
+        try {
+            params.put("userToken", userToken);
+            params.put("personNumber", personNumber);
+            params.put("forumCode", forumCode);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        makeRequest(params,"https://wd.dimensionalapps.com/forum/get_posts ","Get Posts failed");
+    }
+
+    public void getPost(String postCode){ // detailed ones
+        JSONObject params = new JSONObject();
+
+        try {
+            params.put("userToken", userToken);
+            params.put("personNumber", personNumber);
+            params.put("postCode", postCode);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        makeRequest(params,"https://wd.dimensionalapps.com/forum/get_post ","Get Post failed");
+    }
+    public void makePost(String forumCode,String title, String body){ // detailed ones
+        JSONObject params = new JSONObject();
+
+        try {
+            params.put("userToken", userToken);
+            params.put("personNumber", personNumber);
+            params.put("forumCode", forumCode);
+            params.put("title",title);
+            params.put("body",body);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        makeRequest(params,"https://wd.dimensionalapps.com/forum/get_post ","Get Post failed");
+    }
 
 }
 /*For MC, answer should be the zero-

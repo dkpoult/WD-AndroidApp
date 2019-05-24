@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Title"
+        android:hint="@string/announcement_title"
         android:inputType="textPersonName" />
 
     <EditText
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Body"
+        android:hint="@string/announcement_body"
         android:inputType="textPersonName" />
 
     <Button
@@ -29,5 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="clickMakeAnnouncement"
-        android:text="Create Announcement" />
+        android:textColor="@color/colorWhite"
+        android:background="@drawable/rounded_button"
+        android:text="@string/create_announcement" />
 </LinearLayout>

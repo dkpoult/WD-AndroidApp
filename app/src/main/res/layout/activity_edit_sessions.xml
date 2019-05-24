@@ -23,7 +23,7 @@
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Update"
+            android:text="@string/update_session"
             android:textColor="@color/colorWhite"
             android:onClick="updateSessions"
             android:background="@drawable/rounded_button"
@@ -33,7 +33,7 @@
             android:id="@+id/addSession"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add Session"
+            android:text="@string/add_session"
             android:onClick = "addSession"
             android:textColor="@color/colorWhite"
             android:background="@drawable/rounded_button"/>

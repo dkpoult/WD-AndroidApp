@@ -2,10 +2,43 @@
     <string name="app_name">WitsDaily</string>
     <string name="login">login</string>
     <string name="register">register</string>
-    <string name="password">password</string>
+    <string name="password">Password</string>
     <string name="title_activity_home_screen">HomeScreen</string>
     <string name="personid">PersonID</string>
     <string name="title_activity_course_forum">courseForum</string>
+    <string name="view_unregistered_courses">view unregistered courses</string>
+    <string name="timetable">timetable</string>
+    <string name="logout">logout</string>
+    <string name="course_name">Course Name</string>
+    <string name="create_course">Create Course</string>
+    <string name="course_description">Course Description</string>
+    <string name="course_code">Course Code</string>
+    <string name="link_course">Link Course</string>
+    <string name="create_post">Create Post</string>
+    <string name="post_title">Post Title</string>
+    <string name="post_body">Post Body</string>
+    <string name="add_session">Add Session</string>
+    <string name="announcement_title">Announcement Title</string>
+    <string name="announcement_body">Announcement Body</string>
+    <string name="create_announcement">Create Announcement</string>
+    <string name="send">Send</string>
+    <string name="type_message">Type a message</string>
+    <string name="make_announcement">Make Announcement</string>
+    <string name="course_chat">Course Chat</string>
+    <string name="create_survey">Create Survey</string>
+    <string name="forum">Forum</string>
+    <string name="edit_sessions">Edit Sessions</string>
+    <string name="edit_course">Edit Course</string>
+    <string name="new_course_password">New Course Password</string>
+    <string name="update_course">Update Course</string>
+    <string name="update_session">Update Session</string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+
+    <string name="post">Post</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

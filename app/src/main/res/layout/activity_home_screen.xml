@@ -17,51 +17,51 @@
             android:id="@+id/b1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="Link"
-            android:text="Link Course"
-            android:background="@drawable/rounded_button"
             android:layout_marginBottom="10dp"
-            android:textColor="@color/colorWhite"/>
+            android:background="@drawable/rounded_button"
+            android:onClick="Link"
+            android:text="@string/link_course"
+            android:textColor="@color/colorWhite" />
 
         <Button
             android:id="@+id/b2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="Create"
-            android:text="Create Course"
-            android:background="@drawable/rounded_button"
             android:layout_marginBottom="10dp"
-            android:textColor="@color/colorWhite"/>
+            android:background="@drawable/rounded_button"
+            android:onClick="Create"
+            android:text="@string/create_course"
+            android:textColor="@color/colorWhite" />
 
         <Button
             android:id="@+id/btnViewAllCourses"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="clickViewAllCourses"
-            android:text="View unregistered Courses"
-            android:background="@drawable/rounded_button"
             android:layout_marginBottom="10dp"
-            android:textColor="@color/colorWhite"/>
+            android:background="@drawable/rounded_button"
+            android:onClick="clickViewAllCourses"
+            android:text="@string/view_unregistered_courses"
+            android:textColor="@color/colorWhite" />
 
         <Button
             android:id="@+id/testTimeTable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TimeTable"
-            android:onClick ="viewTT"
-            android:background="@drawable/rounded_button"
             android:layout_marginBottom="10dp"
-            android:textColor="@color/colorWhite"/>
+            android:background="@drawable/rounded_button"
+            android:onClick="viewTT"
+            android:text="@string/timetable"
+            android:textColor="@color/colorWhite" />
 
         <Button
             android:id="@+id/logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="logout"
-            android:onClick ="logOut"
-            android:background="@drawable/rounded_button"
             android:layout_marginBottom="10dp"
-            android:textColor="@color/colorWhite"/>
+            android:background="@drawable/rounded_button"
+            android:onClick="logOut"
+            android:text="@string/logout"
+            android:textColor="@color/colorWhite" />
 
         <LinearLayout
             android:id="@+id/llCourseLayout"
