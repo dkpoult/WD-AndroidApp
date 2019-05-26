@@ -48,6 +48,7 @@ public class UserRegistration extends AppCompatActivity {
                 String user_token = response.getString("userToken");
                 Intent i = new Intent(UserRegistration.this, HomeScreen.class);
                 i.putExtra("user_token", user_token);
+                finish();
                 startActivity(i);
 
                 break;

@@ -155,6 +155,11 @@ public class HomeScreen extends AppCompatActivity {
         startActivity(i);
     }
 
+    public void viewVenues(View v){
+        Intent i = new Intent(HomeScreen.this, VenueList.class);
+        startActivity(i);
+    }
+
     private void addAvailableCourses(){
 
         View currentLayout = (LinearLayout)findViewById(R.id.llCourseLayout);

@@ -19,6 +19,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:elevation="10dp"
                 android:id="@+id/titleValue"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -30,6 +31,7 @@
         </LinearLayout>
 
         <EditText
+            android:elevation="10dp"
             android:id="@+id/postContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,6 +44,7 @@
             android:scrollbars="vertical" />
 
         <TextView
+            android:elevation="10dp"
             android:id="@+id/response"
             android:ems="10"
             android:layout_width="match_parent"
@@ -50,6 +53,7 @@
             android:layout_weight="5" />
 
         <Button
+            android:elevation="10dp"
             android:id="@+id/post"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
