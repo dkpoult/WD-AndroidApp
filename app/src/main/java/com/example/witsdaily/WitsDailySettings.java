@@ -36,6 +36,7 @@ public class WitsDailySettings {
                 case "English" : languageCode = "en";break;
                 case "French" : languageCode = "fr";break;
                 case "Portoguese" : languageCode = "pt";break;
+                case "Afrikaans" : languageCode = "af-rZA";break;
                 case "Xhosa" : languageCode = "xh";break;
                 case "Zulu" : languageCode = "zu";break;
             }
