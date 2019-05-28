@@ -1,5 +1,6 @@
 package com.example.witsdaily;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -29,6 +30,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 import static com.example.witsdaily.PhoneDatabaseContract.*;
 
 public class HomeScreen extends AppCompatActivity {
@@ -39,6 +42,7 @@ public class HomeScreen extends AppCompatActivity {
     StorageAccessor syncAccessor;
     boolean enableNotifications = true;
     private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,13 +60,26 @@ public class HomeScreen extends AppCompatActivity {
 
 
         addUserToDB();
+
         if (enableNotifications) {
             FirebaseApp.initializeApp(getApplicationContext());
             firebaseAuthenticate();
         }
         else{
-            FirebaseApp.getInstance().delete();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        FirebaseInstanceId.getInstance().deleteInstanceId();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
         }
+
+
+
         getCourses();
         getUnenrolledCourses();
         addAvailableCourses();
@@ -162,7 +179,7 @@ public class HomeScreen extends AppCompatActivity {
             values.put(TablePerson.COLUMN_NAME_NUMBER,personNumber);
             db.insertOrThrow(TablePerson.TABLE_NAME,null,values);
             values = new ContentValues();
-            values.put(TableSettings.COLUMN_NAME_NOTIFICATIONS,1);
+            values.put(TableSettings.COLUMN_NAME_NOTIFICATIONS,0);
             values.put(TableSettings.COLUMN_NAME_PERSONNUMBER,personNumber);
             values.put(TableSettings.COLUMN_NAME_LANGUAGE,"English");
             db.insertOrThrow(TableSettings.TABLE_NAME,null,values);

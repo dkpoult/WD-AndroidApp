@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 
 import com.example.witsdaily.Survey.SurveyAnswer;
 import com.example.witsdaily.Survey.SurveyViewer;
@@ -30,10 +31,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
         if (remoteMessage.getNotification() != null) {
-            String channelID = "";
+            String channelID = "Default channel";
             System.out.println( "Message Notification Body: " + remoteMessage.getNotification().getBody());
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelID)
-                    .setSmallIcon(R.drawable.logo)
+                    .setSmallIcon(R.drawable.forum_upvote)
                     .setContentTitle(remoteMessage.getNotification().getTitle())
                     .setContentText(remoteMessage.getNotification().getBody())
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT);
@@ -46,7 +47,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 manager.notify(0, builder.build());
 
             }else{
-                builder.build();
+                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+                notificationManager.notify(0, builder.build());
+
             }
 
 
