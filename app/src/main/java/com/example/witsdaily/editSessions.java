@@ -88,8 +88,8 @@ public class editSessions extends AppCompatActivity {
                             EditText room = LLayout.findViewById(R.id.room);
                             Spinner spinner = LLayout.findViewById(R.id.spinner);
                             Spinner sType = LLayout.findViewById(R.id.type);
-                            String[] sessionTypes = new String[]{"lecture", "lab", "tutorial", "lab", "other"};
-                            String[] items = new String[]{"daily", "weekly", "monthly", "once"};
+                            String[] sessionTypes = new String[]{"Lecture", "Lab", "Tutorial", "Test", "Other"};
+                            String[] items = new String[]{"Daily", "Weekly", "Monthly", "Once"};
                             ArrayAdapter<String> ad = new ArrayAdapter<>(editSessions.this,
                                     android.R.layout.simple_spinner_item, items);
 

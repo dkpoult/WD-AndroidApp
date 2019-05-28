@@ -83,10 +83,16 @@ public class timetable extends AppCompatActivity {
                             sType = session.getString("sessionType");
                             System.out.println(sType);
                             startDate = session.getString("nextDate");
-                            ja[0] = session.getJSONArray("cancellations");
+                            JSONArray cancellations;
+                            if(session.has("cancellations")) {
+                                ja[0] = session.getJSONArray("cancellations");
+                                cancellations = session.getJSONArray("cancellations");
+                            }else{
+                                ja[0] = new JSONArray();
+                                cancellations =new JSONArray();
+                            }
                             duration = session.getInt("duration");
                             gap = session.getInt("repeatGap");
-                            JSONArray cancellations = session.getJSONArray("cancellations");
                             Session s = new Session(venue, type, gap, startDate, sType, duration, course);
                             for(int p = 0; p < cancellations.length(); p++){
                                 s.cancells.add(cancellations.getString(p));

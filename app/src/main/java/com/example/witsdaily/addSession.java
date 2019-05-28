@@ -100,7 +100,7 @@ public class addSession extends AppCompatActivity {
                     c[0] = "";
                     cans.clear();
         });
-        String[] sessionTypes = new String[]{"Lecture", "Lab", "Tutorial", "Lab", "Other"};
+        String[] sessionTypes = new String[]{"Lecture", "Lab", "Tutorial", "Test", "Other"};
         String[] items = new String[]{"Daily", "Weekly", "Monthly", "Once"};
         ArrayAdapter<String> ad = new ArrayAdapter<>(addSession.this,
                 android.R.layout.simple_spinner_item, items);

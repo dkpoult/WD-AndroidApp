@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:layout_margin="5dp"
     android:background="@drawable/rounder_corner"
-    android:padding="10dp"
-    android:layout_margin="5dp">
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="5dp">
 
     <TextView
         android:id="@+id/label"
@@ -24,11 +25,6 @@
             android:layout_height="wrap_content"
             android:text="Building" />
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
         <android.support.v7.widget.AppCompatAutoCompleteTextView
             android:id="@+id/venue"
             android:layout_width="wrap_content"
@@ -38,6 +34,7 @@
             android:text="" />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -82,11 +79,12 @@
 
         <Spinner
             android:id="@+id/spinner"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -112,6 +110,7 @@
             android:inputType="number" />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -123,20 +122,15 @@
             android:layout_height="wrap_content"
             android:text="Next Occurrence" />
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
         <TextView
             android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:ems="10"
             android:gravity="center"
-            android:text="time"
-            android:onClick="showTimePicker"/>
+            android:onClick="showTimePicker"
+            android:text="time" />
 
         <TextView
             android:id="@+id/date"
@@ -145,10 +139,16 @@
             android:layout_weight="1"
             android:ems="10"
             android:gravity="center"
-            android:text="date"
-            android:onClick="showDatePicker"/>
+            android:onClick="showDatePicker"
+            android:text="date" />
+
+        <Space
+            android:layout_width="5dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -167,7 +167,7 @@
 
         <Spinner
             android:id="@+id/type"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
     </LinearLayout>
@@ -183,11 +183,6 @@
             android:layout_height="wrap_content"
             android:text="Duration in minutes" />
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
         <EditText
             android:id="@+id/duration"
             android:layout_width="wrap_content"
@@ -199,9 +194,8 @@
     </LinearLayout>
 
 
-
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
@@ -223,23 +217,27 @@
             android:layout_weight="1"
             android:ems="10"
             android:gravity="center"
-            android:text="cancellation date"
-            android:onClick="showDateSelector"/>
+            android:onClick="showDateSelector"
+            android:text="cancellation date" />
 
         <Button
             android:id="@+id/addCancellation"
-            android:background="@drawable/rounded_button"
-            android:textColor="@color/colorWhite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
             android:layout_weight="1"
-            android:text="add" />
+            android:background="@drawable/rounded_button"
+            android:text="add"
+            android:textColor="@color/colorWhite" />
+
+        <Space
+            android:layout_width="5dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
 
 
         <TextView
@@ -254,19 +252,19 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:gravity="center"/>
+            android:gravity="center" />
 
     </LinearLayout>
+
     <Button
+        android:id="@+id/delCancels"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/delCancels"
-        android:background="@drawable/rounded_button"
-        android:textColor="@color/colorWhite"
-        android:text="remove Cancellations"
-        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        />
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/rounded_button"
+        android:text="remove Cancellations"
+        android:textColor="@color/colorWhite" />
 
     <CheckBox
         android:id="@+id/delete"
