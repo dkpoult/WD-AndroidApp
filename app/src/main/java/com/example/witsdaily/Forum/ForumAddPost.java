@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,7 +17,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ForumAddPost extends AppCompatActivity {
-String forumCodeValue,user_token,personNumber;
+    String forumCodeValue, user_token, personNumber;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,29 +27,31 @@ String forumCodeValue,user_token,personNumber;
         forumCodeValue = i.getStringExtra("forumCode");
         user_token = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
-        TextView forumCode = (TextView)(findViewById(R.id.tvForumCode));
+        TextView forumCode = (TextView) (findViewById(R.id.tvForumCode));
         forumCode.setText(forumCodeValue);
     }
 
-    public void clickCreatePost(View v){
-       EditText edtTitle = (EditText)findViewById(R.id.edtTitle);
-       EditText edtBody = (EditText)findViewById(R.id.edtBody);
-       String title = edtTitle.getText().toString();
-       String body = edtBody.getText().toString();
-       if (title.equals("")||body.equals("")){
-           Toast.makeText(getApplicationContext(), "Please enter valid post details", Toast.LENGTH_SHORT).show();
-           return;
-       }
-        StorageAccessor dataAccessor = new StorageAccessor(this,personNumber,user_token) {
+    public void clickCreatePost(View v) {
+        EditText edtTitle = (EditText) findViewById(R.id.edtTitle);
+        EditText edtBody = (EditText) findViewById(R.id.edtBody);
+        String title = edtTitle.getText().toString();
+        String body = edtBody.getText().toString();
+        if (title.equals("") || body.equals("")) {
+            Toast.makeText(getApplicationContext(), "Please enter valid post details", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        StorageAccessor dataAccessor = new StorageAccessor(this, personNumber, user_token) {
             @Override
             public void getData(JSONObject data) {
                 try {
-                    Toast.makeText(getApplicationContext(), data.getString("responseCode"),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), data.getString("responseCode"), Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         };
-       dataAccessor.makePost(forumCodeValue,title,body);
+        dataAccessor.makePost(forumCodeValue, title, body);
     }
+
 }
+

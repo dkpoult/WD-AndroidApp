@@ -10,7 +10,7 @@
     tools:context=".Forum.LectureCourseForum">
 
     <LinearLayout
-        android:id="@+id/llForumPosts"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -23,5 +23,11 @@
             android:onClick="addPost"
             android:background="@drawable/rounded_button"
             android:text="@string/post" />
+
+        <LinearLayout
+            android:id="@+id/llForumPosts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"></LinearLayout>
     </LinearLayout>
 </ScrollView>

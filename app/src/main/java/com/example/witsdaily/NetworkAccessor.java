@@ -332,8 +332,37 @@ public void updateCourse(String courseCode, String couseDesc, String courseName,
             e.printStackTrace();
         }
 
-        makeRequest(params,"https://wd.dimensionalapps.com/forum/get_post ","Get Post failed");
+        makeRequest(params,"https://wd.dimensionalapps.com/forum/make_post ","Make Post failed");
     }
+    public void makeComment(String postCode, String body){
+        JSONObject params = new JSONObject();
+
+        try {
+            params.put("userToken", userToken);
+            params.put("personNumber", personNumber);
+            params.put("postCode", postCode);
+            params.put("body",body);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        makeRequest(params,"https://wd.dimensionalapps.com/forum/make_comment ","Make Comment failed");
+    }
+    public void makeVote(String postCode, String vote){
+        JSONObject params = new JSONObject();
+
+        try {
+            params.put("userToken", userToken);
+            params.put("personNumber", personNumber);
+            params.put("postCode", postCode);
+            params.put("vote",vote);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        makeRequest(params,"https://wd.dimensionalapps.com/forum/make_vote ","Make vote failed");
+    }
+
 
 }
 /*For MC, answer should be the zero-

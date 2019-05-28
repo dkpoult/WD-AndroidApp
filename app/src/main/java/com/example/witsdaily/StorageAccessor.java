@@ -213,4 +213,22 @@ public abstract class StorageAccessor{ // singleton class
         };
         networkAccessor.makePost(forumCode,title,body);
     }
+    public void makeComment(String postCode, String body){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
+            @Override
+            void getResponse(JSONObject data) {
+                getData(data);
+            }
+        };
+        networkAccessor.makeComment(postCode,body);
+    }
+    public void makeVote(String postCode, String vote){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
+            @Override
+            void getResponse(JSONObject data) {
+                getData(data);
+            }
+        };
+        networkAccessor.makeVote(postCode,vote);
+    }
 }

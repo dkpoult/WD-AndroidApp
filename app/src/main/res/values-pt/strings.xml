@@ -1,41 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">WitsDaily</string>
-    <string name="login">login</string>
-    <string name="register">register</string>
-    <string name="password">Password</string>
-    <string name="title_activity_home_screen">HomeScreen</string>
+    <string name="login">entrar</string>
+    <string name="register">registo</string>
+    <string name="password">Senha</string>
+    <string name="title_activity_home_screen">Tela inicial</string>
     <string name="personid">PersonID</string>
     <string name="title_activity_course_forum">courseForum</string>
-    <string name="view_unregistered_courses">view unregistered courses</string>
-    <string name="timetable">timetable</string>
-    <string name="logout">logout</string>
-    <string name="course_name">Course Name</string>
-    <string name="create_course">Create Course</string>
-    <string name="course_description">Course Description</string>
-    <string name="course_code">Course Code</string>
+    <string name="view_unregistered_courses">ver cursos não registrados</string>
+    <string name="timetable">calendário</string>
+    <string name="logout">sair</string>
+    <string name="course_name">Nome do curso</string>
+    <string name="create_course">Criar curso</string>
+    <string name="course_description">Descrição do Curso</string>
+    <string name="course_code">Código do curso</string>
     <string name="link_course">Link Course</string>
-    <string name="create_post">Create Post</string>
-    <string name="post_title">Post Title</string>
+    <string name="create_post">Criar postagem</string>
+    <string name="post_title">Título da postagem</string>
     <string name="post_body">Post Body</string>
-    <string name="add_session">Add Session</string>
-    <string name="announcement_title">Announcement Title</string>
-    <string name="announcement_body">Announcement Body</string>
-    <string name="create_announcement">Create Announcement</string>
-    <string name="send">Send</string>
-    <string name="type_message">Type a message</string>
-    <string name="make_announcement">Make Announcement</string>
-    <string name="course_chat">Course Chat</string>
-    <string name="create_survey">Create Survey</string>
-    <string name="forum">Forum</string>
-    <string name="edit_sessions">Edit Sessions</string>
-    <string name="edit_course">Edit Course</string>
-    <string name="new_course_password">New Course Password</string>
-    <string name="update_course">Update Course</string>
-    <string name="update_session">Update Session</string>
-    <string name="comment">Comment</string>
-    <string name="cancel">Cancel</string>
-    <string name="comment_content">Comment contents</string>
-    <string name="post">Post</string>
+    <string name="add_session">Adicionar Sessão</string>
+    <string name="announcement_title">Título do anúncio</string>
+    <string name="announcement_body">Corpo de anúncio</string>
+    <string name="create_announcement">Criar anúncio</string>
+    <string name="send">Mandar</string>
+    <string name="type_message">Digite uma mensagem</string>
+    <string name="make_announcement">Faça um Anúncio</string>
+    <string name="course_chat">Bate-papo do curso</string>
+    <string name="create_survey">Criar pesquisa</string>
+    <string name="forum">Fórum</string>
+    <string name="edit_sessions">Editar Sessões</string>
+    <string name="edit_course">Editar curso</string>
+    <string name="new_course_password">Senha do novo curso</string>
+    <string name="update_course">Curso de Atualização</string>
+    <string name="update_session">Sessão de Atualização</string>
+    <string name="comment">Comente</string>
+    <string name="cancel">Cancelar</string>
+    <string name="comment_content">Conteúdos de comentário</string>
+    <string name="post">Postar</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -125,13 +126,13 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
-    <string name="action_settings">Settings instellings</string>
+    <string name="action_settings">Configurações instelings</string>
     <string name="title_activity_lecture_course_forum">LectureCourseForum</string>
-    <string name="title_activity_test">test</string>
+    <string name="title_activity_test">teste</string>
 
-    <string name="title_activity_timetable">timetable</string>
+    <string name="title_activity_timetable">calendário</string>
     <string name="title_activity_view_session">viewSession</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Olá fragmento em branco</string>
 </resources>

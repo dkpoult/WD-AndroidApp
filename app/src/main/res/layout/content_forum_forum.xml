@@ -41,31 +41,41 @@
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btnUpvote"
-            android:layout_width="25dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="11dp"
-            android:background="@drawable/forum_upvote" />
+        <RadioGroup
+            android:id="@+id/rgLikes"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="11dp"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:text="(1)"
-            android:textSize="20sp"
-            android:textStyle="italic" />
+            <RadioButton
+                android:id="@+id/btnUpvote"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="11dp"
 
-        <Button
-            android:id="@+id/btnUpvote2"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="11dp"
-            android:layout_weight="1"
-            android:background="@drawable/forum_downvote" />
+                android:button="@drawable/forum_upvote"
+                android:tag="1" />
+
+            <TextView
+                android:id="@+id/tvLikeCount"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="11dp"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="(0)"
+                android:textSize="20sp"
+                android:textStyle="italic" />
+
+            <RadioButton
+                android:id="@+id/btnDownVote"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="11dp"
+                android:layout_weight="1"
+                android:button="@drawable/forum_downvote"
+                android:tag="-1" />
+        </RadioGroup>
 
         <Button
             android:id="@+id/button7"
@@ -73,6 +83,56 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/forum_mark_answer" />
+        <Button
+            android:id="@+id/btnReply"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/forum_reply"
+            android:onClick="clickShowReply" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llCommentView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility= "gone"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/forum_background"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <EditText
+            android:id="@+id/edtComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/comment_content"
+            android:inputType="textPersonName" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="clickCancelComment"
+                android:text="@string/cancel" />
+
+            <Button
+                android:id="@+id/btnComment"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".25"
+                android:onClick="clickComment"
+                android:text="@string/comment" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

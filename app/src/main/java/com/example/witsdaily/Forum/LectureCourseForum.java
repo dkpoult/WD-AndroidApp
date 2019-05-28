@@ -5,7 +5,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.witsdaily.R;
@@ -14,7 +18,6 @@ import com.example.witsdaily.StorageAccessor;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 public class LectureCourseForum extends AppCompatActivity {
 String user_token,personNumber,forumCode;
@@ -27,12 +30,18 @@ String user_token,personNumber,forumCode;
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
         Intent i = getIntent();
         forumCode = ((Intent) i).getStringExtra("forumCode");
-        getPosts();
     }
+    public void clickCancelComment(View v){
+        LinearLayout llCommentView = ((LinearLayout)(v.getParent().getParent()));
+        EditText edtComment = (EditText)llCommentView.findViewById(R.id.edtComment);
+        edtComment.setText("");
+        llCommentView.setVisibility(View.GONE);
 
+    }
     private void getPosts(){
-        LinearLayout forumPosts = (LinearLayout)findViewById(R.id.llForumPosts);
 
+        LinearLayout forumPosts = (LinearLayout)findViewById(R.id.llForumPosts);
+        forumPosts.removeAllViews();
         StorageAccessor dataAccessor = new StorageAccessor(this,personNumber,user_token) {
             @Override
             public void getData(JSONObject data) {
@@ -42,15 +51,25 @@ String user_token,personNumber,forumCode;
                         for (int i =0;i<posts.length();i++){
                             JSONObject currentPost = posts.getJSONObject(i);
                             View newPost = getLayoutInflater().inflate(R.layout.content_forum_forum, null);
+                            newPost.setTag(currentPost.getString("code"));
+                            RadioGroup rgLikes = newPost.findViewById(R.id.rgLikes);
+                            setLikeButtons(rgLikes);
+                            TextView tvLikeCount = (TextView)newPost.findViewById(R.id.tvLikeCount);
+                            String upscore = currentPost.getString("upscore");
+                            String downscore = currentPost.getString("downscore");
+                            String likes = String.valueOf(Integer.parseInt(upscore)-Integer.parseInt(downscore));
+                            tvLikeCount.setText("("+likes+")");
+
                             TextView tvResponse = (TextView)newPost.findViewById(R.id.tvResponse);
                             TextView tvPersonNumber = (TextView)newPost.findViewById(R.id.tvPersonNumber);
                             TextView tvForumTitle = (TextView)newPost.findViewById(R.id.tvForumTitle);
-
+                            Button btnReply = (Button)newPost.findViewById(R.id.btnReply);
+                            btnReply.setVisibility(View.GONE);
                             tvForumTitle.setText(currentPost.getString("title"));
                             tvResponse.setText(currentPost.getString("body"));
                             tvPersonNumber.setText(currentPost.getString("poster"));
 
-                            newPost.setTag(currentPost.getString("code"));
+
 
                             forumPosts.addView(newPost);
                         }
@@ -62,13 +81,6 @@ String user_token,personNumber,forumCode;
             }
         };
         dataAccessor.getPosts(forumCode);
-/*
-
-        responseCode: successful, failed_unknown, failed_invalid_params,
-                failed_missing_params, failed_missing_perms
-        posts: A list of post objects in JSON format. Post format is {code
-    : string, title: string, body: string, poster: string, time: string, up
-        score: int, downscore: int, voted: int, locked: boolean, answer: Comment} */
 
     }
     public void clickGoToForum(View v){
@@ -82,4 +94,19 @@ String user_token,personNumber,forumCode;
         i.putExtra("forumCode",forumCode);
         startActivity(i);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getPosts();
+    }
+    public void clickShowReply(View v){
+        LinearLayout llMainView = ((LinearLayout)(v.getParent().getParent()));
+        llMainView.findViewById(R.id.llCommentView).setVisibility(View.VISIBLE);
+    }
+    private void setLikeButtons(RadioGroup rgLikes){
+        ForumAccessor fa = new ForumAccessor(this,personNumber,user_token);
+        fa.setLikeButtons(rgLikes);
+    }
+
 }

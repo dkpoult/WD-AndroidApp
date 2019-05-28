@@ -1,41 +1,41 @@
 <resources>
     <string name="app_name">WitsDaily</string>
-    <string name="login">login</string>
-    <string name="register">register</string>
-    <string name="password">Password</string>
-    <string name="title_activity_home_screen">HomeScreen</string>
-    <string name="personid">PersonID</string>
-    <string name="title_activity_course_forum">courseForum</string>
-    <string name="view_unregistered_courses">view unregistered courses</string>
-    <string name="timetable">timetable</string>
-    <string name="logout">logout</string>
-    <string name="course_name">Course Name</string>
-    <string name="create_course">Create Course</string>
-    <string name="course_description">Course Description</string>
-    <string name="course_code">Course Code</string>
-    <string name="link_course">Link Course</string>
-    <string name="create_post">Create Post</string>
-    <string name="post_title">Post Title</string>
-    <string name="post_body">Post Body</string>
-    <string name="add_session">Add Session</string>
-    <string name="announcement_title">Announcement Title</string>
-    <string name="announcement_body">Announcement Body</string>
-    <string name="create_announcement">Create Announcement</string>
-    <string name="send">Send</string>
-    <string name="type_message">Type a message</string>
-    <string name="make_announcement">Make Announcement</string>
-    <string name="course_chat">Course Chat</string>
-    <string name="create_survey">Create Survey</string>
-    <string name="forum">Forum</string>
-    <string name="edit_sessions">Edit Sessions</string>
-    <string name="edit_course">Edit Course</string>
-    <string name="new_course_password">New Course Password</string>
-    <string name="update_course">Update Course</string>
-    <string name="update_session">Update Session</string>
-    <string name="comment">Comment</string>
+    <string name="login">Ngema</string>
+    <string name="register">bhalisa</string>
+    <string name="password">Inombolo yokuvula</string>
+    <string name="title_activity_home_screen">Ikhasi eliKhuseleko</string>
+    <string name="personid">Umntu</string>
+    <string name="title_activity_course_forum">yeForum</string>
+    <string name="view_unregistered_courses">zijonga iikhosi ezingabhalwanga</string>
+    <string name="timetable">thayimthebhile</string>
+    <string name="logout">Phuma</string>
+    <string name="course_name">Igama leNkundla</string>
+    <string name="create_course">Yenza ikhosi</string>
+    <string name="course_description">Inkcazelo</string>
+    <string name="course_code">Code Code</string>
+    <string name="link_course">Qhagamshelana neKota</string>
+    <string name="create_post">Yakha i Post</string>
+    <string name="post_title">Isihloko seposi</string>
+    <string name="post_body">IBhodi yoPhulo</string>
+    <string name="add_session">Yongeza iSession</string>
+    <string name="announcement_title">Isihloko sokwamkelwa</string>
+    <string name="announcement_body">IQumrhu lokuBhengeza</string>
+    <string name="create_announcement">Yakha iNgxelo</string>
+    <string name="send">Thumela</string>
+    <string name="type_message">Thayipha umyalezo</string>
+    <string name="make_announcement">Yenza isaziso</string>
+    <string name="course_chat">Ingxoxo Yenkambo</string>
+    <string name="create_survey">Yenza uphando</string>
+    <string name="forum">KwiForam</string>
+    <string name="edit_sessions">Hlela iiNkcazo</string>
+    <string name="edit_course">Hlela Inkambo</string>
+    <string name="new_course_password">Iphasiwedi entsha yeNkundla</string>
+    <string name="update_course">Uhlaziyo lweNkcazo</string>
+    <string name="update_session">IsiHlomelo Session</string>
+    <string name="comment">I ngxelo</string>
     <string name="cancel">Cancel</string>
-    <string name="comment_content">Comment contents</string>
-    <string name="post">Post</string>
+    <string name="comment_content">I ngxelo</string>
+    <string name="post">Iposi</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -125,13 +125,13 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
-    <string name="action_settings">Settings instellings</string>
+    <string name="action_settings">Izilungiso zezixhobo</string>
     <string name="title_activity_lecture_course_forum">LectureCourseForum</string>
-    <string name="title_activity_test">test</string>
+    <string name="title_activity_test">vavanyo</string>
 
-    <string name="title_activity_timetable">timetable</string>
-    <string name="title_activity_view_session">viewSession</string>
+    <string name="title_activity_timetable">thayimthebhile</string>
+    <string name="title_activity_view_session">imbonoSession</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Sawubona ingqungquthela engenanto</string>
 </resources>
