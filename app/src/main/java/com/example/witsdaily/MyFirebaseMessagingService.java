@@ -33,7 +33,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             String channelID = "";
             System.out.println( "Message Notification Body: " + remoteMessage.getNotification().getBody());
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelID)
-                    .setSmallIcon(R.drawable.arrow_up)
+                    .setSmallIcon(R.drawable.logo)
                     .setContentTitle(remoteMessage.getNotification().getTitle())
                     .setContentText(remoteMessage.getNotification().getBody())
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT);
@@ -43,11 +43,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 NotificationChannel channel = new NotificationChannel(channelID, "Default channel", NotificationManager.IMPORTANCE_DEFAULT);
                 manager.createNotificationChannel(channel);
 
-             //   manager.notify(0, builder.build());
+                manager.notify(0, builder.build());
 
+            }else{
+                builder.build();
             }
 
-            builder.build();
+
 
         }
         else{

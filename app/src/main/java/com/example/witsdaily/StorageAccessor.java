@@ -2,6 +2,7 @@ package com.example.witsdaily;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.support.design.widget.TabLayout;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -231,4 +232,21 @@ public abstract class StorageAccessor{ // singleton class
         };
         networkAccessor.makeVote(postCode,vote);
     }
+    public void updateSettings(String language,int notifications,String pPersonNumber){
+        ContentValues params = new ContentValues();
+        params.put(TableSettings.COLUMN_NAME_LANGUAGE,language);
+        params.put(TableSettings.COLUMN_NAME_NOTIFICATIONS,notifications);
+        params.put(TableSettings.COLUMN_NAME_PERSONNUMBER,pPersonNumber);
+        databaseAccessor.updateRecords(TableSettings.TABLE_NAME,params,pPersonNumber);
+    }
+    public JSONArray getSettings(String pPersonnumber){
+        try {
+            return databaseAccessor.selectRecords("Select * From "+TableSettings.TABLE_NAME+" where "
+            + TableSettings.COLUMN_NAME_PERSONNUMBER + " = \'"+pPersonnumber+"\'");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
+

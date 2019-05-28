@@ -63,11 +63,22 @@
             android:text="@string/logout"
             android:textColor="@color/colorWhite" />
 
+        <Button
+            android:id="@+id/btnSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_settings"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/rounded_button"
+            android:onClick="clickSettings" />
+
         <LinearLayout
             android:id="@+id/llCourseLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"/>
+            android:orientation="vertical">
+
+        </LinearLayout>
 
 
     </LinearLayout>

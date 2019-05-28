@@ -78,7 +78,8 @@
         </RadioGroup>
 
         <Button
-            android:id="@+id/button7"
+            android:id="@+id/btnMarked"
+            android:onClick="clickForumMarked"
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

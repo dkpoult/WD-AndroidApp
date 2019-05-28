@@ -62,4 +62,7 @@ public class ForumAccessor {
             }
         });
     }
+    public void clickForumMarked(String v){
+
+    }
 }

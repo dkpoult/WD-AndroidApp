@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">WitsDaily</string>
-    <string name="login">s'identifier</string>
+    <string name="login">s\'identifier</string>
     <string name="register">registre</string>
     <string name="password">Mot de passe</string>
-    <string name="title_activity_home_screen">Écran d'accueil</string>
+    <string name="title_activity_home_screen">Écran d\'accueil</string>
     <string name="personid">PersonID</string>
     <string name="title_activity_course_forum">courseForum</string>
     <string name="view_unregistered_courses">voir les cours non inscrits</string>
@@ -16,11 +16,11 @@
     <string name="course_code">Code de cours</string>
     <string name="link_course">Lien de cours</string>
     <string name="create_post">Créer un message</string>
-    <string name="post_title">Titre de l'article</string>
+    <string name="post_title">Titre de l\'article</string>
     <string name="post_body">Corps de poste</string>
     <string name="add_session">Ajouter une session</string>
-    <string name="announcement_title">Titre de l'annonce</string>
-    <string name="announcement_body">Organisme d'annonce</string>
+    <string name="announcement_title">Titre de l\'annonce</string>
+    <string name="announcement_body">Organisme d\'annonce</string>
     <string name="create_announcement">Créer une annonce</string>
     <string name="send">Envoyer</string>
     <string name="type_message">Tapez un message</string>
