@@ -8,13 +8,20 @@
     android:orientation="vertical"
     android:padding="10dp">
 
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
     <LinearLayout
+        android:elevation="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/LLayout"
         android:orientation="vertical" />
+    </ScrollView>
 
     <Button
+        android:background="@drawable/rounded_button"
+        android:elevation="10dp"
         android:id="@+id/accept"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

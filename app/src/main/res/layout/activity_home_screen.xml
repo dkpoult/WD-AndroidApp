@@ -11,7 +11,16 @@
         android:id="@+id/llHomeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:id="@+id/llCourseLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:layout_marginBottom="10dp"/>
 
         <Button
             android:id="@+id/b1"
@@ -54,6 +63,16 @@
             android:textColor="@color/colorWhite"/>
 
         <Button
+            android:id="@+id/venues"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Venue"
+            android:onClick ="viewVenues"
+            android:background="@drawable/rounded_button"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/colorWhite"/>
+
+        <Button
             android:id="@+id/logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -62,12 +81,6 @@
             android:background="@drawable/rounded_button"
             android:layout_marginBottom="10dp"
             android:textColor="@color/colorWhite"/>
-
-        <LinearLayout
-            android:id="@+id/llCourseLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"/>
 
 
     </LinearLayout>
