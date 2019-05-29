@@ -6,8 +6,8 @@
     android:background="@drawable/rounder_corner"
     android:padding="10dp"
     android:clickable="true"
+    android:layout_marginBottom="10dp"
     android:onClick="courseClicked"
-
     android:orientation="vertical">
 
     <ImageView

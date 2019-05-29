@@ -2,20 +2,14 @@ package com.example.witsdaily;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public abstract class NetworkAccessor {
@@ -25,7 +19,7 @@ public abstract class NetworkAccessor {
     private String userToken;
     abstract void getResponse(JSONObject data);
 
-    public NetworkAccessor(Context pContext,String pPersonNumber,String pUserToken){
+    NetworkAccessor(Context pContext, String pPersonNumber, String pUserToken){
         context = pContext;
         requestQueue = Volley.newRequestQueue(pContext.getApplicationContext());
         userToken = pUserToken;
@@ -41,20 +35,14 @@ public abstract class NetworkAccessor {
         progressBar.setIndeterminate(true);
         progressBar.show();
         final JsonObjectRequest request = new JsonObjectRequest(APIUrl, params,
-                new Response.Listener<JSONObject>(){
-                    @Override
-                    public void onResponse(JSONObject response){
-                        System.out.println("successfull "+APIUrl); // possible return, make function instead
-                        progressBar.dismiss();
-                        getResponse(response); // get for outer class
-                    }
+                response -> {
+                    System.out.println("successfull "+APIUrl); // possible return, make function instead
+                    progressBar.dismiss();
+                    getResponse(response); // get for outer class
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        String s = error.getLocalizedMessage();
-                        System.out.println(errorMessage+" "+s);
-                    }
+                error -> {
+                    String s = error.getLocalizedMessage();
+                    System.out.println(errorMessage+" "+s);
                 })
         {
         };
@@ -63,7 +51,7 @@ public abstract class NetworkAccessor {
 
     }
 //personNumber, userToken, fcmToken
-    public void updateServerFCMToken(String fcmToken){
+void updateServerFCMToken(String fcmToken){
         JSONObject params = new JSONObject();
 
         try {
@@ -77,7 +65,7 @@ public abstract class NetworkAccessor {
         makeRequest(params,"https://wd.dimensionalapps.com/push/set_fcm_token","FCM Token");
     }
 
-    public void firebaseAutenticate(){
+    void firebaseAutenticate(){
         JSONObject params = new JSONObject();
         try {
             params.put("userToken", userToken);
@@ -89,7 +77,7 @@ public abstract class NetworkAccessor {
         makeRequest(params,"https://wd.dimensionalapps.com/push/notification_token","firebase authenticate error");
     }
 
-    public void loginRequest(String password){
+    void loginRequest(String password){
         JSONObject params = new JSONObject();
         try {
             params.put("personNumber", personNumber);
@@ -100,7 +88,7 @@ public abstract class NetworkAccessor {
         makeRequest(params,"https://wd.dimensionalapps.com/auth/login","Login failed");
 
     }
-    public void registerUser(String personIDValue,String passwordValue){
+    void registerUser(String personIDValue, String passwordValue){
         JSONObject params = new JSONObject();
         try {
             params.put("personNumber", personIDValue);
@@ -110,7 +98,7 @@ public abstract class NetworkAccessor {
         }
         makeRequest(params,"https://wd.dimensionalapps.com/auth/register","Register user failed");
     }
-    public void getEnrolledCourses(){
+    void getEnrolledCourses(){
         JSONObject params = new JSONObject();
         try {
             params.put("userToken", userToken);
@@ -121,7 +109,7 @@ public abstract class NetworkAccessor {
         }
         makeRequest(params,"https://wd.dimensionalapps.com/course/get_courses","Get enrolled failed");
     }
-    public void getUnenrolledCourses(){
+    void getUnenrolledCourses(){
         JSONObject params = new JSONObject();
         try {
             params.put("userToken", userToken);
@@ -133,7 +121,7 @@ public abstract class NetworkAccessor {
         makeRequest(params,"https://wd.dimensionalapps.com/course/get_available_courses",
                 "Get Unenrolled failed");
     }
-    public void enrollUser(String password,String courseCode){
+    void enrollUser(String password, String courseCode){
         JSONObject params = new JSONObject();
         try{
             params.put("personNumber", personNumber);
@@ -145,7 +133,7 @@ public abstract class NetworkAccessor {
         }
         makeRequest(params,"https://wd.dimensionalapps.com/course/enrol_in_course","Error enroll");
     }
-    public void getSurvey(String courseCode){
+    void getSurvey(String courseCode){
         JSONObject params = new JSONObject();
         try{
             params.put("personNumber", personNumber);
@@ -157,7 +145,7 @@ public abstract class NetworkAccessor {
 
         makeRequest(params,"https://wd.dimensionalapps.com/survey/get_survey","Error survey");
     }
-    public void makeSurvey(String courseCode, String title, JSONArray options,String responseType){
+    void makeSurvey(String courseCode, String title, JSONArray options, String responseType){
         JSONObject params = new JSONObject();
         try{ //personNumber, userToken, title, options, courseCode
             params.put("personNumber", personNumber);
@@ -172,7 +160,7 @@ public abstract class NetworkAccessor {
         makeRequest(params,"https://wd.dimensionalapps.com/survey/make_survey","Error survey creation");
     }
 
-    public void closeSurvey(String courseCode){
+    void closeSurvey(String courseCode){
         JSONObject params = new JSONObject();
         try{
             params.put("personNumber", personNumber);
@@ -183,7 +171,7 @@ public abstract class NetworkAccessor {
         }
         makeRequest(params,"https://wd.dimensionalapps.com/survey/close_survey","Error closing survey");
     }
-    public void getSurveyResults(String courseCode){
+    void getSurveyResults(String courseCode){
         JSONObject params = new JSONObject();
         try{
             params.put("personNumber", personNumber);
@@ -195,7 +183,7 @@ public abstract class NetworkAccessor {
         makeRequest(params,"https://wd.dimensionalapps.com/survey/get_results","Error getting survey results");
     }
 
-    public void sendAnswer(String answer,String courseCode,String surveyType){
+    void sendAnswer(String answer, String courseCode, String surveyType){
         JSONObject params = new JSONObject();
         try{
             params.put("personNumber", personNumber);
@@ -212,7 +200,7 @@ public abstract class NetworkAccessor {
 
 
 
-    public void getSessions(String courseCode){
+    void getSessions(String courseCode){
         JSONObject params = new JSONObject();
         try{
             params.put("personNumber", personNumber);
@@ -224,7 +212,7 @@ public abstract class NetworkAccessor {
         makeRequest(params,"https://wd.dimensionalapps.com/course/get_course","get_Session error");
     }
 
-    public void addSession(String courseCode, String venue, String type, int Freq, String Occurence, String sType, int duration){
+    void addSession(String courseCode, JSONObject venue, String type, int Freq, String Occurence, String sType, int duration, JSONArray cancels){
         JSONObject params = new JSONObject();
 
         try{
@@ -240,6 +228,7 @@ public abstract class NetworkAccessor {
             session.put("repeatGap", Freq);
             session.put("nextDate", Occurence);
             session.put("duration", duration);
+            session.put("cancellations", cancels);
             params.put("session", session);
         }catch (JSONException e){
             e.printStackTrace();
@@ -248,7 +237,7 @@ public abstract class NetworkAccessor {
         makeRequest(params,"https://wd.dimensionalapps.com/course/add_session","add_session error");
     }
 
-public void getCourse(String courseCode){
+void getCourse(String courseCode){
         JSONObject params = new JSONObject();
 
         try {
@@ -262,7 +251,7 @@ public void getCourse(String courseCode){
         makeRequest(params,"https://wd.dimensionalapps.com/course/get_course","Get course failed");
     }
 
-public void updateCourse(String courseCode, String couseDesc, String courseName, String newKey){
+void updateCourse(String courseCode, String couseDesc, String courseName, String newKey){
         JSONObject params = new JSONObject();
 
         try {
@@ -278,7 +267,7 @@ public void updateCourse(String courseCode, String couseDesc, String courseName,
         makeRequest(params,"https://wd.dimensionalapps.com/course/update_course","Update course failed");
     }
 
-    public void editSessions(String courseCode, JSONArray sessions){
+    void editSessions(String courseCode, JSONArray sessions){
         JSONObject params = new JSONObject();
 
         try {
@@ -378,6 +367,19 @@ public void updateCourse(String courseCode, String couseDesc, String courseName,
         makeRequest(params,"https://wd.dimensionalapps.com/forum/set_answer ","Set answer failed");
     }
 
+
+    void getVenues(){
+        JSONObject params = new JSONObject();
+
+        try {
+            params.put("userToken", userToken);
+            params.put("personNumber", personNumber);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        makeRequest(params,"https://wd.dimensionalapps.com/venue/get_venues ","Get venues failed");
+    }
 
 }
 /*For MC, answer should be the zero-

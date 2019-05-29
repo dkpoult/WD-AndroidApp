@@ -1,6 +1,7 @@
 package com.example.witsdaily;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.icu.util.LocaleData;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.text.MessageFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
@@ -52,43 +54,9 @@ public class timetable extends AppCompatActivity {
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
         user_token = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
 
-        String[][] lables = new String[8][16];
-        String[] days = {"", "Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"};
-        int[] periods = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
-        String[] timeSlots = {"", "08:00-\n08:45", "08:45-\n09:00", "09:00-\n09:45", "09:45-\n10:15", "10:15-\n11:00", "11:00-\n11:15", "11:15-\n12:00", "12:00-\n12:30", "12:30-\n13:15", "13:15-\n14:15", "14:15-\n15:00", "15:00-\n15:15", "15:15-\n16:00", " 16:00-\n16:15", "16:15-\n17:00"};
-
         final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date[] times = new Date[15];
-        final SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm");
         final SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-
-
-        for (int j = 0; j < 16; j++) {
-            if (j > 0) {
-                try {
-                    times[j - 1] = sdfTime.parse(timeSlots[j].split("-")[0]);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(times[j - 1].getHours() + ":" + times[j - 1].getMinutes());
-            }
-        }
-
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 16; j++) {
-                if (i == 0 && j == 0) {
-                    lables[i][j] = days[i] + "         ";
-                } else if (i == 0) {
-                    lables[i][j] = timeSlots[j];
-                } else if (j == 0) {
-                    lables[i][j] = days[i];
-                } else {
-                    lables[i][j] = days[i] + " " + Integer.toString(periods[j])
-                            + "\n" + timeSlots[j];
-                }
-            }
-        }
-
+        final JSONArray[] ja = {new JSONArray()};
         NetworkAccessor NA = new NetworkAccessor(this, personNumber, user_token) {
             @Override
             void getResponse(JSONObject data) {
@@ -97,77 +65,109 @@ public class timetable extends AppCompatActivity {
                     ArrayList<Session> seshs = new ArrayList<>();
                     JSONArray e = data.getJSONArray("courses");
                     for (int i = 0; i < e.length(); i++) {
+//                        System.out.println(e);
+                        String course;
                         JSONObject temp = (JSONObject) e.get(i);
+                        course = temp.getString("courseCode");
                         sessions = temp.getJSONArray("sessions");
-                        System.out.println(sessions.toString());
+//                        System.out.println(sessions.toString());
                         JSONObject session;
                         for (int j = 0; j < sessions.length(); j++) {
                             session = (JSONObject) sessions.get(j);
-                            System.out.println(session.toString());
+//                            System.out.println(session.toString());
                             String venue, type, sType, startDate;
                             int duration, gap;
-                            venue = session.getString("venue");
+                            JSONObject ven = session.getJSONObject("venue");
+                            venue = ven.getString("buildingCode") + ven.getString("subCode");
                             type = session.getString("repeatType");
                             sType = session.getString("sessionType");
                             System.out.println(sType);
                             startDate = session.getString("nextDate");
+                            JSONArray cancellations;
+                            if(session.has("cancellations")) {
+                                ja[0] = session.getJSONArray("cancellations");
+                                cancellations = session.getJSONArray("cancellations");
+                            }else{
+                                ja[0] = new JSONArray();
+                                cancellations =new JSONArray();
+                            }
                             duration = session.getInt("duration");
                             gap = session.getInt("repeatGap");
-                            seshs.add(new Session(venue, type, gap, startDate, sType, duration));
+                            Session s = new Session(venue, type, gap, startDate, sType, duration, course);
+                            for(int p = 0; p < cancellations.length(); p++){
+                                s.cancells.add(cancellations.getString(p));
+                            }
+                            seshs.add(s);
 
                         }
                     }
-
-                    for(Session sesh: seshs){
-                        System.out.println("test " + sesh.nextDate);
-                    }
                     ArrayList<Session> removable = new ArrayList<>();
+                    System.out.println(seshs.size());
+                    Date d;
+                    Calendar c, k;
                     for(Session sesh :seshs){
-                        Date d = dateFormat.parse(sesh.nextDate);
-                        Calendar c = Calendar.getInstance();
-                        Calendar k = Calendar.getInstance();
+                        System.out.println("test " + sesh.sessionType);
+                        d = dateFormat.parse(sesh.nextDate);
+                        c = Calendar.getInstance();
+                        k = Calendar.getInstance();
                         c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
                         c.setFirstDayOfWeek(Calendar.MONDAY);
                         c.add(Calendar.DAY_OF_MONTH, -7);
-                        System.out.println(c.getTime());
+//                        System.out.println(c.getTime());
                         while(d.compareTo(c.getTime())<0){
                             k.setTime(d);
-                            if(sesh.repeatType.equals("WEEKLY")) {
-                                k.add(Calendar.DAY_OF_MONTH, sesh.repeatGap * 7);
-                            }else if(sesh.repeatType.equals("MONTHLY")){
-                                k.add(Calendar.MONTH, sesh.repeatGap);
-                            }else if(sesh.repeatType.equals("DAILY")){
-                                k.add(Calendar.DAY_OF_MONTH, sesh.repeatGap);
+                            switch (sesh.repeatType) {
+                                case "WEEKLY":
+                                    k.add(Calendar.DAY_OF_MONTH, sesh.repeatGap * 7);
+                                    break;
+                                case "MONTHLY":
+                                    k.add(Calendar.MONTH, sesh.repeatGap);
+                                    break;
+                                case "DAILY":
+                                    k.add(Calendar.DAY_OF_MONTH, sesh.repeatGap);
+                                    break;
                             }
                             d=k.getTime();
                         }
                         sesh.nextDate = d.toString();
                         System.out.println(d.toString() + " this is a test");
                         if(!isDateInCurrentWeek(d)){
-                            System.out.println("Removed sesh: " + sesh.venue);
+//                            System.out.println("Removed sesh: " + sesh.venue);
                             removable.add(sesh);
                         }
                     }
                     Collections.sort(seshs);
+
+                    TextView type, venue, startTime, endTime, dat;
+                    String[] tt;
                     for(Session sesh: seshs){
-                        System.out.println(sesh.sessionType);
+//                        System.out.println(sesh.sessionType);
                         if(!removable.contains(sesh)) {
                             LinearLayout mainLayout;
                             View inflate;
                             mainLayout = findViewById(R.id.llayout);
                             inflate = getLayoutInflater().inflate(R.layout.ttsesh, mainLayout, false);
-                            TextView type = inflate.findViewById(R.id.Type);
-                            TextView venue = inflate.findViewById(R.id.venue);
-                            TextView startTime = inflate.findViewById(R.id.startTime);
-                            TextView endTime = inflate.findViewById(R.id.endTime);
-                            TextView dat = inflate.findViewById(R.id.date);
-                            String[] tt = sesh.nextDate.split(" ");
+                            type = inflate.findViewById(R.id.Type);
+                            String[] p = sesh.nextDate.split(" ");
+                            String kpop = p[5] + "-" +getNumMonth(p[1])+ "-" + p[2];
+                            if(sesh.sessionType.equals("TEST")){
+                                type.setTextColor(Color.RED);
+                            }
+                            venue = inflate.findViewById(R.id.venue);
+                            startTime = inflate.findViewById(R.id.startTime);
+                            endTime = inflate.findViewById(R.id.endTime);
+                            dat = inflate.findViewById(R.id.date);
+                            tt = sesh.nextDate.split(" ");
                             String start = tt[3];
-                            System.out.println(sesh.nextDate);
+//                            System.out.println(sesh.nextDate);
                             String temp = start;
                             startTime.setText(temp.substring(0, temp.length() - 3));
                             temp = tt[0]+ "-" + tt[1] + "-" + tt[2];
                             dat.setText(temp);
+                            if(sesh.cancells.contains(kpop)){
+                                dat.setText(dat.getText().toString() + " cancelled");
+                                dat.setTextColor(Color.RED);
+                            }
                             long ONE_MINUTE_IN_MILLIS=60000;//millisecs
                             Calendar date = Calendar.getInstance();
                             date.setTime(format.parse(start));
@@ -183,7 +183,7 @@ public class timetable extends AppCompatActivity {
                             }
                             temp = tempHours + ":" + tempMins;
                             endTime.setText(temp);
-                            type.setText(sesh.sessionType);
+                            type.setText(MessageFormat.format("{0} : {1}", sesh.sessionType, sesh.course));
                             venue.setText(sesh.venue);
                             mainLayout.addView(inflate);
                         }
@@ -193,52 +193,12 @@ public class timetable extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-
             }
         };
 
         NA.getEnrolledCourses();
-
-
-        //        HorizontalScrollView HSV = findViewById(R.id.HSV);
-//        ScrollView VSV = findViewById(R.id.VSC);
-//        VSV.setPadding(10,10,10,10);
-//        HSV.setPadding(10,10,10,10);
-//        TableLayout t = findViewById(R.id.timeTable);
-//        for(int i = 0; i < 8; i++){
-//            TableRow tempRow = new TableRow(this);
-//            for(int j = 0; j < 16; j++){
-//                TableRow tempCol = new TableRow(this);
-//                if(i == 0 || j == 0){
-//                    tempCol.setBackgroundColor(this.getResources().getColor(R.color.colorPrimary));
-//                }
-//                TextView tmp = new TextView(this);
-//                if(i == 0 || j == 0){
-//                    tmp.setTextColor(this.getResources().getColor(R.color.colorWhite));
-//                    tmp.setText(lables[i][j]);
-//                }else{
-//
-//                }
-//                tmp.setHeight(400);
-//                if(j%2 != 0) {
-//                    tmp.setWidth(200);
-//                }else{
-//                    tmp.setWidth(100);
-//                }
-//                tmp.setBackground(getDrawable(R.drawable.border_black));
-//                tmp.setTag(lables[i][j]);
-//                tmp.setPadding(5,5,5,5);
-//                tmp.setGravity(Gravity.CENTER);
-//                tmp.setBackground(getDrawable(R.drawable.border_black));
-//                tempCol.setTag(lables[i][j]);
-//                tempCol.addView(tmp);
-//                tempRow.addView(tempCol);
-//            }
-//            t.addView(tempRow);
-//        }
-//
-//    }
     }
+
     public static boolean isDateInCurrentWeek(Date date) {
         Calendar currentCalendar = Calendar.getInstance();
         int week = currentCalendar.get(Calendar.WEEK_OF_YEAR);
@@ -248,6 +208,21 @@ public class timetable extends AppCompatActivity {
         int targetWeek = targetCalendar.get(Calendar.WEEK_OF_YEAR);
         int targetYear = targetCalendar.get(Calendar.YEAR);
         return week == targetWeek && year == targetYear;
+    }
+
+    public String getNumMonth(String mnth){
+        Calendar cal = Calendar.getInstance();
+        try {
+            cal.setTime(new SimpleDateFormat("MMM").parse(mnth));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        int m = cal.get(Calendar.MONTH) + 1;
+        if(m <10){
+            return "0" + m;
+        }else{
+            return "" + m;
+        }
     }
 
 }

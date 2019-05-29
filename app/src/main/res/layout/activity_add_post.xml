@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".addPost"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="vertical"
+        android:weightSum="50">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:orientation="horizontal">
+
+            <TextView
+                android:elevation="10dp"
+                android:id="@+id/titleValue"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="Title"
+                android:background="@drawable/rounder_corner"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+        </LinearLayout>
+
+        <EditText
+            android:elevation="10dp"
+            android:id="@+id/postContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="45"
+            android:ems="10"
+            android:background="@drawable/rounder_corner"
+            android:inputType="textMultiLine"
+            android:maxHeight="140dp"
+            android:onClick="doPost"
+            android:scrollbars="vertical" />
+
+        <TextView
+            android:elevation="10dp"
+            android:id="@+id/response"
+            android:ems="10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ff0000"
+            android:layout_weight="5" />
+
+        <Button
+            android:elevation="10dp"
+            android:id="@+id/post"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:text="Button"
+            android:onClick="doPost"/>
+
+    </LinearLayout>
+</ScrollView>
