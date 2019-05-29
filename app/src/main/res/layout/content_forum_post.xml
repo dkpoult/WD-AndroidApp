@@ -110,6 +110,8 @@
                 android:id="@+id/btnCancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:background="@drawable/rounded_button"
                 android:layout_weight="1"
                 android:onClick="clickCancelComment"
                 android:text="@string/cancel" />
@@ -119,6 +121,8 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".25"
+                android:background="@drawable/rounded_button"
+                android:textColor="@color/colorWhite"
                 android:onClick="clickComment"
                 android:text="@string/comment" />
         </LinearLayout>

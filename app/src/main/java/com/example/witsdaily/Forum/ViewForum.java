@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
@@ -21,6 +22,9 @@ import org.json.JSONObject;
 public class ViewForum extends AppCompatActivity {
 String user_token,personNumber;
 LinearLayout llPosts;
+String answerCode = "";
+String mainPostCode;
+View currentAnswer = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +73,8 @@ LinearLayout llPosts;
         TextView tvForumTitle = (TextView)parent.findViewById(R.id.tvForumTitle);
         TextView tvLikeCount = (TextView)parent.findViewById(R.id.tvLikeCount);
         try {
-            parent.setTag(titlePost.getString("code"));
+            mainPostCode = titlePost.getString("code");
+            parent.setTag(mainPostCode);
             RadioGroup rgLikes = parent.findViewById(R.id.rgLikes);
             setLikeButtons(rgLikes);
             String upscore = titlePost.getString("upscore");
@@ -79,6 +84,17 @@ LinearLayout llPosts;
             tvForumTitle.setText(titlePost.getString("title"));
             tvResponse.setText(titlePost.getString("body"));
             tvPersonNumber.setText(titlePost.getString("poster"));
+            try {
+                JSONObject answer = titlePost.getJSONObject("answer");
+                Button btnMarked = parent.findViewById(R.id.btnMarked);
+                btnMarked.setVisibility(View.VISIBLE);
+                answerCode = answer.getString("code");
+            }catch(Exception e){
+
+            }
+
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -105,16 +121,21 @@ LinearLayout llPosts;
                     View newPost = getLayoutInflater().inflate(R.layout.content_forum_post, null);
                     TextView tvResponse = (TextView)newPost.findViewById(R.id.tvResponse);
                     TextView tvPersonNumber = (TextView)newPost.findViewById(R.id.tvPersonNumber);
+                    Button btnMarked = (Button)newPost.findViewById(R.id.btnMarked);
                     String upscore = currentPost.getString("upscore");
                     String downscore = currentPost.getString("downscore");
                     String likes = String.valueOf(Integer.parseInt(upscore)-Integer.parseInt(downscore));
                     tvLikeCount.setText("("+likes+")");
-                    newPost.setTag(currentPost.getString("code"));
+                    String code = currentPost.getString("code");
+                    newPost.setTag(code);
                     RadioGroup rgLikes = newPost.findViewById(R.id.rgLikes);
                     setLikeButtons(rgLikes);
                     tvResponse.setText(currentPost.getString("body"));
                     tvPersonNumber.setText(currentPost.getString("poster"));
-
+                    if (code.equals(answerCode)){
+                        btnMarked.setBackground(getResources().getDrawable(R.drawable.forum_answered));
+                        currentAnswer = newPost;
+                    }
                     LinearLayout parentView = (LinearLayout)parent.findViewById(R.id.llChildren);
                     parentView.addView(newPost);
                     addComments(newPost,currentPost.getJSONArray("comments"));
@@ -162,5 +183,27 @@ LinearLayout llPosts;
     private void setLikeButtons(RadioGroup rgLikes){
         ForumAccessor fa = new ForumAccessor(this,personNumber,user_token);
         fa.setLikeButtons(rgLikes);
+    }
+    public void clickForumMarked(View v){
+        if (currentAnswer != null) {
+            Button btnMarkedOld = currentAnswer.findViewById(R.id.btnMarked);
+            btnMarkedOld.setBackground(getResources().getDrawable(R.drawable.forum_mark_answer));
+        }
+        StorageAccessor dataAccessor = new StorageAccessor(this,personNumber,user_token) {
+            @Override
+            public void getData(JSONObject data) {
+                try {
+                    if (data.getString("responseCode").equals("successful")){
+                        v.setBackground(getResources().getDrawable(R.drawable.forum_answered));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        LinearLayout postView = ((LinearLayout)(v.getParent().getParent()));
+        String commentCode = String.valueOf(postView.getTag());
+        dataAccessor.setAnswer(mainPostCode,commentCode);
+
     }
 }

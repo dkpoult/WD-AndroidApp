@@ -57,6 +57,15 @@ String user_token,personNumber,forumCode;
                             TextView tvLikeCount = (TextView)newPost.findViewById(R.id.tvLikeCount);
                             String upscore = currentPost.getString("upscore");
                             String downscore = currentPost.getString("downscore");
+                            try {
+                                JSONObject answer = currentPost.getJSONObject("answer");
+                                Button btnMarked = newPost.findViewById(R.id.btnMarked);
+                                btnMarked.setVisibility(View.VISIBLE);
+                            }
+                            catch (Exception e){
+                                   // Then there is no answer
+                            }
+
                             String likes = String.valueOf(Integer.parseInt(upscore)-Integer.parseInt(downscore));
                             tvLikeCount.setText("("+likes+")");
 
@@ -68,7 +77,6 @@ String user_token,personNumber,forumCode;
                             tvForumTitle.setText(currentPost.getString("title"));
                             tvResponse.setText(currentPost.getString("body"));
                             tvPersonNumber.setText(currentPost.getString("poster"));
-
 
 
                             forumPosts.addView(newPost);
@@ -108,5 +116,7 @@ String user_token,personNumber,forumCode;
         ForumAccessor fa = new ForumAccessor(this,personNumber,user_token);
         fa.setLikeButtons(rgLikes);
     }
+    public void clickForumMarked(View v){
 
+    }
 }

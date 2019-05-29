@@ -363,6 +363,21 @@ public void updateCourse(String courseCode, String couseDesc, String courseName,
         makeRequest(params,"https://wd.dimensionalapps.com/forum/make_vote ","Make vote failed");
     }
 
+    public void setAnswer(String postCode, String commentCode){
+        JSONObject params = new JSONObject();
+
+        try {
+            params.put("userToken", userToken);
+            params.put("personNumber", personNumber);
+            params.put("postCode", postCode);
+            params.put("commentCode",commentCode);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        makeRequest(params,"https://wd.dimensionalapps.com/forum/set_answer ","Set answer failed");
+    }
+
 
 }
 /*For MC, answer should be the zero-

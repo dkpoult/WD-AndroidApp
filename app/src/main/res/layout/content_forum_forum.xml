@@ -83,7 +83,8 @@
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/forum_mark_answer" />
+            android:visibility="gone"
+            android:background="@drawable/forum_answered" />
         <Button
             android:id="@+id/btnReply"
             android:layout_width="30dp"
@@ -122,12 +123,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textColor="@color/colorWhite"
+                android:background="@drawable/rounded_button"
                 android:onClick="clickCancelComment"
                 android:text="@string/cancel" />
 
             <Button
                 android:id="@+id/btnComment"
                 android:layout_width="100dp"
+                android:background="@drawable/rounded_button"
+                android:textColor="@color/colorWhite"
                 android:layout_height="wrap_content"
                 android:layout_weight=".25"
                 android:onClick="clickComment"

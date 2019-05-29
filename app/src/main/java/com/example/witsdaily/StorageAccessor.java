@@ -248,5 +248,15 @@ public abstract class StorageAccessor{ // singleton class
             return null;
         }
     }
+    public void setAnswer(String postCode, String commentCode){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
+            @Override
+            void getResponse(JSONObject data) {
+                getData(data);
+            }
+        };
+        networkAccessor.setAnswer(postCode,commentCode);
+    }
+
 }
 
