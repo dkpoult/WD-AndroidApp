@@ -1,40 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">WitsDaily</string>
-    <string name="login">login</string>
-    <string name="register">register</string>
-    <string name="password">Password</string>
-    <string name="title_activity_home_screen">HomeScreen</string>
+    <string name="login">teken aan</string>
+    <string name="register">registreer</string>
+    <string name="password">wagwoord</string>
+    <string name="title_activity_home_screen">Huis skerm</string>
     <string name="personid">PersonID</string>
     <string name="title_activity_course_forum">courseForum</string>
-    <string name="view_unregistered_courses">view unregistered courses</string>
-    <string name="timetable">timetable</string>
-    <string name="logout">logout</string>
-    <string name="course_name">Course Name</string>
-    <string name="create_course">Create Course</string>
-    <string name="course_description">Course Description</string>
-    <string name="course_code">Course Code</string>
-    <string name="link_course">Link Course</string>
-    <string name="create_post">Create Post</string>
-    <string name="post_title">Post Title</string>
-    <string name="post_body">Post Body</string>
-    <string name="add_session">Add Session</string>
-    <string name="announcement_title">Announcement Title</string>
-    <string name="announcement_body">Announcement Body</string>
-    <string name="create_announcement">Create Announcement</string>
-    <string name="send">Send</string>
-    <string name="type_message">Type a message</string>
-    <string name="make_announcement">Make Announcement</string>
-    <string name="course_chat">Course Chat</string>
-    <string name="create_survey">Create Survey</string>
+    <string name="view_unregistered_courses">sien ongeregistreerde kursusse</string>
+    <string name="timetable">rooster</string>
+    <string name="logout">teken uit</string>
+    <string name="course_name">Kursus naam</string>
+    <string name="create_course">Skep Kursus</string>
+    <string name="course_description">kursus beskrywing</string>
+    <string name="course_code">Kursuskode</string>
+    <string name="link_course">Link kursus</string>
+    <string name="create_post">Skep Pos</string>
+    <string name="post_title">Pos Titel</string>
+    <string name="post_body">Pos Liggaam</string>
+    <string name="add_session">Voeg sessie by</string>
+    <string name="announcement_title">Aankondiging Titel</string>
+    <string name="announcement_body">Aankondiging Liggaam</string>
+    <string name="create_announcement">Skep Aankondiging</string>
+    <string name="send">stuur</string>
+    <string name="type_message">Tik n boodskap</string>
+    <string name="make_announcement">Maak Aankondiging</string>
+    <string name="course_chat">Kursus Chat</string>
+    <string name="create_survey">Skep Opname</string>
     <string name="forum">Forum</string>
-    <string name="edit_sessions">Edit Sessions</string>
-    <string name="edit_course">Edit Course</string>
-    <string name="new_course_password">New Course Password</string>
-    <string name="update_course">Update Course</string>
-    <string name="update_session">Update Session</string>
-    <string name="comment">Comment</string>
-    <string name="cancel">Cancel</string>
-    <string name="comment_content">Comment contents</string>
+    <string name="edit_sessions">Sessies wysig</string>
+    <string name="edit_course">Redigeer Kursus</string>
+    <string name="new_course_password">Nuwe Kursus Wagwoord</string>
+    <string name="update_course">Opdateringskursus</string>
+    <string name="update_session">Update Sessie</string>
+    <string name="comment">kommentaar</string>
+    <string name="cancel">kanselleer</string>
+    <string name="comment_content">Lewer kommentaar inhoud</string>
     <string name="post">Post</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
@@ -125,14 +126,13 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Instellings instellings</string>
     <string name="title_activity_lecture_course_forum">LectureCourseForum</string>
-    <string name="title_activity_test">test</string>
+    <string name="title_activity_test">toets</string>
 
-    <string name="title_activity_timetable">timetable</string>
+    <string name="title_activity_timetable">rooster</string>
     <string name="title_activity_view_session">viewSession</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_venue_list">VenueList</string>
+    <string name="hello_blank_fragment">Hallo leë fragment</string>
 </resources>

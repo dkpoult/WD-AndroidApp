@@ -281,6 +281,92 @@ void updateCourse(String courseCode, String couseDesc, String courseName, String
 
         makeRequest(params,"https://wd.dimensionalapps.com/course/update_sessions ","Update sessions failed");
     }
+    public void getPosts(String forumCode){
+        JSONObject params = new JSONObject();
+
+        try {
+            params.put("userToken", userToken);
+            params.put("personNumber", personNumber);
+            params.put("forumCode", forumCode);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        makeRequest(params,"https://wd.dimensionalapps.com/forum/get_posts ","Get Posts failed");
+    }
+
+    public void getPost(String postCode){ // detailed ones
+        JSONObject params = new JSONObject();
+
+        try {
+            params.put("userToken", userToken);
+            params.put("personNumber", personNumber);
+            params.put("postCode", postCode);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        makeRequest(params,"https://wd.dimensionalapps.com/forum/get_post ","Get Post failed");
+    }
+    public void makePost(String forumCode,String title, String body){ // detailed ones
+        JSONObject params = new JSONObject();
+
+        try {
+            params.put("userToken", userToken);
+            params.put("personNumber", personNumber);
+            params.put("forumCode", forumCode);
+            params.put("title",title);
+            params.put("body",body);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        makeRequest(params,"https://wd.dimensionalapps.com/forum/make_post ","Make Post failed");
+    }
+    public void makeComment(String postCode, String body){
+        JSONObject params = new JSONObject();
+
+        try {
+            params.put("userToken", userToken);
+            params.put("personNumber", personNumber);
+            params.put("postCode", postCode);
+            params.put("body",body);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        makeRequest(params,"https://wd.dimensionalapps.com/forum/make_comment ","Make Comment failed");
+    }
+    public void makeVote(String postCode, String vote){
+        JSONObject params = new JSONObject();
+
+        try {
+            params.put("userToken", userToken);
+            params.put("personNumber", personNumber);
+            params.put("postCode", postCode);
+            params.put("vote",vote);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        makeRequest(params,"https://wd.dimensionalapps.com/forum/make_vote ","Make vote failed");
+    }
+
+    public void setAnswer(String postCode, String commentCode){
+        JSONObject params = new JSONObject();
+
+        try {
+            params.put("userToken", userToken);
+            params.put("personNumber", personNumber);
+            params.put("postCode", postCode);
+            params.put("commentCode",commentCode);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        makeRequest(params,"https://wd.dimensionalapps.com/forum/set_answer ","Set answer failed");
+    }
+
 
     void getVenues(){
         JSONObject params = new JSONObject();

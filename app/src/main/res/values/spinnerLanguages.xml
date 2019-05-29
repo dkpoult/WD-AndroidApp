@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="Languages">
+        <item>English</item>
+        <item>French</item>
+        <item>Portoguese</item>
+        <item>Xhosa</item>
+        <item>Zulu</item>
+        <item>Afrikaans</item>
+
+    </string-array>
+
+</resources>

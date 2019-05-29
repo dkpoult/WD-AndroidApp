@@ -2,6 +2,7 @@ package com.example.witsdaily;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.support.design.widget.TabLayout;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -186,5 +187,76 @@ public abstract class StorageAccessor{ // singleton class
         };
         networkAccessor.sendAnswer(answer,courseCode,surveyType);
     }
+    public void getPosts(String forumCode){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
+            @Override
+            void getResponse(JSONObject data) {
+                getData(data);
+            }
+        };
+        networkAccessor.getPosts(forumCode);
+    }
+    public void getPost(String postCode){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
+            @Override
+            void getResponse(JSONObject data) {
+                getData(data);
+            }
+        };
+        networkAccessor.getPost(postCode);
+    }
+    public void makePost(String forumCode,String title, String body){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
+            @Override
+            void getResponse(JSONObject data) {
+                getData(data);
+            }
+        };
+        networkAccessor.makePost(forumCode,title,body);
+    }
+    public void makeComment(String postCode, String body){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
+            @Override
+            void getResponse(JSONObject data) {
+                getData(data);
+            }
+        };
+        networkAccessor.makeComment(postCode,body);
+    }
+    public void makeVote(String postCode, String vote){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
+            @Override
+            void getResponse(JSONObject data) {
+                getData(data);
+            }
+        };
+        networkAccessor.makeVote(postCode,vote);
+    }
+    public void updateSettings(String language,int notifications,String pPersonNumber){
+        ContentValues params = new ContentValues();
+        params.put(TableSettings.COLUMN_NAME_LANGUAGE,language);
+        params.put(TableSettings.COLUMN_NAME_NOTIFICATIONS,notifications);
+        params.put(TableSettings.COLUMN_NAME_PERSONNUMBER,pPersonNumber);
+        databaseAccessor.updateRecords(TableSettings.TABLE_NAME,params,pPersonNumber);
+    }
+    public JSONArray getSettings(String pPersonnumber){
+        try {
+            return databaseAccessor.selectRecords("Select * From "+TableSettings.TABLE_NAME+" where "
+            + TableSettings.COLUMN_NAME_PERSONNUMBER + " = \'"+pPersonnumber+"\'");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public void setAnswer(String postCode, String commentCode){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
+            @Override
+            void getResponse(JSONObject data) {
+                getData(data);
+            }
+        };
+        networkAccessor.setAnswer(postCode,commentCode);
+    }
 
 }
+

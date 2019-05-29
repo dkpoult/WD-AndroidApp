@@ -57,10 +57,6 @@ public abstract class ChatAccessor {
     public JSONArray getPreviousMessages() {
 
         JSONArray messages = new JSONArray();
-        messages.put("message one");
-        messages.put("message two");
-        messages.put("boom random middle message");
-        messages.put("message three");
 
         return messages;
         //personNumber and userToken

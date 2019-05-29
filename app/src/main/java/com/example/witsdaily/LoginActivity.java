@@ -12,6 +12,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 //Test
 public class LoginActivity extends AppCompatActivity {
     String user_token;
@@ -23,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
 
         user_token = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
-
+        loadSettings();
         if(user_token != null && personNumber != null){
             doValidate(user_token, personNumber);
         }
@@ -32,6 +33,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     EditText sNum, pWord;
+    private void loadSettings(){
+        WitsDailySettings settings = new WitsDailySettings(personNumber,user_token,getBaseContext(),this);
+        settings.loadLanguage("0");
+    }
 
     public void doValidate(String user_token, String personNumber){
         JSONObject params = new JSONObject();

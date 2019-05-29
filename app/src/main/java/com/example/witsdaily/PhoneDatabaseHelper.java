@@ -17,6 +17,7 @@ public class PhoneDatabaseHelper extends SQLiteOpenHelper {
             TableCourse.COLUMN_NAME_DESCRIPTION+" VARCHAR,"+
             TableCourse.COLUMN_NAME_LECTURER+" VARCHAR,"+
             TableCourse.COLUMN_NAME_SYNCED+" DATETIME)";
+
     public static final String SQL_CREATE_PERSON = "CREATE TABLE "+ TablePerson.TABLE_NAME +
             " (" +TablePerson.COLUMN_NAME_NUMBER+" VARCHAR PRIMARY KEY,"+
             TablePerson.COLUMN_NAME_NAME+" VARCHAR)";
@@ -25,6 +26,9 @@ public class PhoneDatabaseHelper extends SQLiteOpenHelper {
             " (" +TablePersonCourse.COLUMN_NAME_PERSONNUMBER+" VARCHAR,"+
             TablePersonCourse.COLUMN_NAME_COURSEID+" INTEGER)";
 
+    public static final String SQL_CREATE_SETTINGS = "CREATE TABLE "+ TableSettings.TABLE_NAME +
+            " (" +TableSettings.COLUMN_NAME_LANGUAGE+" VARCHAR,"+
+            TableSettings.COLUMN_NAME_NOTIFICATIONS+" BOOLEAN, "+TableSettings.COLUMN_NAME_PERSONNUMBER+" VARCHAR)";
 
     private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS "+TableCourse.TABLE_NAME;
 
@@ -36,6 +40,9 @@ public class PhoneDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_COURSES);
         db.execSQL(SQL_CREATE_PERSON);
         db.execSQL(SQL_CREATE_PERSONCOURSE);
+        db.execSQL(SQL_CREATE_SETTINGS);
+        db.execSQL("Insert into "+TableSettings.TABLE_NAME+" ("+TableSettings.COLUMN_NAME_NOTIFICATIONS
+        +","+TableSettings.COLUMN_NAME_LANGUAGE+","+TableSettings.COLUMN_NAME_PERSONNUMBER+") values (1,'English',-1)");
     }
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // This database is only a cache for online data, so its upgrade policy is

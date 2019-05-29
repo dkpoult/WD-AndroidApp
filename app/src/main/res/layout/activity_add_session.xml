@@ -25,6 +25,8 @@
         android:id="@+id/accept"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add"
+        android:text="@string/add_session"
+        android:textColor="@color/colorWhite"
+        android:background="@drawable/rounded_button"
         android:onClick = "addSesh"/>
 </LinearLayout>

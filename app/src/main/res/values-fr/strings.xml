@@ -1,41 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">WitsDaily</string>
-    <string name="login">login</string>
-    <string name="register">register</string>
-    <string name="password">Password</string>
-    <string name="title_activity_home_screen">HomeScreen</string>
+    <string name="login">s\'identifier</string>
+    <string name="register">registre</string>
+    <string name="password">Mot de passe</string>
+    <string name="title_activity_home_screen">Écran d\'accueil</string>
     <string name="personid">PersonID</string>
     <string name="title_activity_course_forum">courseForum</string>
-    <string name="view_unregistered_courses">view unregistered courses</string>
-    <string name="timetable">timetable</string>
-    <string name="logout">logout</string>
-    <string name="course_name">Course Name</string>
-    <string name="create_course">Create Course</string>
-    <string name="course_description">Course Description</string>
-    <string name="course_code">Course Code</string>
-    <string name="link_course">Link Course</string>
-    <string name="create_post">Create Post</string>
-    <string name="post_title">Post Title</string>
-    <string name="post_body">Post Body</string>
-    <string name="add_session">Add Session</string>
-    <string name="announcement_title">Announcement Title</string>
-    <string name="announcement_body">Announcement Body</string>
-    <string name="create_announcement">Create Announcement</string>
-    <string name="send">Send</string>
-    <string name="type_message">Type a message</string>
-    <string name="make_announcement">Make Announcement</string>
-    <string name="course_chat">Course Chat</string>
-    <string name="create_survey">Create Survey</string>
+    <string name="view_unregistered_courses">voir les cours non inscrits</string>
+    <string name="timetable">calendrier</string>
+    <string name="logout">Connectez - Out</string>
+    <string name="course_name">Nom du cours</string>
+    <string name="create_course">Créer un cours</string>
+    <string name="course_description">Description du cours</string>
+    <string name="course_code">Code de cours</string>
+    <string name="link_course">Lien de cours</string>
+    <string name="create_post">Créer un message</string>
+    <string name="post_title">Titre de l\'article</string>
+    <string name="post_body">Corps de poste</string>
+    <string name="add_session">Ajouter une session</string>
+    <string name="announcement_title">Titre de l\'annonce</string>
+    <string name="announcement_body">Organisme d\'annonce</string>
+    <string name="create_announcement">Créer une annonce</string>
+    <string name="send">Envoyer</string>
+    <string name="type_message">Tapez un message</string>
+    <string name="make_announcement">Faire une annonce</string>
+    <string name="course_chat">Chat de cours</string>
+    <string name="create_survey">Créer un sondage</string>
     <string name="forum">Forum</string>
-    <string name="edit_sessions">Edit Sessions</string>
-    <string name="edit_course">Edit Course</string>
-    <string name="new_course_password">New Course Password</string>
-    <string name="update_course">Update Course</string>
-    <string name="update_session">Update Session</string>
-    <string name="comment">Comment</string>
-    <string name="cancel">Cancel</string>
-    <string name="comment_content">Comment contents</string>
-    <string name="post">Post</string>
+    <string name="edit_sessions">Editer les sessions</string>
+    <string name="edit_course">Modifier le cours</string>
+    <string name="new_course_password">Nouveau mot de passe du cours</string>
+    <string name="update_course">Mise à jour du cours</string>
+    <string name="update_session">Session de mise à jour</string>
+    <string name="comment">Commentaire</string>
+    <string name="cancel">Annuler</string>
+    <string name="comment_content">Contenu du commentaire</string>
+    <string name="post">Poster</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -125,14 +126,13 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Paramètres instellings</string>
     <string name="title_activity_lecture_course_forum">LectureCourseForum</string>
-    <string name="title_activity_test">test</string>
+    <string name="title_activity_test">tester</string>
 
-    <string name="title_activity_timetable">timetable</string>
+    <string name="title_activity_timetable">calendrier</string>
     <string name="title_activity_view_session">viewSession</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_venue_list">VenueList</string>
+    <string name="hello_blank_fragment">Bonjour fragment vierge</string>
 </resources>

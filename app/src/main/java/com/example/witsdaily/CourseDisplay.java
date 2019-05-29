@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.witsdaily.Forum.LectureCourseForum;
 import com.example.witsdaily.Survey.SurveyCreator;
 
 import org.json.JSONArray;

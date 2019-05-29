@@ -110,5 +110,10 @@ public class DatabaseAccessor {
         }
         return false;
     }
+    public void updateRecords(String tableName,ContentValues values,String personNumber){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.update(tableName,values,TableSettings.COLUMN_NAME_PERSONNUMBER+" = ?",new String[]{personNumber});
+        System.out.println("Successfull update");
+    }
 
 }
