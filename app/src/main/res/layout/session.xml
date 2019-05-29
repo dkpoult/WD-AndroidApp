@@ -23,7 +23,7 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Building" />
+            android:text="@string/building" />
 
         <android.support.v7.widget.AppCompatAutoCompleteTextView
             android:id="@+id/venue"
@@ -44,7 +44,7 @@
             android:id="@+id/textView20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Room" />
+            android:text="@string/room" />
 
         <Space
             android:layout_width="wrap_content"
@@ -70,7 +70,7 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Repeat Type" />
+            android:text="@string/repeat_type" />
 
         <Space
             android:layout_width="wrap_content"
@@ -94,7 +94,7 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Repeat Frequency" />
+            android:text="@string/repeat_frequency" />
 
         <Space
             android:layout_width="wrap_content"
@@ -120,7 +120,7 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Next Occurrence" />
+            android:text="@string/next_occurrence" />
 
         <TextView
             android:id="@+id/time"
@@ -130,7 +130,7 @@
             android:ems="10"
             android:gravity="center"
             android:onClick="showTimePicker"
-            android:text="time" />
+            android:text="@string/time" />
 
         <TextView
             android:id="@+id/date"
@@ -140,7 +140,7 @@
             android:ems="10"
             android:gravity="center"
             android:onClick="showDatePicker"
-            android:text="date" />
+            android:text="@string/date" />
 
         <Space
             android:layout_width="5dp"
@@ -158,7 +158,7 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Type" />
+            android:text="@string/type" />
 
         <Space
             android:layout_width="wrap_content"
@@ -181,7 +181,7 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Duration in minutes" />
+            android:text="@string/duration_in_minutes" />
 
         <EditText
             android:id="@+id/duration"
@@ -203,7 +203,7 @@
             android:id="@+id/tView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add a cancellation" />
+            android:text="@string/add_a_cancelation" />
 
         <Space
             android:layout_width="wrap_content"
@@ -218,7 +218,7 @@
             android:ems="10"
             android:gravity="center"
             android:onClick="showDateSelector"
-            android:text="cancellation date" />
+            android:text="@string/cancellation_date" />
 
         <Button
             android:id="@+id/addCancellation"
@@ -226,7 +226,7 @@
             android:layout_height="30dp"
             android:layout_weight="1"
             android:background="@drawable/rounded_button"
-            android:text="add"
+            android:text="@string/add"
             android:textColor="@color/colorWhite" />
 
         <Space
@@ -244,7 +244,7 @@
             android:id="@+id/tVew"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancellations" />
+            android:text="@string/cancellations" />
 
         <TextView
             android:id="@+id/cancellations"
@@ -263,13 +263,13 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/rounded_button"
-        android:text="remove Cancellations"
+        android:text="@string/remove_cancellations"
         android:textColor="@color/colorWhite" />
 
     <CheckBox
         android:id="@+id/delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Delete" />
+        android:text="@string/delete" />
 
 </LinearLayout>

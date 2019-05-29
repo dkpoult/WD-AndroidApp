@@ -57,7 +57,7 @@
             android:id="@+id/venue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="venue"
+            android:text="@string/venue"
             android:layout_marginBottom="10dp"
             android:textColor="@color/colorWhite"
             android:background="@drawable/rounded_button"

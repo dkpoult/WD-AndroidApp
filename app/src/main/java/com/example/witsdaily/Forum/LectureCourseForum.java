@@ -68,6 +68,7 @@ String user_token,personNumber,forumCode;
 
                             String likes = String.valueOf(Integer.parseInt(upscore)-Integer.parseInt(downscore));
                             tvLikeCount.setText("("+likes+")");
+                            tvLikeCount.setTag(likes);
 
                             TextView tvResponse = (TextView)newPost.findViewById(R.id.tvResponse);
                             TextView tvPersonNumber = (TextView)newPost.findViewById(R.id.tvPersonNumber);

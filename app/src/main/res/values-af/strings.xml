@@ -6,7 +6,7 @@
     <string name="password">wagwoord</string>
     <string name="title_activity_home_screen">Huis skerm</string>
     <string name="personid">PersonID</string>
-    <string name="title_activity_course_forum">courseForum</string>
+    <string name="title_activity_course_forum">KursusForum</string>
     <string name="view_unregistered_courses">sien ongeregistreerde kursusse</string>
     <string name="timetable">rooster</string>
     <string name="logout">teken uit</string>
@@ -135,4 +135,40 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hallo leë fragment</string>
+    <string name="title_activity_venue_list">VenueList</string>
+    <string name="submit_answer">Dien antwoord in</string>
+    <string name="apply_changes">Pas veranderinge toe</string>
+    <string name="enter_numerical_value">Voer numeriese waarde in</string>
+    <string name="enter_text">Voer teks in</string>
+    <string name="disable_notifications">Deaktiveer kennisgewings</string>
+    <string name="survey_title">Opname Titel</string>
+    <string name="survey_type">Opname Tipe:</string>
+    <string name="options">opsies</string>
+    <string name="insert_option">Voeg opsie in</string>
+    <string name="add_option">Voeg opsie by</string>
+    <string name="remove_selected">Verwyder geselekteerde</string>
+    <string name="send_survey">Stuur Opname</string>
+    <string name="end_get_results">Eindig / kry resultate</string>
+    <string name="okay">Goed</string>
+    <string name="view_on_map">Kyk op kaart</string>
+    <string name="venue_code">Plekkode:</string>
+    <string name="venue_code_here">Tik die plek kode hier</string>
+    <string name="enroll">Inskryf</string>
+    <string name="enrollment_key">Enrolement sleutel (indien nodig)</string>
+    <string name="remove_cancellations">Kansellasies verwyder</string>
+    <string name="add">Voeg</string>
+    <string name="delete">verwyder</string>
+    <string name="cancellations">kansellasies</string>
+    <string name="cancellation_date">Kansellasiedatum</string>
+    <string name="add_a_cancelation">Voeg \'n kansellasie by</string>
+    <string name="duration_in_minutes">Duur in minute</string>
+    <string name="type">tipe:</string>
+    <string name="time">tyd:</string>
+    <string name="date">datum:</string>
+    <string name="next_occurrence">Volgende voorkoms</string>
+    <string name="repeat_frequency">Herhaal Frekwensie</string>
+    <string name="repeat_type">Herhaal Tipe</string>
+    <string name="room">kamer</string>
+    <string name="building">gebou</string>
+    <string name="venue">Lokaal:</string>
 </resources>

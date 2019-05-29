@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Venue Code:" />
+                android:text="@string/venue_code" />
 
             <android.support.v7.widget.AppCompatAutoCompleteTextView
                 android:id="@+id/eText"
@@ -32,20 +32,20 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
+                android:hint="@string/venue_code_here"
                 android:inputType="textPersonName"
-                android:text=""
-                android:hint="type the venue code here"/>
+                android:text="" />
         </LinearLayout>
 
         <Button
-            android:layout_marginTop="10dp"
-            android:background="@drawable/rounded_button"
-            android:textColor="@color/colorWhite"
             android:id="@+id/button1"
-            android:onClick="viewOnMap"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="View on Map" />
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_button"
+            android:onClick="viewOnMap"
+            android:text="@string/view_on_map"
+            android:textColor="@color/colorWhite" />
 
 
     </LinearLayout>

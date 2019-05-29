@@ -14,7 +14,7 @@
     <string name="create_course">Criar curso</string>
     <string name="course_description">Descrição do Curso</string>
     <string name="course_code">Código do curso</string>
-    <string name="link_course">Link Course</string>
+    <string name="link_course">Ligação Curso</string>
     <string name="create_post">Criar postagem</string>
     <string name="post_title">Título da postagem</string>
     <string name="post_body">Post Body</string>
@@ -135,4 +135,40 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Olá fragmento em branco</string>
+    <string name="title_activity_venue_list">VenueList</string>
+    <string name="submit_answer">Enviar resposta</string>
+    <string name="apply_changes">Aplicar mudanças</string>
+    <string name="enter_numerical_value">Insira o valor numérico</string>
+    <string name="enter_text">Digite o texto</string>
+    <string name="disable_notifications">Desativar as notificações</string>
+    <string name="survey_title">Título da pesquisa</string>
+    <string name="survey_type">Tipo de pesquisa:</string>
+    <string name="options">Opções</string>
+    <string name="insert_option">Inserir opção</string>
+    <string name="add_option">Adicionar opção</string>
+    <string name="remove_selected">Remover selecionados</string>
+    <string name="send_survey">Enviar pesquisa</string>
+    <string name="end_get_results">End / Get Results</string>
+    <string name="okay">OK</string>
+    <string name="view_on_map">Visualizar no mapa</string>
+    <string name="venue_code">Código do Local:</string>
+    <string name="venue_code_here">digite o código do local aqui</string>
+    <string name="enroll">Inscreva-se</string>
+    <string name="enrollment_key">Chave de Enrolamento (se necessário)</string>
+    <string name="remove_cancellations">remover cancelamentos</string>
+    <string name="add">Adicionar</string>
+    <string name="delete">Excluir</string>
+    <string name="cancellations">Cancelamentos</string>
+    <string name="cancellation_date">Data de cancelamento</string>
+    <string name="add_a_cancelation">Adicione um cancelamento</string>
+    <string name="duration_in_minutes">Duração em minutos</string>
+    <string name="type">Tipo:</string>
+    <string name="time">Tempo:</string>
+    <string name="date">Encontro:</string>
+    <string name="next_occurrence">Próxima ocorrência</string>
+    <string name="repeat_frequency">Repetir Freqüência</string>
+    <string name="repeat_type">Repetir Tipo</string>
+    <string name="room">Sala</string>
+    <string name="building">Construção</string>
+    <string name="venue">Local:</string>
 </resources>

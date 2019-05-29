@@ -81,6 +81,7 @@ View currentAnswer = null;
             String downscore = titlePost.getString("downscore");
             String likes = String.valueOf(Integer.parseInt(upscore)-Integer.parseInt(downscore));
             tvLikeCount.setText("("+likes+")");
+            tvLikeCount.setTag(likes);
             tvForumTitle.setText(titlePost.getString("title"));
             tvResponse.setText(titlePost.getString("body"));
             tvPersonNumber.setText(titlePost.getString("poster"));
@@ -117,15 +118,18 @@ View currentAnswer = null;
                 }
                 for (int i =0;i<comments.length();i++){
                     JSONObject currentPost = comments.getJSONObject(i);
-                    TextView tvLikeCount = (TextView)parent.findViewById(R.id.tvLikeCount);
+
                     View newPost = getLayoutInflater().inflate(R.layout.content_forum_post, null);
+                    TextView tvLikeCount = (TextView)newPost.findViewById(R.id.tvLikeCount);
                     TextView tvResponse = (TextView)newPost.findViewById(R.id.tvResponse);
                     TextView tvPersonNumber = (TextView)newPost.findViewById(R.id.tvPersonNumber);
                     Button btnMarked = (Button)newPost.findViewById(R.id.btnMarked);
                     String upscore = currentPost.getString("upscore");
                     String downscore = currentPost.getString("downscore");
+
                     String likes = String.valueOf(Integer.parseInt(upscore)-Integer.parseInt(downscore));
                     tvLikeCount.setText("("+likes+")");
+                    tvLikeCount.setTag(likes);
                     String code = currentPost.getString("code");
                     newPost.setTag(code);
                     RadioGroup rgLikes = newPost.findViewById(R.id.rgLikes);

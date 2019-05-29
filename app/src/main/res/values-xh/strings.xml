@@ -134,4 +134,40 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Sawubona ingqungquthela engenanto</string>
+    <string name="title_activity_venue_list">VenueList</string>
+    <string name="submit_answer">Thumela impendulo</string>
+    <string name="apply_changes">Faka iinguqulelo</string>
+    <string name="enter_numerical_value">Faka iNani lamaxabiso</string>
+    <string name="enter_text">Faka umbhalo</string>
+    <string name="disable_notifications">Khubaza izaziso</string>
+    <string name="survey_title">Isihloko soSaveyi</string>
+    <string name="survey_type">Uhlobo loSaveyi:</string>
+    <string name="options">Khetha</string>
+    <string name="insert_option">Faka Inketho</string>
+    <string name="add_option">Yongeza Option</string>
+    <string name="remove_selected">Susa Ukhethiweyo</string>
+    <string name="send_survey">Thumela i Survey</string>
+    <string name="end_get_results">Ukuphela / Fumana iziphumo</string>
+    <string name="okay">Kulungile</string>
+    <string name="view_on_map">Jonga kwiMephu</string>
+    <string name="venue_code">Ikhowudi yeendawo:</string>
+    <string name="venue_code_here">thayipha ikhowudi yeendawo apha</string>
+    <string name="enroll">Bhalisa</string>
+    <string name="enrollment_key">I-Enrolement Key (ukuba iyimfuneko)</string>
+    <string name="remove_cancellations">ukususa ukuChoxiswa</string>
+    <string name="add">Yongeza</string>
+    <string name="delete">Cima</string>
+    <string name="cancellations">Ukukhanselwa</string>
+    <string name="cancellation_date">Usuku lokukhansela</string>
+    <string name="add_a_cancelation">Yongeza ukukhansela</string>
+    <string name="duration_in_minutes">Ubude bemizuzu</string>
+    <string name="type">Uhlobo:</string>
+    <string name="time">Ixesha:</string>
+    <string name="date">Umhla:</string>
+    <string name="next_occurrence">Isiganeko esilandelayo</string>
+    <string name="repeat_frequency">Phinda Uphindaphindiwe</string>
+    <string name="repeat_type">Phinda Uhlobo</string>
+    <string name="room">Igumbi</string>
+    <string name="building">Ukwakha</string>
+    <string name="venue">Indawo:</string>
 </resources>
