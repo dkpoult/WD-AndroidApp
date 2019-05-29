@@ -27,6 +27,5 @@
         android:layout_height="wrap_content"
         android:text="@string/add_session"
         android:textColor="@color/colorWhite"
-        android:background="@drawable/rounded_button"
         android:onClick = "addSesh"/>
 </LinearLayout>
