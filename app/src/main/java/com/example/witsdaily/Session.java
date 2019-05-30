@@ -2,17 +2,20 @@ package com.example.witsdaily;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 public class Session implements Comparable<Session>{
-    String venue, repeatType, nextDate, sessionType;
+    String venue, repeatType, nextDate, sessionType, course;
     int repeatGap, duration;
     int dayVal = 0;
     Date time;
+    ArrayList<String> cancells = new ArrayList<>();
 
-    public Session(String venue,String repeatType,int repeatGap,String nextDate,String sessionType,int duration) throws ParseException {
+    public Session(String venue,String repeatType,int repeatGap,String nextDate,String sessionType,int duration, String course) throws ParseException {
         this.venue = venue;
+        this.course = course;
         this.repeatType = repeatType;
         this.repeatGap = repeatGap;
         this.nextDate = nextDate;

@@ -1,5 +1,6 @@
 package com.example.witsdaily;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -29,6 +30,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 import static com.example.witsdaily.PhoneDatabaseContract.*;
 
 public class HomeScreen extends AppCompatActivity {
@@ -37,14 +40,17 @@ public class HomeScreen extends AppCompatActivity {
     String personNumber;
     String firebaseToken;
     StorageAccessor syncAccessor;
+    boolean enableNotifications = true;
     private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_screen);
+
         userToken = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
-
+        loadSettings();
+        setContentView(R.layout.activity_home_screen);
         syncAccessor  = new StorageAccessor(this, personNumber,userToken){
             @Override
             public void getData(JSONObject data) {
@@ -55,8 +61,25 @@ public class HomeScreen extends AppCompatActivity {
 
         addUserToDB();
 
-        FirebaseApp.initializeApp(getApplicationContext());
-        firebaseAuthenticate();
+        if (enableNotifications) {
+            FirebaseApp.initializeApp(getApplicationContext());
+            firebaseAuthenticate();
+        }
+        else{
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        FirebaseInstanceId.getInstance().deleteInstanceId();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        }
+
+
+
         getCourses();
         getUnenrolledCourses();
         addAvailableCourses();
@@ -70,6 +93,8 @@ public class HomeScreen extends AppCompatActivity {
         addAvailableCourses();
     }
 
+
+
     private void updateServerFCMToken(String newToken){
         StorageAccessor dataAccessor = new StorageAccessor(this, personNumber,userToken){
             @Override
@@ -80,6 +105,12 @@ public class HomeScreen extends AppCompatActivity {
         dataAccessor.updateServerFCMToken(newToken);
     }
     private void loginCustomTokenFirebase(final String mCustomToken){
+        try{
+            mAuth.signOut();
+        }
+        catch (Exception e){
+
+        }
         mAuth = FirebaseAuth.getInstance();
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnSuccessListener(new OnSuccessListener<InstanceIdResult>(){
@@ -124,7 +155,15 @@ public class HomeScreen extends AppCompatActivity {
 
             }
         };
+
         dataAccessor.firebaseAuthenticate();
+    }
+    private void loadSettings(){
+        WitsDailySettings settings = new WitsDailySettings(personNumber,userToken,getBaseContext(),this);
+        settings.loadLanguage(personNumber);
+        if (settings.getCurrentNotifications()==1){
+            enableNotifications = false;
+        }
     }
     private void addUserToDB(){ // possibly encrypt student number
         PhoneDatabaseHelper dbHelper = new PhoneDatabaseHelper(getApplicationContext());
@@ -139,6 +178,11 @@ public class HomeScreen extends AppCompatActivity {
             ContentValues values = new ContentValues();
             values.put(TablePerson.COLUMN_NAME_NUMBER,personNumber);
             db.insertOrThrow(TablePerson.TABLE_NAME,null,values);
+            values = new ContentValues();
+            values.put(TableSettings.COLUMN_NAME_NOTIFICATIONS,0);
+            values.put(TableSettings.COLUMN_NAME_PERSONNUMBER,personNumber);
+            values.put(TableSettings.COLUMN_NAME_LANGUAGE,"English");
+            db.insertOrThrow(TableSettings.TABLE_NAME,null,values);
         }
 
         cursor.close();
@@ -152,6 +196,11 @@ public class HomeScreen extends AppCompatActivity {
     }
     public void Create(View v){
         Intent i = new Intent(HomeScreen.this, CourseRegistration.class);
+        startActivity(i);
+    }
+
+    public void viewVenues(View v){
+        Intent i = new Intent(HomeScreen.this, VenueList.class);
         startActivity(i);
     }
 
@@ -268,6 +317,10 @@ public class HomeScreen extends AppCompatActivity {
         SharedPreferences.Editor settings = getSharedPreferences("com.wd", Context.MODE_PRIVATE).edit();
         settings.clear().apply();
         Intent i = new Intent(HomeScreen.this, LoginActivity.class);
+        startActivity(i);
+    }
+    public void clickSettings(View v){
+        Intent i = new Intent(HomeScreen.this, SettingsActivity.class);
         startActivity(i);
     }
 

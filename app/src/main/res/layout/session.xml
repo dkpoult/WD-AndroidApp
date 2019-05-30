@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:layout_margin="5dp"
     android:background="@drawable/rounder_corner"
-    android:padding="10dp"
-    android:layout_margin="5dp">
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="5dp">
 
     <TextView
         android:id="@+id/label"
@@ -22,14 +23,9 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Venue" />
+            android:text="@string/building" />
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <EditText
+        <android.support.v7.widget.AppCompatAutoCompleteTextView
             android:id="@+id/venue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,6 +34,33 @@
             android:text="" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/room" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <EditText
+            android:id="@+id/room"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="" />
+
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,7 +70,7 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Repeat Type" />
+            android:text="@string/repeat_type" />
 
         <Space
             android:layout_width="wrap_content"
@@ -56,11 +79,12 @@
 
         <Spinner
             android:id="@+id/spinner"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -70,7 +94,7 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Repeat Frequency" />
+            android:text="@string/repeat_frequency" />
 
         <Space
             android:layout_width="wrap_content"
@@ -86,6 +110,7 @@
             android:inputType="number" />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -95,22 +120,17 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Next Occurrence" />
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:text="@string/next_occurrence" />
 
         <TextView
             android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:ems="10"
             android:gravity="center"
-            android:text="time"
-            android:onClick="showTimePicker"/>
+            android:onClick="showTimePicker"
+            android:text="@string/time" />
 
         <TextView
             android:id="@+id/date"
@@ -119,10 +139,16 @@
             android:layout_weight="1"
             android:ems="10"
             android:gravity="center"
-            android:text="date"
-            android:onClick="showDatePicker"/>
+            android:onClick="showDatePicker"
+            android:text="@string/date" />
+
+        <Space
+            android:layout_width="5dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -132,7 +158,7 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Type" />
+            android:text="@string/type" />
 
         <Space
             android:layout_width="wrap_content"
@@ -141,7 +167,7 @@
 
         <Spinner
             android:id="@+id/type"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
     </LinearLayout>
@@ -155,12 +181,7 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Duration in minutes" />
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:text="@string/duration_in_minutes" />
 
         <EditText
             android:id="@+id/duration"
@@ -172,17 +193,83 @@
 
     </LinearLayout>
 
+
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <TextView
+            android:id="@+id/tView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_a_cancelation" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/cancelDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:gravity="center"
+            android:onClick="showDateSelector"
+            android:text="@string/cancellation_date" />
+
+        <Button
+            android:id="@+id/addCancellation"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_button"
+            android:text="@string/add"
+            android:textColor="@color/colorWhite" />
+
+        <Space
+            android:layout_width="5dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:id="@+id/tVew"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancellations" />
+
+        <TextView
+            android:id="@+id/cancellations"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/delCancels"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/rounded_button"
+        android:text="@string/remove_cancellations"
+        android:textColor="@color/colorWhite" />
 
     <CheckBox
         android:id="@+id/delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Delete" />
+        android:text="@string/delete" />
 
 </LinearLayout>

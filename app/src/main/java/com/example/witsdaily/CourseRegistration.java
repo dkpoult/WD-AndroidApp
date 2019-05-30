@@ -76,24 +76,18 @@ public class CourseRegistration extends AppCompatActivity {
         }
 
         final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/course/create_course", params,
-                new Response.Listener<JSONObject>(){
-                    @Override
-                    public void onResponse(JSONObject response){
-                        try {
-                            handleResponse(response.toString());
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                response -> {
+                    try {
+                        handleResponse(response.toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-                    }
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        String s = error.getLocalizedMessage();
-                        System.out.println(s);
-                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-                    }
+                error -> {
+                    String s = error.getLocalizedMessage();
+                    System.out.println(s);
+                    Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                 })
         {
         };

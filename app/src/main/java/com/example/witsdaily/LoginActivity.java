@@ -8,12 +8,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 //Test
 public class LoginActivity extends AppCompatActivity {
     String user_token;
@@ -25,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
 
         user_token = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
-
+        loadSettings();
         if(user_token != null && personNumber != null){
             doValidate(user_token, personNumber);
         }
@@ -34,6 +33,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     EditText sNum, pWord;
+    private void loadSettings(){
+        WitsDailySettings settings = new WitsDailySettings(personNumber,user_token,getBaseContext(),this);
+        settings.loadLanguage("0");
+    }
 
     public void doValidate(String user_token, String personNumber){
         JSONObject params = new JSONObject();
@@ -46,18 +49,10 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/auth/validate_token", params,
-                new Response.Listener<JSONObject>(){
-                    @Override
-                    public void onResponse(JSONObject response){
-                        doValidateMessage(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        String s = error.getLocalizedMessage();
-                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-                    }
+                this::doValidateMessage,
+                error -> {
+                    String s = error.getLocalizedMessage();
+                    Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                 })
         {
         };
@@ -84,6 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                 System.out.println(personNumber);
                 sharedPreferences.edit().putString("personNumber", personNumber).apply();
                 Intent i = new Intent(LoginActivity.this, HomeScreen.class);
+                finish();
                 startActivity(i);
 
                 break;
@@ -129,6 +125,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void doSignIn(View v) {
+        System.out.println("logging in");
         // When the user signs in this will execute
         sNum = findViewById(R.id.sNumber);
         pWord = findViewById(R.id.password);
@@ -137,6 +134,8 @@ public class LoginActivity extends AppCompatActivity {
 
         JSONObject params = new JSONObject();
         try {
+            System.out.println(personNumber);
+            System.out.println(password);
             params.put("personNumber", personNumber);
             params.put("password", password);
         } catch (JSONException e) {
@@ -144,24 +143,19 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         final JsonObjectRequest request = new JsonObjectRequest("https://wd.dimensionalapps.com/auth/login", params,
-                new Response.Listener<JSONObject>(){
-                    @Override
-                    public void onResponse(JSONObject response){
-                        try {
-                            doOutput(response.toString());
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                response -> {
+                    try {
+                        System.out.println(response);
+                        doOutput(response.toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-                    }
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        String s = error.getLocalizedMessage();
-                        System.out.println(s);
-                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-                    }
+                error -> {
+                    String s = error.getLocalizedMessage();
+                    System.out.println(s);
+                    Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                 })
         {
         };
@@ -176,6 +170,7 @@ public class LoginActivity extends AppCompatActivity {
     // called when a personclicks the register text
     public void doRegister(View v){
         Intent i = new Intent(LoginActivity.this, UserRegistration.class);
+//        finish();
         startActivity(i);
     }
 
@@ -193,6 +188,7 @@ public class LoginActivity extends AppCompatActivity {
                 sharedPreferences.edit().putString("userToken", user_token).apply();
                 sharedPreferences.edit().putString("personNumber", personNumber).apply();
                 Intent i = new Intent(LoginActivity.this, HomeScreen.class);
+                finish();
                 startActivity(i);
 
                 break;

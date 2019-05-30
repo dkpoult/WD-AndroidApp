@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:orientation="vertical"
+    tools:context=".SettingsActivity">
+
+    <Switch
+        android:id="@+id/switchNotifications"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="@string/disable_notifications" />
+
+    <Spinner
+        android:id="@+id/spnrLanguages"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:padding="7dp"
+        android:background="@drawable/forum_background"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btnChangeLanguage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rounded_button"
+        android:onClick="clickApplyChanges"
+        android:text="@string/apply_changes"
+        android:textColor="@color/colorWhite" />
+</LinearLayout>

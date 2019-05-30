@@ -50,9 +50,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:onClick="clickOkay"
         android:background="@drawable/rounded_button"
-        android:text="Okay" />
+        android:onClick="clickOkay"
+        android:text="@string/okay" />
         android:layout_height="wrap_content" />
 
 

@@ -20,7 +20,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="30dp"
         android:ems="10"
-        android:hint="Enrolement Key (If required)"
+        android:hint="@string/enrollment_key"
         android:inputType="textPersonName" />
 
     <Button
@@ -28,6 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="clickEnroll"
-        android:text="Enroll" />
+        android:background="@drawable/rounded_button"
+        android:textColor="@color/colorWhite"
+        android:text="@string/enroll" />
 
 </LinearLayout>

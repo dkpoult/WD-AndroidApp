@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="false"
+    android:orientation="vertical"
+    android:background="@drawable/forum_background"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/tvPersonNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="PersonNumber" />
+
+    <TextView
+        android:id="@+id/tvResponse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Some response to forum"
+        android:textColor="#000000"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:id="@+id/llActions"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:id="@+id/rgLikes"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/btnUpvote"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="11dp"
+
+                android:button="@drawable/forum_upvote"
+                android:tag="1" />
+
+            <TextView
+                android:id="@+id/tvLikeCount"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="11dp"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="(0)"
+                android:textSize="20sp"
+                android:textStyle="italic" />
+
+            <RadioButton
+                android:id="@+id/btnDownVote"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="11dp"
+                android:layout_weight="1"
+                android:button="@drawable/forum_downvote"
+                android:tag="-1" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btnMarked"
+            android:onClick="clickForumMarked"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/forum_mark_answer" />
+
+        <Button
+            android:id="@+id/btnReply"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/forum_reply"
+            android:onClick="clickShowReply" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llCommentView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility= "gone"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/forum_background"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <EditText
+            android:id="@+id/edtComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/comment_content"
+            android:inputType="textPersonName" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:background="@drawable/rounded_button"
+                android:layout_weight="1"
+                android:onClick="clickCancelComment"
+                android:text="@string/cancel" />
+
+            <Button
+                android:id="@+id/btnComment"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".25"
+                android:background="@drawable/rounded_button"
+                android:textColor="@color/colorWhite"
+                android:onClick="clickComment"
+                android:text="@string/comment" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llChildren"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="7dp"
+        android:orientation="vertical"></LinearLayout>
+
+</LinearLayout>

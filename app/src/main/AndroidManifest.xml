@@ -11,10 +11,26 @@
         android:minSdkVersion="8"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
+
+        <activity
+            android:name=".SettingsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Forum.ForumAddPost"
+            android:theme="@style/Theme.AppCompat.Dialog" />
+        <activity
+            android:name=".Forum.ViewForum"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Forum.LectureCourseForum"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".VenueList"
+            android:label="@string/title_activity_venue_list"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".Survey.SurveyAnswer"
-            android:theme="@style/Theme.AppCompat.Dialog"
-            />
+            android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
             android:name=".Survey.SurveyCreator"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -67,7 +83,6 @@
         <activity
             android:name=".timetable"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".LoginActivity"
             android:label="activity_login"

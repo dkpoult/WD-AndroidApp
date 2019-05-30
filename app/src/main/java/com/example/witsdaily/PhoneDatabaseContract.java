@@ -36,6 +36,13 @@ public final class PhoneDatabaseContract {
         public static final String COLUMN_NAME_COURSEID = "";
         public static final String COLUMN_NAME_TITLE = "";
     }
+    public static class TableSettings implements BaseColumns{
+        public static final String TABLE_NAME = "SETTINGS";
+        public static final String COLUMN_NAME_LANGUAGE = "Language";
+        public static final String COLUMN_NAME_NOTIFICATIONS = "Notifications";
+        public static final String COLUMN_NAME_PERSONNUMBER = "PersonNumber";
+
+    }
     /*
     * public static class TableNotifications implements BaseColumns {
     *   public static final String TABLE_NAME = "Notifications";

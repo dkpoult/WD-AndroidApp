@@ -19,28 +19,28 @@
         android:layout_marginTop="20dp"
         app:srcCompat="@drawable/logo" />
 
-    <EditText
-        android:id="@+id/edtCourseCode"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:ems="10"
-        android:hint="Course Code"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/rounder_corner"
-        android:paddingLeft="10dp"
-        android:maxLength="8"
-        android:inputType="textPersonName" />
+        <EditText
+            android:id="@+id/edtCourseCode"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounder_corner"
+            android:ems="10"
+            android:hint="@string/course_code"
+            android:inputType="textPersonName"
+            android:maxLength="8"
+            android:paddingLeft="10dp" />
 
-    <EditText
-        android:id="@+id/edtCourseName"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:ems="10"
-        android:hint="Course Name"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/rounder_corner"
-        android:paddingLeft="10dp"
-        android:inputType="textPersonName" />
+        <EditText
+            android:id="@+id/edtCourseName"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounder_corner"
+            android:ems="10"
+            android:hint="@string/course_name"
+            android:inputType="textPersonName"
+            android:paddingLeft="10dp" />
 
         <EditText
             android:id="@+id/edtCourseDescription"
@@ -49,22 +49,22 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/rounder_corner"
             android:ems="10"
-            android:hint="Course Description"
+            android:hint="@string/course_description"
             android:inputType="textMultiLine"
             android:maxHeight="140dp"
             android:paddingLeft="10dp"
             android:scrollbars="vertical" />
 
-    <Button
-        android:id="@+id/btnCreateCourse"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/rounded_button"
-        android:onClick="clickRegistration"
+        <Button
+            android:id="@+id/btnCreateCourse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_button"
+            android:onClick="clickRegistration"
 
-        android:text="Create Course"
-        android:textColor="#ffffff" />
+            android:text="@string/create_course"
+            android:textColor="#ffffff" />
 
     <TextView
         android:id="@+id/tvState"

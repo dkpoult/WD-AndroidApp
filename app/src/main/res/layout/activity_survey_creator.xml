@@ -20,22 +20,22 @@
         android:textStyle="bold"
         android:text="CourseCode" />
 
-    <EditText
-        android:id="@+id/edtTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Survey Title"
-        android:inputType="textPersonName" />
+        <EditText
+            android:id="@+id/edtTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/survey_title"
+            android:inputType="textPersonName" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:text="Survey Type:" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/survey_type"
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
     <RadioGroup
         android:id="@+id/rgSurveyType"
@@ -78,7 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="Options"
+            android:text="@string/options"
             android:textSize="25sp"
             android:textStyle="bold" />
 
@@ -92,28 +92,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Insert Option"
+            android:hint="@string/insert_option"
             android:inputType="textPersonName" />
 
         <Button
             android:id="@+id/btnAddOption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="clickAddOption"
-            android:background="@drawable/rounded_button"
-            android:textColor="@color/colorWhite"
             android:layout_marginTop="10dp"
-            android:text="Add option" />
+            android:background="@drawable/rounded_button"
+            android:onClick="clickAddOption"
+            android:text="@string/add_option"
+            android:textColor="@color/colorWhite" />
 
         <Button
             android:id="@+id/btnRemoveSelected"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_button"
-            android:textColor="@color/colorWhite"
             android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_button"
             android:onClick="clickRemoveOption"
-            android:text="Remove Selected" />
+            android:text="@string/remove_selected"
+            android:textColor="@color/colorWhite" />
     </LinearLayout>
 
         <ProgressBar
@@ -134,25 +134,25 @@
             android:text="Survey In progress" />
 
         <Button
-        android:id="@+id/btnSendSurvey"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="clickSendSurvey"
-        android:background="@drawable/rounded_button"
-        android:textColor="@color/colorWhite"
-        android:layout_marginTop="10dp"
-        android:text="Send Survey" />
+            android:id="@+id/btnSendSurvey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_button"
+            android:onClick="clickSendSurvey"
+            android:text="@string/send_survey"
+            android:textColor="@color/colorWhite" />
 
         <Button
             android:id="@+id/btnEndSurvey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="clickEndSurvey"
-            android:enabled="false"
-            android:background="@drawable/rounded_button"
-            android:textColor="@color/colorWhite"
             android:layout_marginTop="10dp"
-            android:text="End/Get Results" />
+            android:background="@drawable/rounded_button"
+            android:enabled="false"
+            android:onClick="clickEndSurvey"
+            android:text="@string/end_get_results"
+            android:textColor="@color/colorWhite" />
 
     </LinearLayout>
 </ScrollView>

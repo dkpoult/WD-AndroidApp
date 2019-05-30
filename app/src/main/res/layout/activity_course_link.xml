@@ -19,13 +19,13 @@
         android:id="@+id/edtCourseCode"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:ems="10"
-        android:hint="Course Code"
         android:layout_marginTop="20dp"
         android:background="@drawable/rounder_corner"
-        android:paddingLeft="10dp"
+        android:ems="10"
+        android:hint="@string/course_code"
+        android:inputType="textPersonName"
         android:maxLength="8"
-        android:inputType="textPersonName" />
+        android:paddingLeft="10dp" />
 
 
     <Button
@@ -35,7 +35,7 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/rounded_button"
         android:onClick="clickLinkCourse"
-        android:text="Link Course"
+        android:text="@string/link_course"
         android:textColor="#ffffff" />
 
     <TextView

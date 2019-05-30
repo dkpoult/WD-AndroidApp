@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="clickAnnouncement"
-            android:text="Make Announcement"
+            android:text="@string/make_announcement"
             android:background="@drawable/rounded_button"
             android:layout_marginTop="10dp"
             android:textColor="@color/colorWhite"/>
@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="clickChat"
-            android:text="Course Chat"
+            android:text="@string/course_chat"
             android:background="@drawable/rounded_button"
             android:layout_marginTop="10dp"
             android:textColor="@color/colorWhite" />
@@ -61,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="clickSurvey"
-            android:text="Create Survey"
+            android:text="@string/create_survey"
             android:background="@drawable/rounded_button"
             android:layout_marginTop="10dp"
             android:textColor="@color/colorWhite" />
@@ -71,7 +71,7 @@
             android:onClick = "doForum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Forum"
+            android:text="@string/forum"
             android:background="@drawable/rounded_button"
             android:layout_marginTop="10dp"
             android:textColor="@color/colorWhite" />
@@ -81,7 +81,7 @@
             android:onClick = "editSessions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Edit Sessions"
+            android:text="@string/edit_sessions"
             android:background="@drawable/rounded_button"
             android:layout_marginTop="10dp"
             android:textColor="@color/colorWhite" />
@@ -91,7 +91,7 @@
             android:onClick = "editCourse"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Edit Course"
+            android:text="@string/edit_course"
             android:background="@drawable/rounded_button"
             android:layout_marginTop="10dp"
             android:textColor="@color/colorWhite" />
