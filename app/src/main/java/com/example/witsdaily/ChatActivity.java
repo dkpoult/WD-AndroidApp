@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -23,6 +24,7 @@ public class ChatActivity extends AppCompatActivity {
     ChatAccessor newChatAccesor;
     boolean connected;
     LinearLayout mainLayout;
+    LinearLayout qScroll;
     final LinearLayout.LayoutParams params =
             new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
     ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -50,7 +52,9 @@ public class ChatActivity extends AppCompatActivity {
             }
         };
         connected  = newChatAccesor.establishConnection();
-        mainLayout = (LinearLayout)findViewById(R.id.chatLayout);
+        mainLayout = findViewById(R.id.chatLayout);
+        qScroll = findViewById(R.id.qChat);
+        qScroll.setVisibility(View.GONE);
         params.topMargin = 10;
 
         addPreviousMessages();
@@ -70,13 +74,10 @@ public class ChatActivity extends AppCompatActivity {
     }
     private void addSingleMessage(String message, String timeStamp,boolean outgoing) {
         View newMessage = getLayoutInflater().inflate(R.layout.chat_message, null);
-        newMessage.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                view.setVisibility(View.GONE);
+        newMessage.setOnLongClickListener(view -> {
+            view.setVisibility(View.GONE);
 
-                return false;
-            }
+            return false;
         });
         TextView messageContents = newMessage.findViewById(R.id.tvMessageContents);
         TextView time = newMessage.findViewById(R.id.tvTime);
@@ -91,7 +92,7 @@ public class ChatActivity extends AppCompatActivity {
     }
     public void clickSendMessage(View v){
         String message;
-        EditText edtMessage = (EditText)findViewById(R.id.edtMessage);
+        EditText edtMessage = findViewById(R.id.edtMessage);
         if (edtMessage.getText().toString().equals("")){
             return;
         }
@@ -111,7 +112,11 @@ public class ChatActivity extends AppCompatActivity {
     public void onBackPressed() {
         newChatAccesor.onDestroy();
         this.finish();
-        return;
 
     }
+
+    public void clickSwitch(View v){
+        
+    }
+
 }
