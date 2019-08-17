@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/forum_background"
+    android:clickable="false"
+    android:orientation="vertical"
+    android:layout_marginBottom="50dp"
+    android:animateLayoutChanges="true"
+    android:padding="20dp">
+
+
+    <TextView
+        android:id="@+id/tvQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Some response to forum"
+        android:textColor="#000000"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:id="@+id/llActions"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:id="@+id/rgLikes"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/btnUpvote"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="11dp"
+
+                android:button="@drawable/forum_upvote"
+                android:clickable="true"
+                android:onClick="clickQuestionVote"
+                android:tag="1" />
+
+            <TextView
+                android:id="@+id/tvScore"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="11dp"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="(0)"
+                android:textSize="20sp"
+                android:textStyle="italic" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+</LinearLayout>

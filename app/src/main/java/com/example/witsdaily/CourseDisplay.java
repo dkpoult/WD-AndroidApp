@@ -118,6 +118,19 @@ public class CourseDisplay extends AppCompatActivity {
     public void clickChat(View v){
         Intent i = new Intent(CourseDisplay.this, ChatActivity.class);
         i.putExtra("courseCode",courseCodeString);
+        i.putExtra("audience","normal");
+        startActivity(i);
+    }
+    public void clickTutorChat(View v){
+        Intent i = new Intent(CourseDisplay.this, ChatActivity.class);
+        i.putExtra("courseCode",courseCodeString);
+        i.putExtra("audience","tutor");
+        startActivity(i);
+    }
+    public void clickQuestions(View v){
+        Intent i = new Intent(CourseDisplay.this, LiveQuestions.class);
+        i.putExtra("courseCode",courseCodeString);
+        i.putExtra("audience","normal");
         startActivity(i);
     }
     public void clickSurvey(View v){

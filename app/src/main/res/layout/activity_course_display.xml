@@ -57,6 +57,25 @@
             android:textColor="@color/colorWhite" />
 
         <Button
+            android:id="@+id/btnTutorChat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="clickTutorChat"
+            android:background="@drawable/rounded_button"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorWhite"
+            android:text="Tutor Chat" />
+        <Button
+            android:id="@+id/btnQuestions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="clickQuestions"
+            android:text="Live Questions"
+            android:background="@drawable/rounded_button"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorWhite" />
+
+        <Button
             android:id="@+id/btnCreateSurvey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
 
     android:orientation="vertical"
-    tools:context=".ChatActivity">
+    tools:context=".LiveQuestions">
 
     <ScrollView
         android:id="@+id/messageScroll"
@@ -19,7 +19,7 @@
         android:focusedByDefault="true">
 
         <LinearLayout
-            android:id="@+id/chatLayout"
+            android:id="@+id/questionLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusable="true"
@@ -40,23 +40,23 @@
         android:padding="10dp">
 
         <EditText
-            android:id="@+id/edtMessage"
+            android:id="@+id/edtQuestion"
             android:layout_width="253dp"
             android:layout_height="50dp"
             android:layout_weight="0.9"
             android:background="@drawable/rounder_corner"
             android:ems="10"
-            android:hint="@string/type_message"
+            android:hint="@string/type_question"
             android:inputType="textPersonName"
             android:padding="5dp" />
 
         <Button
-            android:id="@+id/btnSendMessage"
+            android:id="@+id/btnSendQuestion"
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/rounder_corner"
-            android:onClick="clickSendMessage"
+            android:onClick="clickSendQuestion"
             android:text="@string/send" />
     </LinearLayout>
 
