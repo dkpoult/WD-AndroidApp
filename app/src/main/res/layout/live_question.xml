@@ -29,15 +29,15 @@
         <RadioGroup
             android:id="@+id/rgLikes"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <RadioButton
+            <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/btnUpvote"
-                android:layout_width="30dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="11dp"
-
+                android:checked = "false"
                 android:button="@drawable/forum_upvote"
                 android:clickable="true"
                 android:onClick="clickQuestionVote"
@@ -45,7 +45,7 @@
 
             <TextView
                 android:id="@+id/tvScore"
-                android:layout_width="30dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="11dp"
                 android:layout_weight="1"

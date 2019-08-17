@@ -39,7 +39,7 @@ public class ChatActivity extends AppCompatActivity {
         //courseCode now has a specific type, ie tutor or normal
         String audience = i.getStringExtra("audience");
         courseCode += ":"+audience;
-        newChatAccesor = new SocketAccessor(personNumber,userToken,courseCode,"CHAT",true) {
+        newChatAccesor = new SocketAccessor(personNumber,userToken,courseCode,"CHAT") {
             @Override
             void onMessage(StompMessage topicMessage) {
                try{

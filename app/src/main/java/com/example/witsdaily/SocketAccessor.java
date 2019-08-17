@@ -41,19 +41,15 @@ public abstract class SocketAccessor {
     private StompClient mStompClient;
     private CompositeDisposable compositeDisposable;
     String personNumber, userToken, courseCode,socketType; // course code is now with type,, ie COMS1234:Tutor
-    String sendStream;
+    String sendStream = "sendMessage"; // default
     String TAG = "Websocket connection";
     private Disposable mRestPingDisposable;
-    public SocketAccessor(String pPersonNumber, String pUserToken, String pCourseCode,String pType,boolean pSend) {
+    public SocketAccessor(String pPersonNumber, String pUserToken, String pCourseCode,String pType) {
         personNumber = pPersonNumber;
         userToken = pUserToken;
         courseCode = pCourseCode;
         mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "wss://wd.dimensionalapps.com/chatsocket/websocket");
         socketType = pType;
-        if (pSend)
-            sendStream = "sendMessage";
-        else
-            sendStream = "deleteMessage";
         resetSubscriptions();
     }
 
@@ -112,7 +108,17 @@ public abstract class SocketAccessor {
         return true;
     }
 
-
+    public void setMessageType(String messageType){
+        socketType = messageType;
+    }
+    public void setStreamType(boolean pStreamType){
+        if (pStreamType){
+            sendStream = "sendMessage";
+        }
+        else{
+            sendStream = "deleteMessage";
+        }
+    }
     private void sendEchoViaStomp(String message) {
 
         JSONObject messageObject = new JSONObject();
