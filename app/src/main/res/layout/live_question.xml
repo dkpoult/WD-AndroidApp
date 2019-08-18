@@ -46,6 +46,7 @@
                 android:checked = "false"
                 android:button="@drawable/forum_upvote"
                 android:clickable="true"
+                android:focusedByDefault="true"
                 android:onClick="clickQuestionVote"
                 android:tag="1" />
 

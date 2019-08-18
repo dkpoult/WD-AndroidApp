@@ -183,7 +183,7 @@ public class LiveQuestions extends AppCompatActivity {
         tvPersonNumber.setText(pPersonNumber);
        // totalScore.setText("("+score+")");
        // int a = new Random().nextInt();
-        totalScore.setText("("+voted+")");
+        totalScore.setText("("+score+")");
         questionContents.setText(content);
         params.topMargin = 15;
 
@@ -246,7 +246,7 @@ public class LiveQuestions extends AppCompatActivity {
         LinearLayout mainLayout = findViewById(R.id.questionLayout);
         mainLayout.removeView(currentView);
         for (int i =0;i<mainLayout.getChildCount();i++){
-            if ((Integer)(mainLayout.getChildAt(i).getTag())<score){
+            if ((Integer)(mainLayout.getChildAt(i).getTag())<=score){
                 mainLayout.addView(currentView,i);
                 return;
             }
