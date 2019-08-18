@@ -2,6 +2,8 @@ package com.example.witsdaily;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +19,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Random;
 
 import ua.naiksoftware.stomp.dto.StompMessage;
@@ -24,6 +28,9 @@ import ua.naiksoftware.stomp.dto.StompMessage;
 public class LiveQuestions extends AppCompatActivity {
     String userToken,personNumber,courseCode;
     SocketAccessor newQuestionAccessor;
+    final LinearLayout.LayoutParams params =
+            new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
     boolean connected;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +56,9 @@ public class LiveQuestions extends AppCompatActivity {
                         int score = question.getInt("score");
                         int voted = question.getInt("voted");
                         long id = question.getLong("id");
-                        addSingleQuestion(content, score, voted, id);
+                        String userType = question.getString("tag");
+                        String pPersonNumber = question.getString("personNumber");
+                        addSingleQuestion(content, score, voted, id,userType,pPersonNumber);
                     }
                     else if (messageType.equals("LIVE_QUESTION_VOTE")){
                         String[] values = (new JSONObject(topicMessage.getPayload())).getString("content").split(" ");
@@ -57,6 +66,7 @@ public class LiveQuestions extends AppCompatActivity {
                         questionInfo.put("id",Long.valueOf(values[0]));
                         questionInfo.put("score",Long.valueOf(values[1]));
                         receiveVote(questionInfo);
+
                     }
                     else if (messageType.equals("DELETE")){
                         String id = question.getString("content");
@@ -95,12 +105,16 @@ public class LiveQuestions extends AppCompatActivity {
 
                         int j = messages.length()-i-1;
 
+
+
                         JSONObject question = messages.getJSONObject(j);
                         String content = question.getString("content");
                         int score = question.getInt("score");
                         int voted = question.getInt("voted");
                         long id = question.getLong("id");
-                        addSingleQuestion(content,score,voted,id);
+                        String pPersonNumber = question.getString("personNumber");
+                        String userType = question.getString("tag");
+                        addSingleQuestion(content, score, voted, id,userType,pPersonNumber);
 
                     }
                     deleteBadMessages();
@@ -113,7 +127,7 @@ public class LiveQuestions extends AppCompatActivity {
         };
         dataAccessor.getChatTypeMessages(courseCode,"LIVE_QUESTION");
     }
-    public void addSingleQuestion(String content, int score, int voted,long id){
+    public void addSingleQuestion(String content, int score, int voted,long id,String userType,String pPersonNumber){
         LinearLayout mainLayout = (LinearLayout)findViewById(R.id.questionLayout);
 
         View newQuestion = getLayoutInflater().inflate(R.layout.live_question, null);
@@ -138,15 +152,44 @@ public class LiveQuestions extends AppCompatActivity {
                 return false;
             }
         });
+       // newQuestion.setBackgroundColor(Color.rgb(241,210,124));//in
+        //newQuestion.setBackgroundColor(Color.rgb(220,248,198));//out
+        //newQuestion.setBackgroundColor(Color.rgb(245,172,172));//lecturer
+        //
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            switch (userType){
+                //  case "tutor": newQuestion.setBackgroundColor(Color.rgb(181,218,240));break;//tutor
+                // case "lecturer":newQuestion.setBackgroundColor(Color.rgb(245,172,172));break;//lecturer
+                case "tutor": newQuestion.setBackgroundTintList(this.getResources().getColorStateList(R.color.tutor));break;//tutor
+                case "lecturer":newQuestion.setBackgroundTintList(this.getResources().getColorStateList(R.color.lecturer));break;//lecturer
+                case "normal":newQuestion.setBackgroundTintList(this.getResources().getColorStateList(R.color.incoming));break;
+            }
+
+        }else{
+            switch (userType){
+                //  case "tutor": newQuestion.setBackgroundColor(Color.rgb(181,218,240));break;//tutor
+                // case "lecturer":newQuestion.setBackgroundColor(Color.rgb(245,172,172));break;//lecturer
+                case "tutor": newQuestion.setBackgroundColor(Color.rgb(181,218,240));break;//tutor
+                case "lecturer":newQuestion.setBackgroundColor(Color.rgb(245,172,172));break;//lecturer
+                case "normal":newQuestion.setBackgroundColor(Color.rgb(241,210,124));break;//in
+            }
+
+        }
+
         newQuestion.setTag(score);
         TextView questionContents = newQuestion.findViewById(R.id.tvQuestion);
         TextView totalScore = newQuestion.findViewById(R.id.tvScore);
+        TextView tvPersonNumber = newQuestion.findViewById(R.id.tvPersonNumber);
+        tvPersonNumber.setText(pPersonNumber);
        // totalScore.setText("("+score+")");
        // int a = new Random().nextInt();
         totalScore.setText("("+voted+")");
         questionContents.setText(content);
+        params.topMargin = 15;
 
-        mainLayout.addView(newQuestion);
+        newQuestion.setLayoutParams(params);
+        bubbleVote(newQuestion,score);
+        //mainLayout.addView(newQuestion);
     }
     public void clickSendQuestion(View v){
         String question;
@@ -191,14 +234,26 @@ public class LiveQuestions extends AppCompatActivity {
             int score =  voteInfo.getInt("score");
             TextView previousVote = currentQuestion.findViewById(R.id.tvScore);
             currentQuestion.setTag(score);
-
             previousVote.setText("("+score+")");
+            bubbleVote(currentQuestion,score);
+
         }catch (Exception e){
 
         }
 
     }
+    private void bubbleVote(View currentView,int score){
+        LinearLayout mainLayout = findViewById(R.id.questionLayout);
+        mainLayout.removeView(currentView);
+        for (int i =0;i<mainLayout.getChildCount();i++){
+            if ((Integer)(mainLayout.getChildAt(i).getTag())<score){
+                mainLayout.addView(currentView,i);
+                return;
+            }
+        }
+        mainLayout.addView(currentView);
 
+    }
     public void deleteBadMessages(){
         StorageAccessor dataAccessor = new StorageAccessor(this,personNumber,userToken) {
             @Override

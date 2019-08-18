@@ -2,6 +2,8 @@ package com.example.witsdaily;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -43,9 +45,19 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             void onMessage(StompMessage topicMessage) {
                try{
+
                    JSONObject jsonMessage = new JSONObject(topicMessage.getPayload());
-                   if (!jsonMessage.getString("personNumber").equals(personNumber))
-                       addSingleMessage(jsonMessage.getString("content"),getCurrentTime(),false);
+                   String messageType = jsonMessage.getString("messageType");
+                   if (messageType.equals("CHAT")) {
+                       String userType = jsonMessage.getString("tag");
+                       String currentPersonNumber = jsonMessage.getString("personNumber");
+                       int id = (int) jsonMessage.getLong("id");
+                       addSingleMessage(jsonMessage.getString("content"), getCurrentTime(), userType, currentPersonNumber, id);
+                   }
+                   else if (messageType.equals("DELETE")){
+                       int id = (int) jsonMessage.getLong("content");
+                       deleteMessage(id);
+                   }
                }catch (Exception e){
 
                }
@@ -68,12 +80,17 @@ public class ChatActivity extends AppCompatActivity {
                         for (int i =0;i<messages.length();i++) {
                             int j = messages.length()-i-1;
                             JSONObject message = messages.getJSONObject(j);
+                            String userType = message.getString("tag");
+                            String currentPersonNumber = message.getString("personNumber");
+                            int id = (int)message.getLong("id");
                             if (message.getString("personNumber").equals(personNumber)) {
-                                addSingleMessage(message.getString("content"), message.getString("time"), true);
+                                addSingleMessage(message.getString("content"), message.getString("time"), "normal",currentPersonNumber,id);//fake normal
                             }else{
-                                addSingleMessage(message.getString("content"), message.getString("time"), false);
+                                addSingleMessage(message.getString("content"), message.getString("time"),userType,currentPersonNumber,id);
                             }
+
                         }
+                        deleteBadMessages();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -84,11 +101,16 @@ public class ChatActivity extends AppCompatActivity {
        dataAccessor.getChatTypeMessages(courseCode,"CHAT");
 
     }
-    private void addSingleMessage(String message, String timeStamp,boolean outgoing) {
+    private void addSingleMessage(String message, String timeStamp,String userType,String pPersonNumber, int id) {
         View newMessage = getLayoutInflater().inflate(R.layout.chat_message, null);
         newMessage.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
+
+                newChatAccesor.setStreamType(false);
+                newChatAccesor.setMessageType("DELETE");
+                newChatAccesor.sendMessage(String.valueOf(id));
+                newChatAccesor.setStreamType(true);
                 view.setVisibility(View.GONE);
 
                 return false;
@@ -96,13 +118,36 @@ public class ChatActivity extends AppCompatActivity {
         });
         TextView messageContents = newMessage.findViewById(R.id.tvMessageContents);
         TextView time = newMessage.findViewById(R.id.tvTime);
-        if (outgoing)
+        TextView tvPersonNumber = newMessage.findViewById(R.id.tvPersonNumber);
+        if (personNumber.equals(pPersonNumber))
             newMessage.setBackgroundResource(R.drawable.outgoing_message_bubble);
         else
             newMessage.setBackgroundResource(R.drawable.incoming_message_bubble);
         messageContents.setText(message);
+        tvPersonNumber.setText(pPersonNumber);
         time.setText(timeStamp);
         newMessage.setLayoutParams(params);
+        newMessage.setId(id);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            switch (userType){
+                //  case "tutor": newQuestion.setBackgroundColor(Color.rgb(181,218,240));break;//tutor
+                // case "lecturer":newQuestion.setBackgroundColor(Color.rgb(245,172,172));break;//lecturer
+                case "tutor": newMessage.setBackgroundTintList(this.getResources().getColorStateList(R.color.tutor));break;//tutor
+                case "lecturer":newMessage.setBackgroundTintList(this.getResources().getColorStateList(R.color.lecturer));break;//lecturer
+                case "normal":newMessage.setBackgroundTintList(this.getResources().getColorStateList(R.color.outgoing));break;//normal
+            }
+
+        }else{
+            switch (userType){
+                //  case "tutor": newQuestion.setBackgroundColor(Color.rgb(181,218,240));break;//tutor
+                // case "lecturer":newQuestion.setBackgroundColor(Color.rgb(245,172,172));break;//lecturer
+                case "tutor": newMessage.setBackgroundColor(Color.rgb(181,218,240));break;//tutor
+                case "lecturer":newMessage.setBackgroundColor(Color.rgb(245,172,172));break;//lecturer
+                case "normal":newMessage.setBackgroundColor(Color.rgb(220,248,198));break;//normal
+            }
+
+        }
+
         mainLayout.addView(newMessage);
     }
     public void clickSendMessage(View v){
@@ -114,7 +159,7 @@ public class ChatActivity extends AppCompatActivity {
             return;
         }
         message = edtMessage.getText().toString();
-        addSingleMessage(message,getCurrentTime(),true);
+     //   addSingleMessage(message,getCurrentTime(),true,"normal",personNumber);
         if (connected){
             newChatAccesor.sendMessage(message);
         }
@@ -133,5 +178,41 @@ public class ChatActivity extends AppCompatActivity {
         this.finish();
         return;
 
+    }
+    public void deleteBadMessages(){
+        StorageAccessor dataAccessor = new StorageAccessor(this,personNumber,userToken) {
+            @Override
+            public void getData(JSONObject data) {
+                try {
+                    JSONArray messages = data.getJSONArray("messages"); // content score votes
+
+                    System.out.println("");
+                    for (int i =0;i<messages.length();i++) {
+                        try {
+                            JSONObject currentMessage = messages.getJSONObject(i);
+                            int currentId = (int) currentMessage.getLong("content");
+                            deleteMessage(currentId);
+                        }
+                        catch(Exception e){
+
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        };
+        dataAccessor.getChatTypeMessages(courseCode,"DELETE");
+    }
+    public void deleteMessage(int id){
+        LinearLayout mainLayout = findViewById(R.id.chatLayout);
+        try {
+            View messageObject = mainLayout.findViewById(id);
+            mainLayout.removeView(messageObject);
+        }catch(Exception e){
+            System.out.println("probably deleted on user side already");
+        }
     }
 }

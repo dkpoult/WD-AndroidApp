@@ -25,6 +25,7 @@
             android:focusable="true"
             android:orientation="vertical"
             android:layout_marginBottom= "10dp"
+            android:animateLayoutChanges="true"
             android:padding="20dp">
 
         </LinearLayout>
