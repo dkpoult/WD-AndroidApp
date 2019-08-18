@@ -44,6 +44,7 @@ public abstract class ChatAccessor {
     public JSONArray getPreviousMessages() {
 
         JSONArray messages = new JSONArray();
+        String received = "";
 
         return messages;
         //personNumber and userToken
@@ -103,7 +104,7 @@ public abstract class ChatAccessor {
     }
 
 
-    private void sendEchoViaStomp(String message) {
+    private void sendEchoViaStomp(String message, String type) {
 
         JSONObject messageObject = new JSONObject();
         List<StompHeader> headers = new ArrayList<>();
@@ -114,7 +115,7 @@ public abstract class ChatAccessor {
 
         try {
             messageObject.put("content",message);
-            messageObject.put("messageType","CHAT");
+            messageObject.put("messageType",type);
             messageObject.put("userToken",userToken);
             messageObject.put("personNumber",personNumber);
             StompMessage stompMessage = new StompMessage(StompCommand.SEND,headers,messageObject.toString());
@@ -137,8 +138,8 @@ public abstract class ChatAccessor {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
-    public void sendMessage(String message){
-        sendEchoViaStomp(message);
+    public void sendMessage(String message, String type){
+        sendEchoViaStomp(message, type);
     }
     private void resetSubscriptions() {
         if (compositeDisposable != null) {

@@ -11,9 +11,20 @@
         android:id="@+id/llHomeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:paddingBottom="10dp">
+
+        <LinearLayout
+            android:id="@+id/llCourseLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        </LinearLayout>
 
         <Button
+            android:layout_marginTop="10dp"
             android:id="@+id/b1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -82,14 +93,6 @@
             android:onClick="logOut"
             android:text="@string/logout"
             android:textColor="@color/colorWhite" />
-
-        <LinearLayout
-            android:id="@+id/llCourseLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-        </LinearLayout>
 
 
     </LinearLayout>

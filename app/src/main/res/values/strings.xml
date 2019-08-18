@@ -135,4 +135,5 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_venue_list">VenueList</string>
+    <string name="error_pNumb_not_set_addTutors">Please type the person number whos permissions you would like to change</string>
 </resources>

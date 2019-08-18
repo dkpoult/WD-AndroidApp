@@ -28,10 +28,11 @@
             android:text="Chat" />
 
         <Switch
-            android:id="@+id/switch1"
+            android:id="@+id/switchChat"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
             android:background="#003a5e"
+            android:onClick="clickSwitch"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
@@ -104,8 +105,7 @@
             android:ems="10"
             android:hint="@string/type_message"
             android:inputType="textPersonName"
-            android:padding="5dp"
-            android:Hint="Type a message" />
+            android:padding="5dp"/>
 
         <Button
             android:id="@+id/btnSendMessage"

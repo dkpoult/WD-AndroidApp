@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".addTutors">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:weightSum="40">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/inflatable"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight="37" />
+
+        <Button
+            android:id="@+id/addPerm"
+            android:onClick="changePerm"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="change"
+            android:background="@drawable/rounded_button"
+            android:textColor="@color/colorWhite"
+            android:layout_weight="3"/>
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
