@@ -5,7 +5,7 @@
     android:background="@drawable/forum_background"
     android:clickable="false"
     android:orientation="vertical"
-
+    android:backgroundTint="@color/incoming"
     android:layout_marginBottom="50dp"
     android:animateLayoutChanges="true"
 

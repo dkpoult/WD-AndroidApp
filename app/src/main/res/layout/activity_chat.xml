@@ -12,10 +12,10 @@
         android:id="@+id/messageScroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+
         android:layout_alignParentTop="true"
         android:fillViewport="false"
-        android:layout_marginBottom="10dp"
+        android:paddingBottom="60dp"
         android:focusedByDefault="true">
 
         <LinearLayout

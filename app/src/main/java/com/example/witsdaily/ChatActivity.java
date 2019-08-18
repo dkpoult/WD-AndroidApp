@@ -161,6 +161,7 @@ public class ChatActivity extends AppCompatActivity {
         message = edtMessage.getText().toString();
      //   addSingleMessage(message,getCurrentTime(),true,"normal",personNumber);
         if (connected){
+            newChatAccesor.setMessageType("CHAT");
             newChatAccesor.sendMessage(message);
         }
         edtMessage.setText("");
