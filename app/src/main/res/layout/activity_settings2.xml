@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:text="Disable Notifications" />
+        android:text="@string/disable_notifications" />
 
     <Spinner
         android:id="@+id/spnrLanguages"
@@ -27,9 +27,9 @@
         android:id="@+id/btnChangeLanguage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_button"
         android:layout_marginTop="10dp"
+        android:background="@drawable/rounded_button"
         android:onClick="clickApplyChanges"
-        android:text="Apply changes"
+        android:text="@string/apply_changes"
         android:textColor="@color/colorWhite" />
 </LinearLayout>

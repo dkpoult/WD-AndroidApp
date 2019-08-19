@@ -28,18 +28,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:visibility="gone"
-        android:hint = "Enter Text"
-        android:inputType="textPersonName" />
+        android:hint="@string/enter_text"
+        android:inputType="textPersonName"
+        android:visibility="gone" />
 
     <EditText
         android:id="@+id/edtNumerical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:ems="10"
-        android:hint = "Enter Numerical Value"
-        android:inputType="numberDecimal" />
+        android:hint="@string/enter_numerical_value"
+        android:inputType="numberDecimal"
+        android:visibility="gone" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -66,7 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:onClick="clickSubmit"
         android:background="@drawable/rounded_button"
-        android:text="Submit Answer" />
+        android:onClick="clickSubmit"
+        android:text="@string/submit_answer" />
 </LinearLayout>

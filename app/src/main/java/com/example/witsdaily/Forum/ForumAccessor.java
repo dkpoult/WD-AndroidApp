@@ -5,7 +5,9 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.witsdaily.HomeScreen;
 import com.example.witsdaily.R;
 import com.example.witsdaily.StorageAccessor;
 
@@ -26,29 +28,36 @@ public class ForumAccessor {
         {
             public void onCheckedChanged(RadioGroup group, int checkedId)
             {
-                String likeValue;
+                int likeValue = 0;
                 RadioButton checkedRadioButton = (RadioButton)group.findViewById(checkedId);
                 TextView likeCount = (TextView)group.findViewById(R.id.tvLikeCount);
-                String likeCountString = likeCount.getText().toString();
-
-                likeCountString = likeCountString.substring(1,likeCountString.length()-1);
+                Integer totalLikes = 0;
+                try {
+                    totalLikes =  Integer.parseInt(String.valueOf(likeCount.getTag()));
+                }catch (Exception e){
+                    // this happens when likes == null
+                    System.out.println("");
+                }
+                String currentLikes = String.valueOf(totalLikes);
                 boolean isChecked = checkedRadioButton.isChecked();
                 if (isChecked)
                 {
-                    likeValue = String.valueOf(checkedRadioButton.getTag());
-                    if (likeValue.equals("1")){
-                        likeCountString = String.valueOf(Integer.valueOf(likeCountString)+1);
+
+                        likeValue = Integer.parseInt(String.valueOf(checkedRadioButton.getTag()));
+
+                    if (likeValue==1){
+                        currentLikes = String.valueOf(totalLikes+1);
                     }
                     else
                     {
-                        likeCountString = String.valueOf(Integer.valueOf(likeCountString)-1);
+                        currentLikes = String.valueOf(totalLikes-1);
                     }
-                    likeCountString = "("+likeCountString+")";
+                    currentLikes = "("+currentLikes+")";
                 }
                 else{
-                    likeValue = "0";
+                   // currentLikes = "0";
                 }
-                likeCount.setText(likeCountString);
+                likeCount.setText(currentLikes);
                 StorageAccessor dataAccessor = new StorageAccessor(applicationContext,personNumber,user_token) {
                     @Override
                     public void getData(JSONObject data) {
@@ -58,7 +67,7 @@ public class ForumAccessor {
 
                 LinearLayout mainView = (LinearLayout)rgLikes.getParent().getParent();
                 String postCode = String.valueOf((mainView.getTag()));
-                dataAccessor.makeVote(postCode,likeValue);
+                dataAccessor.makeVote(postCode,String.valueOf(likeValue));
             }
         });
     }
