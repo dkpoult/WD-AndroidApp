@@ -12,7 +12,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/llCourseLayout"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="30"
+            android:paddingBottom="10dp">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="27" />
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:background="@drawable/rounded_button"
+                app:srcCompat="@android:drawable/ic_popup_sync"
+                android:onClick="resyncData"/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvCourseName"
@@ -57,6 +80,25 @@
             android:textColor="@color/colorWhite" />
 
         <Button
+            android:id="@+id/btnTutorChat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="clickTutorChat"
+            android:background="@drawable/rounded_button"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorWhite"
+            android:text="Tutor Chat" />
+        <Button
+            android:id="@+id/btnQuestions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="clickQuestions"
+            android:text="Live Questions"
+            android:background="@drawable/rounded_button"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorWhite" />
+
+        <Button
             android:id="@+id/btnCreateSurvey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -92,6 +134,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/edit_course"
+            android:background="@drawable/rounded_button"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorWhite" />
+
+        <Button
+            android:id="@+id/addTutors"
+            android:onClick = "addTutors"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Tutors or Lecturers"
             android:background="@drawable/rounded_button"
             android:layout_marginTop="10dp"
             android:textColor="@color/colorWhite" />

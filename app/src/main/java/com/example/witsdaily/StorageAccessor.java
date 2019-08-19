@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.design.widget.TabLayout;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import static com.example.witsdaily.PhoneDatabaseContract.*;
@@ -258,5 +259,34 @@ public abstract class StorageAccessor{ // singleton class
         networkAccessor.setAnswer(postCode,commentCode);
     }
 
+    public void getChatTypeMessages(String chatroomCode,String socketType){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
+            @Override
+            void getResponse(JSONObject data) {
+
+                try {
+                    if (!data.getString("responseCode").equals("successful")){
+                        return;
+                    }
+                    JSONArray messages = data.getJSONArray("messages");
+                    for(int i =0;i<messages.length();i++){
+                        if (!((JSONObject)messages.get(i)).getString("messageType").equals(socketType)){
+                            messages.remove(i);
+                            i -= 1;
+
+                        }
+                    }
+                    JSONObject newData = new JSONObject();
+                    newData.put("messages",messages);
+                    getData(newData);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        };
+        networkAccessor.getChatTypeMessages(chatroomCode);
+    }
 }
 

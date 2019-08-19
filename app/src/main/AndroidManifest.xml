@@ -11,7 +11,12 @@
         android:minSdkVersion="8"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
-
+        <activity
+            android:name=".addTutors"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".LiveQuestions"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SettingsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -27,7 +32,7 @@
         <activity
             android:name=".VenueList"
             android:label="@string/title_activity_venue_list"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Survey.SurveyAnswer"
             android:theme="@style/Theme.AppCompat.Dialog" />

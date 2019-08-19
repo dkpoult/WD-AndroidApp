@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,9 @@ import static com.example.witsdaily.PhoneDatabaseContract.*;
 public class CourseDisplay extends AppCompatActivity {
     int courseID;
     String courseCodeString;
+    private static final long  lect = 128|64|32|16|8|4|2|1;
+    private static final long  student = 64|1;
+    private static final long  tutor = 128|64|1;
     String user_token,personNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,21 +47,39 @@ public class CourseDisplay extends AppCompatActivity {
             void getResponse(JSONObject data) {
                 try {
                     String s = data.getString("responseCode");
-                    if(s.equals("successful")){
+                    if (s.equals("successful")) {
                         JSONArray t = data.getJSONArray("courses");
+                        System.out.println(t.toString());
                         JSONObject course = t.getJSONObject(0);
                         Button b = findViewById(R.id.editSession);
+                        Button b1 = findViewById(R.id.editCourse);
+                        Button b2 = findViewById(R.id.addTutors);
+                        Button b3 = findViewById(R.id.btnCreateSurvey);
+                        Button b4 = findViewById(R.id.btnTutorChat);
+                        b1.setVisibility(View.GONE);
+                        b2.setVisibility(View.GONE);
+                        b3.setVisibility(View.GONE);
+                        b4.setVisibility(View.GONE);
+                        b.setVisibility(View.GONE);
 //                        System.out.println(personNumber);
-                        JSONObject lecturer = course.getJSONObject("lecturer");
+                        long lecturer = course.getLong("permissions");
+                        ImageButton IB = findViewById(R.id.imageButton);
+                        IB.setVisibility(View.GONE);
+                        System.out.println(lecturer);
+                        System.out.println(lect);
+                        System.out.println(tutor);
 //                        System.out.println(lecturer.getString("personNumber"));
-                        if(lecturer.getString("personNumber").equals(personNumber)){
+                        if (lecturer == lect) {
                             b.setVisibility(View.VISIBLE);
-                            b = findViewById(R.id.editCourse);
-                            b.setVisibility(View.VISIBLE);
-                        }else{
-                            b.setVisibility(View.GONE);
-                            b = findViewById(R.id.editCourse);
-                            b.setVisibility(View.GONE);
+                            b1.setVisibility(View.VISIBLE);
+                            b2.setVisibility(View.VISIBLE);
+                            b3.setVisibility(View.VISIBLE);
+                            b4.setVisibility(View.VISIBLE);
+                        } else if (lecturer == tutor) {
+                            b4.setVisibility(View.VISIBLE);
+                        }
+                        if(course.has("moodleId")){
+                            IB.setVisibility(View.VISIBLE);
                         }
                     }else{
                         switch (s){
@@ -94,9 +116,9 @@ public class CourseDisplay extends AppCompatActivity {
     }
     private void updateFields(){ // fill in values, take from local database
         PhoneDatabaseHelper dbHelper = new PhoneDatabaseHelper(getApplicationContext());
-        TextView courseName = (TextView)findViewById(R.id.tvCourseName);
-        TextView courseCode = (TextView)findViewById(R.id.tvCourseCode);
-        TextView courseDescription = (TextView)findViewById(R.id.tvDescription);
+        TextView courseName = findViewById(R.id.tvCourseName);
+        TextView courseCode = findViewById(R.id.tvCourseCode);
+        TextView courseDescription = findViewById(R.id.tvDescription);
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String sqlString  = "Select * from "+ TableCourse.TABLE_NAME
@@ -118,6 +140,19 @@ public class CourseDisplay extends AppCompatActivity {
     public void clickChat(View v){
         Intent i = new Intent(CourseDisplay.this, ChatActivity.class);
         i.putExtra("courseCode",courseCodeString);
+        i.putExtra("audience","normal");
+        startActivity(i);
+    }
+    public void clickTutorChat(View v){
+        Intent i = new Intent(CourseDisplay.this, ChatActivity.class);
+        i.putExtra("courseCode",courseCodeString);
+        i.putExtra("audience","tutor");
+        startActivity(i);
+    }
+    public void clickQuestions(View v){
+        Intent i = new Intent(CourseDisplay.this, LiveQuestions.class);
+        i.putExtra("courseCode",courseCodeString);
+        i.putExtra("audience","normal");
         startActivity(i);
     }
     public void clickSurvey(View v){
@@ -142,5 +177,53 @@ public class CourseDisplay extends AppCompatActivity {
         Intent i = new Intent(CourseDisplay.this, editCourse.class);
         i.putExtra("forumCode", courseCodeString);
         startActivity(i);
+    }
+
+    public void addTutors(View v) {
+        Intent i = new Intent(CourseDisplay.this, addTutors.class);
+        i.putExtra("courseCode", courseCodeString);
+        i.putExtra("forumCode", courseCodeString);
+        startActivity(i);
+    }
+
+    public void resyncData(View v){
+        NetworkAccessor NA = new NetworkAccessor(this, personNumber, user_token) {
+            @Override
+            void getResponse(JSONObject data) {
+                try {
+                    String s = data.getString("responseCode");
+                    switch (s){
+                        case "successful":
+                            s = "successful";
+                            Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                            break;
+                        case "failed_unknown":
+                            s = "Failed to sync course: ";
+                            Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                            break;
+                        case "failed_invalid_params":
+                            s = "Failed to sync course: " + data.getString("responseCode");
+                            Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                            break;
+                        case "failed_missing_params":
+                            s = "Failed to sync course: " + data.getString("responseCode");
+                            Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                            break;
+                        case "failed_missing_perms":
+                            s = "Failed to sync course: " + data.getString("responseCode");
+                            Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                            break;
+                        case "failed_not_linked":
+                            s = "Failed to sync course since this course is not a Moodle course: " + data.getString("responseCode");
+                            Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        NA.resync(courseCodeString);
+
     }
 }
