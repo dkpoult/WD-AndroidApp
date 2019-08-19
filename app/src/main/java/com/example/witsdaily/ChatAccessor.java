@@ -1,36 +1,23 @@
 package com.example.witsdaily;
 
-import android.content.Context;
-import android.icu.text.SymbolTable;
-
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import com.neovisionaries.ws.client.WebSocket;
-import com.neovisionaries.ws.client.WebSocketAdapter;
-import com.neovisionaries.ws.client.WebSocketFactory;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONStringer;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import io.reactivex.CompletableTransformer;
-import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import ua.naiksoftware.stomp.Stomp;
 import ua.naiksoftware.stomp.StompClient;
-import ua.naiksoftware.stomp.dto.LifecycleEvent;
 import ua.naiksoftware.stomp.dto.StompCommand;
 import ua.naiksoftware.stomp.dto.StompHeader;
 import ua.naiksoftware.stomp.dto.StompMessage;
@@ -57,6 +44,7 @@ public abstract class ChatAccessor {
     public JSONArray getPreviousMessages() {
 
         JSONArray messages = new JSONArray();
+        String received = "";
 
         return messages;
         //personNumber and userToken
@@ -116,7 +104,7 @@ public abstract class ChatAccessor {
     }
 
 
-    private void sendEchoViaStomp(String message) {
+    private void sendEchoViaStomp(String message, String type) {
 
         JSONObject messageObject = new JSONObject();
         List<StompHeader> headers = new ArrayList<>();
@@ -127,15 +115,13 @@ public abstract class ChatAccessor {
 
         try {
             messageObject.put("content",message);
-            messageObject.put("messageType","CHAT");
+            messageObject.put("messageType",type);
             messageObject.put("userToken",userToken);
             messageObject.put("personNumber",personNumber);
             StompMessage stompMessage = new StompMessage(StompCommand.SEND,headers,messageObject.toString());
             compositeDisposable.add(mStompClient.send(stompMessage)
                     .compose(applySchedulers())
-                    .subscribe(() -> {
-                        Log.d(TAG, "STOMP echo send successfully");
-                    }, throwable -> {
+                    .subscribe(() -> Log.d(TAG, "STOMP echo send successfully"), throwable -> {
                         Log.e(TAG, "Error send STOMP echo", throwable);
                     }));
             //mStompClient.send(stompMessage).subscribe();
@@ -152,8 +138,8 @@ public abstract class ChatAccessor {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
-    public void sendMessage(String message){
-        sendEchoViaStomp(message);
+    public void sendMessage(String message, String type){
+        sendEchoViaStomp(message, type);
     }
     private void resetSubscriptions() {
         if (compositeDisposable != null) {
