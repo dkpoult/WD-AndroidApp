@@ -251,6 +251,20 @@ void getCourse(String courseCode){
         makeRequest(params,"https://wd.dimensionalapps.com/course/get_course","Get course failed");
     }
 
+void linkCourse (String courseCode){
+        JSONObject params = new JSONObject();
+
+        try {
+            params.put("userToken", userToken);
+            params.put("personNumber", personNumber);
+            params.put("courseId", courseCode);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        makeRequest(params,"https://wd.dimensionalapps.com/course/link_course","Link course failed");
+    }
+
 void updateCourse(String courseCode, String couseDesc, String courseName, String newKey){
         JSONObject params = new JSONObject();
 
@@ -388,7 +402,6 @@ void updateCourse(String courseCode, String couseDesc, String courseName, String
             params.put("userToken", userToken);
             params.put("personNumber", personNumber);
             params.put("chatroomCode", chatroomCode);
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -396,6 +409,36 @@ void updateCourse(String courseCode, String couseDesc, String courseName, String
         makeRequest(params,"https://wd.dimensionalapps.com/chat/get_messages ","Get messages failed");
     }
 
+    void getPermissionCodes(){
+        JSONObject params = new JSONObject();
+
+        makeRequest(params,"https://wd.dimensionalapps.com/permission/get_permission_codes ","get permissions failed");
+    }
+
+    void serPermissions(JSONObject j){
+        try {
+            j.put("userToken", userToken);
+            j.put("personNumber", personNumber);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        makeRequest(j,"https://wd.dimensionalapps.com/permission/set_permissions ","Set permissions failed");
+    }
+
+    void resync(String courseCode){
+        JSONObject params = new JSONObject();
+        try {
+            params.put("userToken", userToken);
+            params.put("personNumber", personNumber);
+            params.put("courseCode", courseCode);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        makeRequest(params,"https://wd.dimensionalapps.com/course/resync_course ","Get Posts failed");
+
+    }
+    
 }
 /*For MC, answer should be the zero-
 based index of the selected option. For text and numeric the answer should simply be the user given answer.*/

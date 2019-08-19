@@ -8,7 +8,9 @@
     android:clickable="true"
     android:layout_marginBottom="10dp"
     android:onClick="courseClicked"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginTop="10dp"
+    android:paddingTop="10dp">
 
     <ImageView
         android:id="@+id/imgColor"

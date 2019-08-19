@@ -11,7 +11,9 @@
         android:minSdkVersion="8"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
-
+        <activity
+            android:name=".addTutors"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".LiveQuestions"
             android:theme="@style/AppTheme.NoActionBar" />

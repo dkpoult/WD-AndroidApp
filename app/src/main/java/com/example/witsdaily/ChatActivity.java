@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -26,16 +27,18 @@ public class ChatActivity extends AppCompatActivity {
     SocketAccessor newChatAccesor;
     boolean connected;
     LinearLayout mainLayout;
+    LinearLayout qScroll;
     final LinearLayout.LayoutParams params =
             new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-    ViewGroup.LayoutParams.WRAP_CONTENT);
-    String userToken,personNumber,courseCode;
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+    String userToken, personNumber, courseCode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         userToken = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
-        personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber",null);
+        personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
         Intent i = getIntent();
         courseCode = i.getStringExtra("courseCode");
         //courseCode now has a specific type, ie tutor or normal
@@ -51,6 +54,10 @@ public class ChatActivity extends AppCompatActivity {
                    if (messageType.equals("CHAT")) {
                        String userType = jsonMessage.getString("tag");
                        String currentPersonNumber = jsonMessage.getString("personNumber");
+
+                       if(currentPersonNumber.equals(personNumber)) {
+                           userType = "me";
+                       }
                        int id = (int) jsonMessage.getLong("id");
                        addSingleMessage(jsonMessage.getString("content"), getCurrentTime(), userType, currentPersonNumber, id);
                    }
@@ -64,8 +71,10 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         };
-        connected  = newChatAccesor.establishConnection();
-        mainLayout = (LinearLayout)findViewById(R.id.chatLayout);
+        connected = newChatAccesor.establishConnection();
+        mainLayout = findViewById(R.id.chatLayout);
+        qScroll = findViewById(R.id.qChat);
+        qScroll.setVisibility(View.GONE);
         params.topMargin = 10;
 
         addPreviousMessages();
@@ -168,16 +177,17 @@ public class ChatActivity extends AppCompatActivity {
         messageScroll.requestFocus();
         messageScroll.fullScroll(View.FOCUS_DOWN);
     }
+
     public String getCurrentTime() {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        return sdf.format(cal.getTime()) ;
+        return sdf.format(cal.getTime());
     }
+
     @Override
     public void onBackPressed() {
         newChatAccesor.onDestroy();
         this.finish();
-        return;
 
     }
     public void deleteBadMessages(){
