@@ -381,6 +381,21 @@ void updateCourse(String courseCode, String couseDesc, String courseName, String
         makeRequest(params,"https://wd.dimensionalapps.com/venue/get_venues ","Get venues failed");
     }
 
+    void getChatTypeMessages(String chatroomCode){
+        JSONObject params = new JSONObject();
+
+        try {
+            params.put("userToken", userToken);
+            params.put("personNumber", personNumber);
+            params.put("chatroomCode", chatroomCode);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        makeRequest(params,"https://wd.dimensionalapps.com/chat/get_messages ","Get messages failed");
+    }
+
 }
 /*For MC, answer should be the zero-
 based index of the selected option. For text and numeric the answer should simply be the user given answer.*/

@@ -35,6 +35,7 @@
     <string name="comment">Comment</string>
     <string name="cancel">Cancel</string>
     <string name="comment_content">Comment contents</string>
+    <string name="type_question">Type a question...</string>
     <string name="post">Post</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"

@@ -36,31 +36,23 @@ import ua.naiksoftware.stomp.dto.StompHeader;
 import ua.naiksoftware.stomp.dto.StompMessage;
 
 
-public abstract class ChatAccessor {
-    WebSocket ws = null;
+public abstract class SocketAccessor {
+
     private StompClient mStompClient;
     private CompositeDisposable compositeDisposable;
-    String personNumber, userToken, courseCode;
-
+    String personNumber, userToken, courseCode,socketType; // course code is now with type,, ie COMS1234:Tutor
+    String sendStream = "sendMessage"; // default
     String TAG = "Websocket connection";
     private Disposable mRestPingDisposable;
-    public ChatAccessor(String pPersonNumber, String pUserToken, String pCourseCode) {
+    public SocketAccessor(String pPersonNumber, String pUserToken, String pCourseCode,String pType) {
         personNumber = pPersonNumber;
         userToken = pUserToken;
         courseCode = pCourseCode;
         mStompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, "wss://wd.dimensionalapps.com/chatsocket/websocket");
-
+        socketType = pType;
         resetSubscriptions();
     }
 
-    // do some connection shiz with socckets
-    public JSONArray getPreviousMessages() {
-
-        JSONArray messages = new JSONArray();
-
-        return messages;
-        //personNumber and userToken
-    }
 
 
     public boolean establishConnection() {
@@ -97,7 +89,8 @@ public abstract class ChatAccessor {
         compositeDisposable.add(dispLifecycle);
 
         //receiving messages
-        Disposable dispTopic = mStompClient.topic("/topic/"+courseCode,headers)
+        String courseCodeWithc = courseCode.replace(":","\\c");
+        Disposable dispTopic = mStompClient.topic("/topic/"+courseCodeWithc,headers)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(topicMessage -> {
@@ -115,19 +108,29 @@ public abstract class ChatAccessor {
         return true;
     }
 
-
+    public void setMessageType(String messageType){
+        socketType = messageType;
+    }
+    public void setStreamType(boolean pStreamType){
+        if (pStreamType){
+            sendStream = "sendMessage";
+        }
+        else{
+            sendStream = "deleteMessage";
+        }
+    }
     private void sendEchoViaStomp(String message) {
 
         JSONObject messageObject = new JSONObject();
         List<StompHeader> headers = new ArrayList<>();
         headers.add(new StompHeader("personNumber", personNumber));
         headers.add(new StompHeader("userToken", userToken));
-        headers.add(new StompHeader(StompHeader.DESTINATION,"/chat/"+courseCode+"/sendMessage"));
+        headers.add(new StompHeader(StompHeader.DESTINATION,"/chat/"+courseCode+"/"+sendStream));
 
 
         try {
             messageObject.put("content",message);
-            messageObject.put("messageType","CHAT");
+            messageObject.put("messageType",socketType);
             messageObject.put("userToken",userToken);
             messageObject.put("personNumber",personNumber);
             StompMessage stompMessage = new StompMessage(StompCommand.SEND,headers,messageObject.toString());
