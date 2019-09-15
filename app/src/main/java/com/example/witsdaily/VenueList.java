@@ -40,7 +40,7 @@ public class VenueList extends ToolbarActivity {
 
         NetworkAccessor NA = new NetworkAccessor(this, personNumber, user_token) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 try {
                     if(data.getString("responseCode").equals("successful")){
                         venues = data.getJSONArray("venues");

@@ -54,7 +54,7 @@ public class CourseDisplay extends ToolbarActivity {
     public void hideRelevantButtons(){
         NetworkAccessor NA = new NetworkAccessor(this, personNumber, user_token) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 try {
                     String s = data.getString("responseCode");
                     if (s.equals("successful")) {
@@ -199,7 +199,7 @@ public class CourseDisplay extends ToolbarActivity {
     public void resyncData(View v){
         NetworkAccessor NA = new NetworkAccessor(this, personNumber, user_token) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 try {
                     String s = data.getString("responseCode");
                     switch (s){

@@ -46,7 +46,7 @@ public class editSessions extends AppCompatActivity {
 
         NetworkAccessor NA = new NetworkAccessor(this, personNumber, user_token) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 try {
                     if(data.getString("responseCode").equals("successful")){
                         JSONArray venues = data.getJSONArray("venues");
@@ -67,7 +67,7 @@ public class editSessions extends AppCompatActivity {
 
         NA = new NetworkAccessor(this, personNumber, user_token) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 try {
                     if(data.getString("responseCode").equals("successful")) {
                         JSONArray r = data.getJSONArray("courses");
@@ -276,7 +276,7 @@ public class editSessions extends AppCompatActivity {
 
         NetworkAccessor NA = new NetworkAccessor(this, personNumber, user_token) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 try {
                     String s = data.getString("responseCode");
                     if (s.equals("successful")) {

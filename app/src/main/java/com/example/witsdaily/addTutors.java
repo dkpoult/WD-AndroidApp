@@ -42,7 +42,7 @@ public class addTutors extends ToolbarActivity {
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
         NA = new NetworkAccessor(this, personNumber, user_token) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 System.out.println(data.toString());
                 try {
                     String s = data.getString("responseCode");
@@ -111,7 +111,7 @@ public class addTutors extends ToolbarActivity {
         String pArea = area.getSelectedItem().toString();
         NA = new NetworkAccessor(this, personNumber, user_token) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 try {
                     String s = data.getString("responseCode");
                     System.out.println(s);

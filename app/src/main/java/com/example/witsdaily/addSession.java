@@ -39,7 +39,7 @@ public class addSession extends ToolbarActivity {
 
         NetworkAccessor NA = new NetworkAccessor(this, personNumber, user_token) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 System.out.println(data);
                 try {
                     if(data.getString("responseCode").equals("successful")){
@@ -199,7 +199,7 @@ public class addSession extends ToolbarActivity {
 
         NetworkAccessor NA = new NetworkAccessor(this, personNumber, user_token) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 try {
                     String s;
                     if(data.getString("responseCode").equals("successful")){

@@ -43,7 +43,7 @@ public class timetable extends ToolbarActivity {
         final JSONArray[] ja = {new JSONArray()};
         NetworkAccessor NA = new NetworkAccessor(this, personNumber, user_token) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 JSONArray sessions;
                 try {
                     ArrayList<Session> seshs = new ArrayList<>();
