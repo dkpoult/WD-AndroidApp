@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/llCourseLayout"
         android:orientation="vertical"
-        android:layout_margin="5dp">
+        android:layout_margin="2dp"
+        android:paddingBottom="3dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -143,7 +144,27 @@
             android:onClick = "addTutors"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add Tutors or Lecturers"
+            android:text="@string/add_tutors_or_lecturers"
+            android:background="@drawable/rounded_button"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorWhite" />
+
+        <Button
+            android:id="@+id/editBookings"
+            android:onClick = "editBookings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_bookings"
+            android:background="@drawable/rounded_button"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorWhite" />
+
+        <Button
+            android:id="@+id/makeBooking"
+            android:onClick = "makeBooking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/book_a_consult_or_meeting"
             android:background="@drawable/rounded_button"
             android:layout_marginTop="10dp"
             android:textColor="@color/colorWhite" />

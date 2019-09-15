@@ -4,6 +4,8 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import androidx.fragment.app.DialogFragment;
+
+import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
@@ -13,6 +15,7 @@ public class DateSelector extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
     public int year, day, month;
     TextView edit;
+    View tView;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -34,7 +37,7 @@ public class DateSelector extends DialogFragment
         this.month = month+1;
         this.day = day;
 
-        edit = getActivity().findViewById(R.id.cancelDate);
+        edit = tView.findViewById(R.id.cancelDate);
         edit.setText(returnDate());
     }
 
@@ -47,6 +50,10 @@ public class DateSelector extends DialogFragment
             day = "0" + day;
         }
         return year + "-" + month + "-" + day;
+    }
+
+    public void setView(View v){
+        this.tView = v;
     }
 }
 

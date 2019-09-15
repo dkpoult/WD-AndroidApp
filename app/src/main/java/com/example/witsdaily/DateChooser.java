@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import java.util.Calendar;
 
-public class DatePickerFragment extends DialogFragment
+public class DateChooser extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
     public int year, day, month;
     TextView edit;
@@ -34,19 +34,19 @@ public class DatePickerFragment extends DialogFragment
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
         this.year = year;
-        this.month = month+1;
+        this.month = month + 1;
         this.day = day;
 
-        edit = tView.findViewById(R.id.date);
+        edit = tView.findViewById(R.id.eDate);
         edit.setText(returnDate());
     }
 
-    public String returnDate(){
-        String year = Integer.toString(this.year), month=Integer.toString(this.month), day = Integer.toString(this.day);
-        if(month.length() < 2){
+    public String returnDate() {
+        String year = Integer.toString(this.year), month = Integer.toString(this.month), day = Integer.toString(this.day);
+        if (month.length() < 2) {
             month = "0" + month;
         }
-        if(day.length() < 2){
+        if (day.length() < 2) {
             day = "0" + day;
         }
         return year + "-" + month + "-" + day;

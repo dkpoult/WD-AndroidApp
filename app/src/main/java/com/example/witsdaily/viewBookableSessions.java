@@ -2,12 +2,19 @@ package com.example.witsdaily;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
+import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -25,25 +32,25 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class editSessions extends AppCompatActivity {
+public class viewBookableSessions extends AppCompatActivity {
 
     String personNumber, user_token, forumCode;
     final TimePickerFragment tFrag = new TimePickerFragment();
     final DatePickerFragment dFrag = new DatePickerFragment();
     final DateSelector dfrag = new DateSelector();
+    final DateChooser dFfrag = new DateChooser();
     ArrayList<String> buildings = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_sessions);
-
+        setContentView(R.layout.activity_view_bookable_sessions);
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
         user_token = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
         forumCode = getIntent().getStringExtra("forumCode");
-
-
-
+        System.out.println(personNumber);
+        System.out.println(user_token);
+        System.out.println(forumCode);
         NetworkAccessor NA = new NetworkAccessor(this, personNumber, user_token) {
             @Override
             void getResponse(JSONObject data) {
@@ -65,36 +72,44 @@ public class editSessions extends AppCompatActivity {
         };
         NA.getVenues();
 
+
         NA = new NetworkAccessor(this, personNumber, user_token) {
             @Override
             void getResponse(JSONObject data) {
+                System.out.println(data);
                 try {
-                    if(data.getString("responseCode").equals("successful")) {
+                    if (data.getString("responseCode").equals("successful")) {
                         JSONArray r = data.getJSONArray("courses");
+                        System.out.println(r.toString());
                         JSONObject sessionTemp = r.getJSONObject(0);
-                        JSONArray sessions = sessionTemp.getJSONArray("sessions");
-                        System.out.println(sessions.toString());
-                        LinearLayout mainLayout = findViewById(R.id.LLayout);
+                        JSONObject lecturer = sessionTemp.getJSONObject("lecturer");
+                        JSONObject lecSessions = sessionTemp.getJSONObject("bookableSessions");
+                        JSONArray sessions = lecSessions.getJSONArray(personNumber);
+                        System.out.println("TESTING SESSIONS: " + sessions.toString());
+
+                        LinearLayout mainLayout = findViewById(R.id.bookableLayout);
                         View LLayout;
-                        Session[] sesh = new Session[sessions.length()];
-                        for(int i = 0; i < sessions.length(); i++){
-                            LLayout = getLayoutInflater().inflate(R.layout.session, mainLayout, false);
+                        for(int i = 0; i < sessions.length(); i++) {
+                            LLayout = getLayoutInflater().inflate(R.layout.booking, mainLayout, false);
                             JSONObject session = sessions.getJSONObject(i);
-                            AppCompatAutoCompleteTextView venue = LLayout.findViewById(R.id.venue);
+                            System.out.println(session);
+
+                            AutoCompleteTextView venue = LLayout.findViewById(R.id.venue);
+                            EditText room = LLayout.findViewById(R.id.room);
 
                             ArrayAdapter<String> adapter = new ArrayAdapter<>
-                                    (editSessions.this, android.R.layout.select_dialog_item, buildings);
+                                    (viewBookableSessions.this, android.R.layout.select_dialog_item, buildings);
                             venue.setThreshold(1); //will start working from first character
                             venue.setAdapter(adapter);
-                            EditText room = LLayout.findViewById(R.id.room);
+
                             Spinner spinner = LLayout.findViewById(R.id.spinner);
                             Spinner sType = LLayout.findViewById(R.id.type);
-                            String[] sessionTypes = new String[]{"Lecture", "Lab", "Tutorial", "Test", "Other"};
+                            String[] sessionTypes = new String[]{"Meeting","Consultation"};
                             String[] items = new String[]{"Daily", "Weekly", "Monthly", "Once"};
-                            ArrayAdapter<String> ad = new ArrayAdapter<>(editSessions.this,
+                            ArrayAdapter<String> ad = new ArrayAdapter<>(viewBookableSessions.this,
                                     android.R.layout.simple_spinner_item, items);
 
-                            ArrayAdapter<String> sessAdapter = new ArrayAdapter<>(editSessions.this,
+                            ArrayAdapter<String> sessAdapter = new ArrayAdapter<>(viewBookableSessions.this,
                                     android.R.layout.simple_spinner_item, sessionTypes);
                             spinner.setAdapter(ad);
                             sType.setAdapter(sessAdapter);
@@ -102,16 +117,39 @@ public class editSessions extends AppCompatActivity {
                             TextView cencels = LLayout.findViewById(R.id.cancellations);
                             TextView date = LLayout.findViewById(R.id.date);
                             dFrag.setView(LLayout);
-                            tFrag.setView(LLayout);
-                            dfrag.setView(LLayout);
+                            date.setOnClickListener(view -> dFrag.show(getSupportFragmentManager(), "datePicker"));
                             TextView time = LLayout.findViewById(R.id.time);
+                            tFrag.setView(LLayout);
+                            time.setOnClickListener(view -> tFrag.show(getSupportFragmentManager(), "timePicker"));
+                            TextView eDate = LLayout.findViewById(R.id.eDate);
+                            dFfrag.setView(LLayout);
+                            eDate.setOnClickListener(view -> dFfrag.show(getSupportFragmentManager(), "datePicker"));
                             EditText duration = LLayout.findViewById(R.id.duration);
+                            EditText slotCount = LLayout.findViewById(R.id.numSessions);
+                            EditText slotGap = LLayout.findViewById(R.id.padding);
 
                             int freq = session.getInt("repeatGap");
                             String type = session.getString("repeatType");
                             String pDate = session.getString("startDate");
                             String pType = session.getString("sessionType");
                             JSONArray cancel = session.getJSONArray("cancellations");
+                            JSONObject ven = session.getJSONObject("venue");
+                            String pVenue = ven.getString("buildingCode");
+                            String pRoom = ven.getString("subCode");
+                            String endDate;
+                            if(session.has("endDate")) {
+                                endDate = session.getString("endDate");
+                            }else{
+                                endDate = "Not set";
+                            }
+                            int pDuration = session.getInt("duration");
+                            int pSlotCount = session.getInt("slotCount");
+                            int pSlotGap = session.getInt("slotGap");
+
+
+                            TextView cancelDate = LLayout.findViewById(R.id.cancelDate);
+                            dfrag.setView(LLayout);
+                            cancelDate.setOnClickListener(view -> dfrag.show(getSupportFragmentManager(), "datePicker"));
                             final StringBuilder[] cancells = {new StringBuilder()};
                             ArrayList<String> cans = new ArrayList<>();
                             for(int j = 0; j < cancel.length(); j++){
@@ -122,6 +160,7 @@ public class editSessions extends AppCompatActivity {
                                 }
                             }
                             cencels.setText(cancells[0].toString());
+
                             Button addCancel = LLayout.findViewById(R.id.addCancellation);
                             addCancel.setOnClickListener(view -> {
                                 String s = ((TextView)findViewById(R.id.cancelDate)).getText().toString();
@@ -134,21 +173,15 @@ public class editSessions extends AppCompatActivity {
 
                             Button remove = LLayout.findViewById(R.id.delCancels);
                             remove.setOnClickListener(view -> {
-                                    cencels.setText("");
-                                    cancells[0] = new StringBuilder();
-                                    cans.clear();
-                                }
+                                        cencels.setText("");
+                                        cancells[0] = new StringBuilder();
+                                        cans.clear();
+                                    }
                             );
 
-                            JSONObject ven = session.getJSONObject("venue");
-                            String pVenue = ven.getString("buildingCode");
-                            String pRoom = ven.getString("subCode");
-//                            JSONArray cancellations = session.getJSONArray("cancellations");
-//                            System.out.println(cancellations);
-                            int pDuration = session.getInt("duration");
-//                            System.out.println(pDate);
-                            sesh[i] = new Session(pVenue + ": " + pRoom, type, freq, pDate, pType, pDuration, "pTest100");
+
                             String[] dateTime = pDate.split(" ");
+                            String[] eDateTime = endDate.split(" ");
 
                             venue.setText(pVenue);
                             room.setText(pRoom);
@@ -162,14 +195,21 @@ public class editSessions extends AppCompatActivity {
                             tList = Arrays.asList(sessionTypes);
                             ind = tList.indexOf(temp);
                             sType.setSelection(ind);
-
+                            System.out.println(freq);
                             repeatFrequency.setText(Integer.toString(freq));
+
                             date.setText(dateTime[0]);
+                            eDate.setText(eDateTime[0]);
+
                             time.setText(dateTime[1].substring(0, dateTime[1].length()-3));
+
                             duration.setText(Integer.toString(pDuration));
+                            slotCount.setText(Integer.toString(pSlotCount));
+                            slotGap.setText(Integer.toString(pSlotGap));
+
                             mainLayout.addView(LLayout);
                         }
-                    }else{
+                    } else {
                         String s = data.getString("responseCode");
                         switch (s){
                             case "failed_unknown":
@@ -187,47 +227,37 @@ public class editSessions extends AppCompatActivity {
                             case "failed_missing_perms":
                                 s = "Failed to get course: " + data.getString("responseCode");
                                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-
+                                break;
+                            case "failed_invalid_token":
+                                s = "Failed to get course: " + data.getString("responseCode");
+                                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                                break;
+                            case "failed_no_user":
+                                s = "Failed to get course: " + data.getString("responseCode");
+                                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
+                                break;
                         }
-
                     }
-
                 } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
         };
-
-        NA.getSessions(forumCode);
+        NA.getCourse(forumCode);
     }
 
-    public void addSession(View v){
-        Intent i = new Intent(editSessions.this, addSession.class);
-        i.putExtra("forumCode", forumCode);
-        startActivity(i);
-        finish();
-    }
-
-    public void addCancellation(){
-
-    }
-
-    public void updateSessions(View v) {
-        LinearLayout LLayout = ((LinearLayout) v.getParent()).findViewById(R.id.LLayout);
+    public void updateBookables(View v) {
+        LinearLayout LLayout = ((LinearLayout) v.getParent()).findViewById(R.id.bookableLayout);
         JSONArray sessions = new JSONArray();
         for (int i = 0; i < LLayout.getChildCount(); i++) {
             JSONObject jo = new JSONObject();
             View temp = LLayout.getChildAt(i);
-            AppCompatAutoCompleteTextView venue = temp.findViewById(R.id.venue);
-//            EditText room = temp.findViewById(R.id.room);
+            AutoCompleteTextView venue = temp.findViewById(R.id.venue);
             Spinner spinner = temp.findViewById(R.id.spinner);
             Spinner sType = temp.findViewById(R.id.type);
             EditText repeatFrequency = temp.findViewById(R.id.repeat);
             TextView Cancellations = temp.findViewById(R.id.cancellations);
-            String[] c = Cancellations.getText().toString().split("\n");
-            JSONArray cancels = new JSONArray();
+            String[] c = Cancellations.getText().toString().split("\n");JSONArray cancels = new JSONArray();
             for(String j: c){
                 if(!j.isEmpty()) {
                     cancels.put(j);
@@ -237,9 +267,71 @@ public class editSessions extends AppCompatActivity {
             TextView date = temp.findViewById(R.id.date);
             TextView time = temp.findViewById(R.id.time);
             EditText duration = temp.findViewById(R.id.duration);
+
+
+            EditText slotGap = temp.findViewById(R.id.padding);
+            EditText slotCount = temp.findViewById(R.id.numSessions);
+            TextView eDate = LLayout.findViewById(R.id.eDate);
+
+
             CheckBox cb = temp.findViewById(R.id.delete);
             String type = spinner.getSelectedItem().toString().toUpperCase();
+            TextView t;
+            boolean issue = false;
+            if(repeatFrequency.getText().toString().isEmpty()){
+                t = temp.findViewById(R.id.textView3);
+                t.setTextColor(Color.RED);
+                issue = true;
+            }
+            if(slotGap.getText().toString().isEmpty()){
+                t = temp.findViewById(R.id.textView13);
+                t.setTextColor(Color.RED);
+                issue = true;
+
+            }
+            if(slotCount.getText().toString().isEmpty()){
+                t = temp.findViewById(R.id.textView11);
+                t.setTextColor(Color.RED);
+                issue = true;
+
+            }
+            String endDate;
+            boolean isEnd = true;
+            if(eDate.getText().toString().equals("Date:") || eDate.getText().toString().equals("Not")){
+                endDate = eDate.getText().toString();
+                isEnd = false;
+
+            }else{
+                endDate = eDate.getText().toString();
+
+            }
+            if(date.getText().toString().equals("Date:")){
+                t = temp.findViewById(R.id.textView4);
+                t.setTextColor(Color.RED);
+                issue = true;
+            }if(duration.getText().toString().isEmpty()){
+                t = temp.findViewById(R.id.textView6);
+                t.setTextColor(Color.RED);
+                issue = true;
+            }
+            if(time.getText().toString().equals("Time:")){
+                t = temp.findViewById(R.id.textView4);
+                t.setTextColor(Color.RED);
+                issue = true;
+
+            }
+            if(venue.getText().toString().isEmpty()){
+                t = temp.findViewById(R.id.textView);
+                t.setTextColor(Color.RED);
+                issue = true;
+
+            }
+            if(issue){
+                return;
+            }
             int freq = Integer.parseInt(repeatFrequency.getText().toString());
+            int pSlotGap = Integer.parseInt(slotGap.getText().toString());
+            int pSlotCount = Integer.parseInt(slotCount.getText().toString());
             String pDate = date.getText().toString();
             System.out.println(pDate);
             String pTime = time.getText().toString();
@@ -261,12 +353,17 @@ public class editSessions extends AppCompatActivity {
 
             try {
                 jo.put("duration", pDuration);
+                jo.put("slotGap", pSlotGap);
+                jo.put("slotCount", pSlotCount);
                 jo.put("venue", ven);
 //                System.out.println(ven.getString("buildingCode"));
                 jo.put("repeatType", type);
                 jo.put("sessionType", pType);
                 jo.put("repeatGap", freq);
                 jo.put("startDate", pDate + " " + pTime);
+                if(isEnd){
+                    jo.put("endDate", endDate);
+                }
                 jo.put("cancellations", cancels);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -310,15 +407,80 @@ public class editSessions extends AppCompatActivity {
                 }
             }
         };
-        NA.editSessions(forumCode, sessions);
+        System.out.println(personNumber);
+        System.out.println(user_token);
+        System.out.println(forumCode);
+        System.out.println(sessions.toString());
+        NA.editBookables(forumCode, sessions);
+    }
+
+    public void addBookableSession(View v){
+        LinearLayout mainLayout = findViewById(R.id.bookableLayout);
+        View LLayout = getLayoutInflater().inflate(R.layout.booking, mainLayout, false);
+        AutoCompleteTextView venue = LLayout.findViewById(R.id.venue);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>
+                (viewBookableSessions.this, android.R.layout.select_dialog_item, buildings);
+        venue.setThreshold(1); //will start working from first character
+        venue.setAdapter(adapter);
+
+
+        TextView cencels = LLayout.findViewById(R.id.cancellations);
+        Spinner spinner = LLayout.findViewById(R.id.spinner);
+        Spinner sType = LLayout.findViewById(R.id.type);
+        String[] sessionTypes = new String[]{"Meeting","Consultation"};
+        String[] items = new String[]{"Daily", "Weekly", "Monthly", "Once"};
+        ArrayAdapter<String> ad = new ArrayAdapter<>(viewBookableSessions.this,
+                android.R.layout.simple_spinner_item, items);
+
+        ArrayAdapter<String> sessAdapter = new ArrayAdapter<>(viewBookableSessions.this,
+                android.R.layout.simple_spinner_item, sessionTypes);
+        spinner.setAdapter(ad);
+        sType.setAdapter(sessAdapter);
+
+        TextView date = LLayout.findViewById(R.id.date);
+        dFrag.setView(LLayout);
+        date.setOnClickListener(view -> dFrag.show(getSupportFragmentManager(), "datePicker"));
+        TextView time = LLayout.findViewById(R.id.time);
+        tFrag.setView(LLayout);
+        time.setOnClickListener(view -> tFrag.show(getSupportFragmentManager(), "timePicker"));
+        TextView eDate = LLayout.findViewById(R.id.eDate);
+        dFfrag.setView(LLayout);
+        eDate.setOnClickListener(view -> dFfrag.show(getSupportFragmentManager(), "datePicker"));
+        TextView cancelDate = LLayout.findViewById(R.id.cancelDate);
+        dfrag.setView(LLayout);
+        cancelDate.setOnClickListener(view -> dfrag.show(getSupportFragmentManager(), "datePicker"));
+
+        final StringBuilder[] cancells = {new StringBuilder()};
+        ArrayList<String> cans = new ArrayList<>();
+        Button addCancel = LLayout.findViewById(R.id.addCancellation);
+        addCancel.setOnClickListener(view -> {
+            String s = ((TextView)findViewById(R.id.cancelDate)).getText().toString();
+            if(!cans.contains(s) && s.charAt(0) != 'c') {
+                cancells[0].append("\n").append(s);
+                cencels.setText(cancells[0]);
+                cans.add(s);
+            }
+        });
+
+        Button remove = LLayout.findViewById(R.id.delCancels);
+        remove.setOnClickListener(view -> {
+                    cencels.setText("");
+                    cancells[0] = new StringBuilder();
+                    cans.clear();
+                }
+        );
+
+        mainLayout.addView(LLayout);
     }
 
     public void showTimePicker(View v){
         tFrag.show(getSupportFragmentManager(), "timePicker");
     }
-
     public void showDatePicker(View v){
         dFrag.show(getSupportFragmentManager(), "datePicker");
+    }
+    public void viewDatePicker(View v){
+        dFfrag.show(getSupportFragmentManager(), "datePicker");
     }
     public void showDateSelector(View v){
         dfrag.show(getSupportFragmentManager(), "datePicker");

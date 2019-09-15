@@ -226,7 +226,7 @@ void updateServerFCMToken(String fcmToken){
             session.put("repeatType", type);
             session.put("sessionType", sType);
             session.put("repeatGap", Freq);
-            session.put("nextDate", Occurence);
+            session.put("startDate", Occurence);
             session.put("duration", duration);
             session.put("cancellations", cancels);
             params.put("session", session);
@@ -295,6 +295,8 @@ void updateCourse(String courseCode, String couseDesc, String courseName, String
 
         makeRequest(params,"https://wd.dimensionalapps.com/course/update_sessions ","Update sessions failed");
     }
+
+
     public void getPosts(String forumCode){
         JSONObject params = new JSONObject();
 
@@ -437,6 +439,38 @@ void updateCourse(String courseCode, String couseDesc, String courseName, String
 
         makeRequest(params,"https://wd.dimensionalapps.com/course/resync_course ","Get Posts failed");
 
+    }
+
+    void editBookables(String courseCode, JSONArray sessions){
+        JSONObject params = new JSONObject();
+
+        try {
+            params.put("userToken", userToken);
+            params.put("personNumber", personNumber);
+            params.put("courseCode", courseCode);
+            params.put("bookableSessions", sessions);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        makeRequest(params,"https://wd.dimensionalapps.com/course/update_bookable_sessions  ","Update bookable sessions failed");
+    }
+
+    void makeBooking(int sessionId, String  repeatIndex, int slotIndex, String courseCode, String lecturerPersonNumber){JSONObject params = new JSONObject();
+
+        try {
+            params.put("userToken", userToken);
+            params.put("personNumber", personNumber);
+            params.put("courseCode", courseCode);
+            params.put("bookableSessionId", sessionId);
+            params.put("slotIndex", slotIndex);
+            params.put("repeatIndex", repeatIndex);
+            params.put("lecturerPersonNumber", lecturerPersonNumber);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        makeRequest(params,"https://wd.dimensionalapps.com/course/make_booking  ","Booking failed");
     }
     
 }

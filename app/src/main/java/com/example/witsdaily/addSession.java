@@ -71,6 +71,9 @@ public class addSession extends AppCompatActivity {
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
         mainLayout = findViewById(R.id.LLayout);
         inflate = getLayoutInflater().inflate(R.layout.session, mainLayout, false);
+        dFrag.setView(inflate);
+        tFrag.setView(inflate);
+        dfrag.setView(inflate);
         AppCompatAutoCompleteTextView venue = inflate.findViewById(R.id.venue);
         venue.setThreshold(1); //will start working from first character
         venue.setAdapter(adapter);
