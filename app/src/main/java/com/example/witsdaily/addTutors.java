@@ -20,7 +20,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-public class addTutors extends AppCompatActivity {
+public class addTutors extends ToolbarActivity {
     String courseCodeString;
     String forumCode;
     String user_token, personNumber;
@@ -33,6 +33,7 @@ public class addTutors extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_tutors);
+        setupAppBar();
         Intent i = getIntent();
         courseCodeString = i.getStringExtra("courseCode");
         forumCode= i.getStringExtra("forumCode");

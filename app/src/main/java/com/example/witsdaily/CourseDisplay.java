@@ -21,7 +21,7 @@ import org.json.JSONObject;
 
 import static com.example.witsdaily.PhoneDatabaseContract.*;
 
-public class CourseDisplay extends AppCompatActivity {
+public class CourseDisplay extends ToolbarActivity {
     int courseID;
     String courseCodeString;
     private static final long  lect = 128|64|32|16|8|4|2|1;
@@ -32,6 +32,7 @@ public class CourseDisplay extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_display);
+        setupAppBar();
         Intent i  = getIntent();
         courseID = Integer.parseInt(i.getStringExtra("courseID"));
         user_token = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);

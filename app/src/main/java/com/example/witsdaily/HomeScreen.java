@@ -55,9 +55,15 @@ public class HomeScreen extends ToolbarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+    try {
         userToken = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
+    }catch (Exception e){
+        Intent currentIntent = getIntent();
+        userToken = currentIntent.getStringExtra("user_token");
+        personNumber = currentIntent.getStringExtra("person_number");
+    }
+
         loadSettings();
         setContentView(R.layout.activity_home_screen);
         setupAppBar();
