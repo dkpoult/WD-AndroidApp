@@ -61,19 +61,19 @@
             android:name=".EnrollDialog"
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
-            android:name=".UnregisteredCourses"
+            android:name=".Course.UnregisteredCourses"
             android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".AnnouncementSender"
             android:theme="@style/MyTheme.DayNight" />
         <activity
-            android:name=".CourseDisplay"
+            android:name=".Course.CourseDisplay"
             android:theme="@style/MyTheme.DayNight" />
         <activity
-            android:name=".courseLink"
+            android:name=".Course.courseLink"
             android:theme="@style/MyTheme.DayNight" />
         <activity
-            android:name=".CourseRegistration"
+            android:name=".Course.CourseRegistration"
             android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".viewSession"

@@ -1,10 +1,9 @@
-package com.example.witsdaily;
+package com.example.witsdaily.Course;
 
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,8 +11,18 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.witsdaily.AnnouncementSender;
+import com.example.witsdaily.ChatActivity;
 import com.example.witsdaily.Forum.LectureCourseForum;
+import com.example.witsdaily.LiveQuestions;
+import com.example.witsdaily.NetworkAccessor;
+import com.example.witsdaily.PhoneDatabaseHelper;
+import com.example.witsdaily.R;
 import com.example.witsdaily.Survey.SurveyCreator;
+import com.example.witsdaily.ToolbarActivity;
+import com.example.witsdaily.addTutors;
+import com.example.witsdaily.editCourse;
+import com.example.witsdaily.editSessions;
 
 import org.json.JSONArray;
 import org.json.JSONException;

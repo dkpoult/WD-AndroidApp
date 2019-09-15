@@ -1,4 +1,4 @@
-package com.example.witsdaily;
+package com.example.witsdaily.Course;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.witsdaily.EnrollDialog;
+import com.example.witsdaily.R;
+import com.example.witsdaily.StorageAccessor;
 
 import org.json.JSONArray;
 import org.json.JSONException;

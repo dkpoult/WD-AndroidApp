@@ -17,7 +17,7 @@ public abstract class NetworkAccessor {
     private String personNumber;
     private Context context;
     private String userToken;
-    abstract void getResponse(JSONObject data);
+    public abstract void getResponse(JSONObject data);
 
     NetworkAccessor(Context pContext, String pPersonNumber, String pUserToken){
         context = pContext;
