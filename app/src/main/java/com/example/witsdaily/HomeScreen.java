@@ -7,19 +7,19 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.viewpager.widget.ViewPager;
 
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.witsdaily.Course.CourseDisplay;
 import com.example.witsdaily.Course.CourseRegistration;
-import com.example.witsdaily.Course.UnregisteredCourses;
+import com.example.witsdaily.Course.EnrolledCourses;
+import com.example.witsdaily.Course.UnenrolledCourses;
 import com.example.witsdaily.Course.courseLink;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,7 +27,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -85,22 +84,17 @@ public class HomeScreen extends ToolbarActivity {
             }).start();
         }
 
+        ViewPager viewPager = findViewById(R.id.courseViewPager);
+        TabLayout tabLayout = findViewById(R.id.courseTabLayout);
 
-
-        getCourses();
-        getUnenrolledCourses();
-        addAvailableCourses();
+        TabAdapter adapter = new TabAdapter(getSupportFragmentManager());
+        adapter.addFragment(new EnrolledCourses(),"Enrolled Courses");
+        adapter.addFragment(new UnenrolledCourses(),"Not Courses");
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
 
 
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        addAvailableCourses();
-    }
-
-
 
     private void updateServerFCMToken(String newToken){
         StorageAccessor dataAccessor = new StorageAccessor(this, personNumber,userToken){
@@ -204,112 +198,6 @@ public class HomeScreen extends ToolbarActivity {
     public void Create(View v){
         Intent i = new Intent(HomeScreen.this, CourseRegistration.class);
         startActivity(i);
-    }
-
-
-
-    private void addAvailableCourses(){
-
-        View currentLayout = (LinearLayout)findViewById(R.id.llCourseLayout);
-        ((LinearLayout) currentLayout).removeAllViews(); // clears this for when async is done
-            JSONArray value = syncAccessor.getLocalCourses();
-            for (int i =0;i<value.length();i++){
-                try {
-                    View courseBrief = getLayoutInflater().inflate(R.layout.briefcoursedisplay, null);
-                    TextView name = (TextView)(courseBrief.findViewById(R.id.tvName));
-                    TextView description = (TextView)(courseBrief.findViewById(R.id.tvDescription));
-
-                    String courseID = value.getJSONObject(i).getString(TableCourse.COLUMN_NAME_ID); // or whatever whatever
-                    String courseName = value.getJSONObject(i).getString(TableCourse.COLUMN_NAME_NAME);
-                    String courseDescription = value.getJSONObject(i).getString(TableCourse.COLUMN_NAME_DESCRIPTION);
-
-                    courseBrief.setTag(courseID);
-                    name.setText(courseName);
-                    description.setText(courseDescription);
-                    ((LinearLayout) currentLayout).addView(courseBrief);
-
-                    } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-    }
-    public void courseClicked(View v){ // means they're already enrolled
-     // go to that course
-        Intent i = new Intent(HomeScreen.this, CourseDisplay.class);
-        i.putExtra("courseID",String.valueOf(v.getTag()));
-        startActivity(i);
-    }
-    private void processGetCourses(JSONObject response,boolean enrolled) throws Exception{
-        PhoneDatabaseHelper dbHelper = new PhoneDatabaseHelper(getApplicationContext());
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        if (!response.getString("responseCode").equals("successful")){
-            return;
-        }
-        JSONArray coursesList = response.getJSONArray("courses");
-        for (int i =0;i<coursesList.length();i++) {
-            response = coursesList.getJSONObject(i);
-
-            ContentValues values = new ContentValues();
-            if (!syncAccessor.containsCourseCode(response.getString("courseCode"))){
-                values.put(TableCourse.COLUMN_NAME_CODE, response.getString("courseCode"));
-                values.put(TableCourse.COLUMN_NAME_DESCRIPTION, response.getString("courseDescription"));
-                values.put(TableCourse.COLUMN_NAME_LECTURER, response.getString("lecturer"));
-                values.put(TableCourse.COLUMN_NAME_NAME, response.getString("courseName"));
-                long result = db.insertOrThrow(TableCourse.TABLE_NAME, null, values);
-                if (result <= 0) {
-                    return;
-                }
-            }
-            String courseID = syncAccessor.courseCodeToID(response.getString("courseCode"));
-            if (enrolled && !syncAccessor.userLinked(courseID)){
-                values = new ContentValues();
-                values.put(TablePersonCourse.COLUMN_NAME_PERSONNUMBER, personNumber);
-                values.put(TablePersonCourse.COLUMN_NAME_COURSEID, courseID);
-                long result2 = db.insertOrThrow(TablePersonCourse.TABLE_NAME, null, values);
-
-            }
-        }
-        addAvailableCourses(); // just to refresh the ui
-    }
-
-
-    private void getCourses(){
-        StorageAccessor dataAccessor = new StorageAccessor(this, personNumber,userToken){
-            @Override
-            public void getData(JSONObject data) {
-                try {
-                    processGetCourses(data,true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        dataAccessor.getEnrolledCourses();
-    }
-    private void getUnenrolledCourses(){
-        StorageAccessor dataAccessor = new StorageAccessor(this, personNumber,userToken){
-            @Override
-            public void getData(JSONObject data) {
-                try {
-                    processGetCourses(data,false);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        dataAccessor.getUnenrolledCourses();
-    }
-    public void clickViewAllCourses(View v){
-        Intent i = new Intent(HomeScreen.this, UnregisteredCourses.class);
-        startActivity(i);
-    }    private void processRequest(JSONObject response){
-        String output = null;
-        try {
-            output = response.getString("responseCode");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 
 

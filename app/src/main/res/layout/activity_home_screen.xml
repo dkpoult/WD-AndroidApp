@@ -8,11 +8,15 @@
     android:layout_height="match_parent"
     tools:openDrawer="start"
     >
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
 
     <ScrollView
         android:layout_width="match_parent"
 
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
 
         >
@@ -27,16 +31,9 @@
             android:clipToPadding="false"
             android:paddingBottom="10dp">
 
-            <include layout = "@layout/uniform_toolbar">
-                
-            </include>
-            <LinearLayout
-                android:id="@+id/llCourseLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+            <include layout = "@layout/uniform_toolbar"/>
 
-            </LinearLayout>
+
 
             <com.google.android.material.button.MaterialButton
                 android:layout_marginTop="10dp"
@@ -58,21 +55,26 @@
                 android:text="@string/create_course"
                 android:textColor="@color/colorWhite" />
 
-            <Button
-                android:id="@+id/btnViewAllCourses"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/rounded_button"
-                android:onClick="clickViewAllCourses"
-                android:text="@string/view_unregistered_courses"
-                android:textColor="@color/colorWhite" />
-
 
         </LinearLayout>
 
 
     </ScrollView>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/courseTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/courseViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+
+
+    </LinearLayout>
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_layout"
         android:layout_width="wrap_content"
@@ -80,7 +82,5 @@
         android:layout_gravity="start|left"
         app:headerLayout="@layout/drawer_header_layout"
         app:menu="@menu/navigation_menu" />
-
-
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -22,6 +22,7 @@ public abstract class NetworkAccessor {
     public NetworkAccessor(Context pContext, String pPersonNumber, String pUserToken){
         context = pContext;
         requestQueue = Volley.newRequestQueue(pContext.getApplicationContext());
+
         userToken = pUserToken;
         personNumber = pPersonNumber;
 
@@ -33,7 +34,11 @@ public abstract class NetworkAccessor {
         progressBar.setMessage("Loading");
         progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressBar.setIndeterminate(true);
-        progressBar.show();
+        try{
+        progressBar.show();}
+        catch(Exception e){
+            System.out.println("Doesn't work with fragments for now");
+        }
         final JsonObjectRequest request = new JsonObjectRequest(APIUrl, params,
                 response -> {
                     System.out.println("successfull "+APIUrl); // possible return, make function instead

@@ -61,9 +61,6 @@
             android:name=".EnrollDialog"
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
-            android:name=".Course.UnregisteredCourses"
-            android:theme="@style/MyTheme.DayNight" />
-        <activity
             android:name=".AnnouncementSender"
             android:theme="@style/MyTheme.DayNight" />
         <activity
