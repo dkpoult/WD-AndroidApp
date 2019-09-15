@@ -15,16 +15,16 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".addTutors"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".LiveQuestions"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".SettingsActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".Forum.ForumAddPost"
-            android:theme="@style/Theme.AppCompat.Dialog" />
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".Forum.ViewForum"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -34,13 +34,13 @@
         <activity
             android:name=".VenueList"
             android:label="@string/title_activity_venue_list"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".Survey.SurveyAnswer"
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
             android:name=".Survey.SurveyCreator"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".Survey.SurveyViewer"
             android:theme="@style/Theme.AppCompat.Dialog" />
@@ -62,34 +62,34 @@
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
             android:name=".UnregisteredCourses"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".AnnouncementSender"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".CourseDisplay"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".courseLink"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".CourseRegistration"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".viewSession"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".editSessions"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".editCourse"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".addSession"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".timetable"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".LoginActivity"
             android:theme="@style/MyTheme.DayNight">
@@ -100,7 +100,7 @@
         </activity>
         <activity
             android:name=".UserRegistration"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".HomeScreen"
             android:label="@string/title_activity_home_screen"

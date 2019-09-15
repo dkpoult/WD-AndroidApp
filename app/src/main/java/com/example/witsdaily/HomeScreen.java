@@ -1,5 +1,6 @@
 package com.example.witsdaily;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +10,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,6 +27,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,7 +43,7 @@ import java.io.IOException;
 
 import static com.example.witsdaily.PhoneDatabaseContract.*;
 
-public class HomeScreen extends AppCompatActivity {
+public class HomeScreen extends ToolbarActivity {
  // FirebaseInstanceId.getInstance().deleteInstanceId(); good for logout button
     String userToken;
     String personNumber;
@@ -50,13 +60,13 @@ public class HomeScreen extends AppCompatActivity {
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
         loadSettings();
         setContentView(R.layout.activity_home_screen);
+        setupAppBar();
         syncAccessor  = new StorageAccessor(this, personNumber,userToken){
             @Override
             public void getData(JSONObject data) {
                 System.out.println("Successful sync task complete");
             }
         };
-
 
         addUserToDB();
 
@@ -198,10 +208,7 @@ public class HomeScreen extends AppCompatActivity {
         startActivity(i);
     }
 
-    public void viewVenues(View v){
-        Intent i = new Intent(HomeScreen.this, VenueList.class);
-        startActivity(i);
-    }
+
 
     private void addAvailableCourses(){
 
@@ -307,20 +314,6 @@ public class HomeScreen extends AppCompatActivity {
         }
     }
 
-    public void viewTT(View view){
-        Intent i = new Intent(HomeScreen.this, timetable.class);
-        startActivity(i);
-    }
 
-    public void logOut(View v){
-        SharedPreferences.Editor settings = getSharedPreferences("com.wd", Context.MODE_PRIVATE).edit();
-        settings.clear().apply();
-        Intent i = new Intent(HomeScreen.this, LoginActivity.class);
-        startActivity(i);
-    }
-    public void clickSettings(View v){
-        Intent i = new Intent(HomeScreen.this, SettingsActivity.class);
-        startActivity(i);
-    }
 
 }

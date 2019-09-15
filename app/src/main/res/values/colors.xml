@@ -11,10 +11,10 @@
     <color name="outgoing">#dcf8c6</color>
 
 
-    <color name="color_primary">#EE0000</color>
-    <color name="color_primary_variant">#FF5722</color>
-    <color name="color_secondary">#4CAF50</color>
-    <color name="color_secondary_variant">#018786</color>
+    <color name="color_primary">#003a5e</color>
+    <color name="color_primary_variant">#003a5e</color>
+    <color name="color_secondary">#86724c</color>
+    <color name="color_secondary_variant">#86724c</color>
 
     <!--colorBackground appears behind scrollable content and is used for the default window-->
     <!--background. colorSurface is mapped to the surface of components such as cards, sheets-->

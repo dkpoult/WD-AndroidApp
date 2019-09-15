@@ -17,7 +17,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class VenueList extends AppCompatActivity {
+public class VenueList extends ToolbarActivity {
 
     ArrayList<String> buildings = new ArrayList<>();
     ArrayAdapter<String> adapter;
@@ -29,7 +29,7 @@ public class VenueList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_venue_list);
-
+        setupAppBar();
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
         user_token = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
 

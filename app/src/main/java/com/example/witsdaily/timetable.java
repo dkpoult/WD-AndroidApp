@@ -24,7 +24,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 
-public class timetable extends AppCompatActivity {
+public class timetable extends ToolbarActivity {
 
     String personNumber, user_token;
 
@@ -34,7 +34,7 @@ public class timetable extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timetable);
-
+        //setupAppBar();
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
         user_token = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
 

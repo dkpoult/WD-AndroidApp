@@ -1,101 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".HomeScreen">
+    tools:openDrawer="start"
+    >
 
-    <LinearLayout
-        android:id="@+id/llHomeLayout"
+    <ScrollView
         android:layout_width="match_parent"
+
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_margin="10dp"
-        android:paddingBottom="10dp">
+
+        >
 
         <LinearLayout
-            android:id="@+id/llCourseLayout"
+
+            android:id="@+id/llHomeLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:clipToPadding="false"
+            android:paddingBottom="10dp">
+
+            <include layout = "@layout/uniform_toolbar">
+                
+            </include>
+            <LinearLayout
+                android:id="@+id/llCourseLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+            <Button
+                android:layout_marginTop="10dp"
+                android:id="@+id/b1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rounded_button"
+                android:onClick="Link"
+                android:text="@string/link_course"
+                android:textColor="@color/colorWhite" />
+
+            <Button
+                android:id="@+id/b2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rounded_button"
+                android:onClick="Create"
+                android:text="@string/create_course"
+                android:textColor="@color/colorWhite" />
+
+            <Button
+                android:id="@+id/btnViewAllCourses"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rounded_button"
+                android:onClick="clickViewAllCourses"
+                android:text="@string/view_unregistered_courses"
+                android:textColor="@color/colorWhite" />
+
 
         </LinearLayout>
 
-        <Button
-            android:layout_marginTop="10dp"
-            android:id="@+id/b1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rounded_button"
-            android:onClick="Link"
-            android:text="@string/link_course"
-            android:textColor="@color/colorWhite" />
 
-        <Button
-            android:id="@+id/b2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rounded_button"
-            android:onClick="Create"
-            android:text="@string/create_course"
-            android:textColor="@color/colorWhite" />
-
-        <Button
-            android:id="@+id/btnViewAllCourses"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rounded_button"
-            android:onClick="clickViewAllCourses"
-            android:text="@string/view_unregistered_courses"
-            android:textColor="@color/colorWhite" />
-
-        <Button
-            android:id="@+id/testTimeTable"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rounded_button"
-            android:onClick="viewTT"
-            android:text="@string/timetable"
-            android:textColor="@color/colorWhite" />
-
-        <Button
-            android:id="@+id/venue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/venue"
-            android:layout_marginBottom="10dp"
-            android:textColor="@color/colorWhite"
-            android:background="@drawable/rounded_button"
-            android:onClick="viewVenues" />
-
-        <Button
-            android:id="@+id/btnSettings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/action_settings"
-            android:textColor="@color/colorWhite"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rounded_button"
-            android:onClick="clickSettings" />
-
-        <Button
-            android:id="@+id/logout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/rounded_button"
-            android:onClick="logOut"
-            android:text="@string/logout"
-            android:textColor="@color/colorWhite" />
+    </ScrollView>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start|left"
+        app:headerLayout="@layout/drawer_header_layout"
+        app:menu="@menu/navigation_menu" />
 
 
-    </LinearLayout>
 
-
-</ScrollView>
+</androidx.drawerlayout.widget.DrawerLayout>

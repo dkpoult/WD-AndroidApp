@@ -2,7 +2,11 @@ package com.example.witsdaily;
 
 import android.content.Context;
 import android.content.Intent;
+
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,7 +17,7 @@ import android.widget.Toast;
 
 import org.json.JSONObject;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends ToolbarActivity {
 String currentLanguage,userToken,personNumber;
 int currentNotification;
     @Override
@@ -22,7 +26,7 @@ int currentNotification;
         setContentView(R.layout.activity_settings2);
         userToken = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
-
+        setupAppBar();
         getCurrentLanguage();
         getCurrentNotificationSettings();
         Spinner spinner = (Spinner) findViewById(R.id.spnrLanguages);
