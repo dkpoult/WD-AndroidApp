@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.ViewPager;
 
+import android.os.Environment;
 import android.view.View;
 import android.widget.Toast;
 
@@ -30,7 +32,13 @@ import com.google.firebase.iid.InstanceIdResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import static com.example.witsdaily.PhoneDatabaseContract.*;
 
@@ -89,7 +97,7 @@ public class HomeScreen extends ToolbarActivity {
 
         TabAdapter adapter = new TabAdapter(getSupportFragmentManager());
         adapter.addFragment(new EnrolledCourses(),"Enrolled Courses");
-        adapter.addFragment(new UnenrolledCourses(),"Not Courses");
+        adapter.addFragment(new UnenrolledCourses(),"Un-enrolled Courses");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -175,6 +183,8 @@ public class HomeScreen extends ToolbarActivity {
 
         if (!cursor.moveToFirst()){
             //add user
+
+            // download image for the memes thanks api.adorable.io! ""
             db = dbHelper.getWritableDatabase();
             ContentValues values = new ContentValues();
             values.put(TablePerson.COLUMN_NAME_NUMBER,personNumber);
@@ -199,6 +209,7 @@ public class HomeScreen extends ToolbarActivity {
         Intent i = new Intent(HomeScreen.this, CourseRegistration.class);
         startActivity(i);
     }
+
 
 
 
