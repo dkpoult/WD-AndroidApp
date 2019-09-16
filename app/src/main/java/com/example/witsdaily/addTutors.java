@@ -20,7 +20,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-public class addTutors extends AppCompatActivity {
+public class addTutors extends ToolbarActivity {
     String courseCodeString;
     String forumCode;
     String user_token, personNumber;
@@ -33,6 +33,7 @@ public class addTutors extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_tutors);
+        setupAppBar();
         Intent i = getIntent();
         courseCodeString = i.getStringExtra("courseCode");
         forumCode= i.getStringExtra("forumCode");
@@ -41,7 +42,7 @@ public class addTutors extends AppCompatActivity {
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
         NA = new NetworkAccessor(this, personNumber, user_token) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 System.out.println(data.toString());
                 try {
                     String s = data.getString("responseCode");
@@ -110,7 +111,7 @@ public class addTutors extends AppCompatActivity {
         String pArea = area.getSelectedItem().toString();
         NA = new NetworkAccessor(this, personNumber, user_token) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 try {
                     String s = data.getString("responseCode");
                     System.out.println(s);

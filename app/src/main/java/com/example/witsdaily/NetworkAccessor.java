@@ -17,11 +17,12 @@ public abstract class NetworkAccessor {
     private String personNumber;
     private Context context;
     private String userToken;
-    abstract void getResponse(JSONObject data);
+    public abstract void getResponse(JSONObject data);
 
-    NetworkAccessor(Context pContext, String pPersonNumber, String pUserToken){
+    public NetworkAccessor(Context pContext, String pPersonNumber, String pUserToken){
         context = pContext;
         requestQueue = Volley.newRequestQueue(pContext.getApplicationContext());
+
         userToken = pUserToken;
         personNumber = pPersonNumber;
 
@@ -33,7 +34,11 @@ public abstract class NetworkAccessor {
         progressBar.setMessage("Loading");
         progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressBar.setIndeterminate(true);
-        progressBar.show();
+        try{
+        progressBar.show();}
+        catch(Exception e){
+            System.out.println("Doesn't work with fragments for now");
+        }
         final JsonObjectRequest request = new JsonObjectRequest(APIUrl, params,
                 response -> {
                     System.out.println("successfull "+APIUrl); // possible return, make function instead
@@ -51,7 +56,7 @@ public abstract class NetworkAccessor {
 
     }
 //personNumber, userToken, fcmToken
-void updateServerFCMToken(String fcmToken){
+public void updateServerFCMToken(String fcmToken){
         JSONObject params = new JSONObject();
 
         try {
@@ -65,7 +70,7 @@ void updateServerFCMToken(String fcmToken){
         makeRequest(params,"https://wd.dimensionalapps.com/push/set_fcm_token","FCM Token");
     }
 
-    void firebaseAutenticate(){
+    public void firebaseAutenticate(){
         JSONObject params = new JSONObject();
         try {
             params.put("userToken", userToken);
@@ -77,7 +82,7 @@ void updateServerFCMToken(String fcmToken){
         makeRequest(params,"https://wd.dimensionalapps.com/push/notification_token","firebase authenticate error");
     }
 
-    void loginRequest(String password){
+    public void loginRequest(String password){
         JSONObject params = new JSONObject();
         try {
             params.put("personNumber", personNumber);
@@ -88,7 +93,7 @@ void updateServerFCMToken(String fcmToken){
         makeRequest(params,"https://wd.dimensionalapps.com/auth/login","Login failed");
 
     }
-    void registerUser(String personIDValue, String passwordValue){
+    public void registerUser(String personIDValue, String passwordValue){
         JSONObject params = new JSONObject();
         try {
             params.put("personNumber", personIDValue);
@@ -98,7 +103,7 @@ void updateServerFCMToken(String fcmToken){
         }
         makeRequest(params,"https://wd.dimensionalapps.com/auth/register","Register user failed");
     }
-    void getEnrolledCourses(){
+    public void getEnrolledCourses(){
         JSONObject params = new JSONObject();
         try {
             params.put("userToken", userToken);
@@ -109,7 +114,7 @@ void updateServerFCMToken(String fcmToken){
         }
         makeRequest(params,"https://wd.dimensionalapps.com/course/get_courses","Get enrolled failed");
     }
-    void getUnenrolledCourses(){
+    public void getUnenrolledCourses(){
         JSONObject params = new JSONObject();
         try {
             params.put("userToken", userToken);
@@ -121,7 +126,7 @@ void updateServerFCMToken(String fcmToken){
         makeRequest(params,"https://wd.dimensionalapps.com/course/get_available_courses",
                 "Get Unenrolled failed");
     }
-    void enrollUser(String password, String courseCode){
+    public void enrollUser(String password, String courseCode){
         JSONObject params = new JSONObject();
         try{
             params.put("personNumber", personNumber);
@@ -133,7 +138,7 @@ void updateServerFCMToken(String fcmToken){
         }
         makeRequest(params,"https://wd.dimensionalapps.com/course/enrol_in_course","Error enroll");
     }
-    void getSurvey(String courseCode){
+    public void getSurvey(String courseCode){
         JSONObject params = new JSONObject();
         try{
             params.put("personNumber", personNumber);
@@ -145,7 +150,7 @@ void updateServerFCMToken(String fcmToken){
 
         makeRequest(params,"https://wd.dimensionalapps.com/survey/get_survey","Error survey");
     }
-    void makeSurvey(String courseCode, String title, JSONArray options, String responseType){
+    public void makeSurvey(String courseCode, String title, JSONArray options, String responseType){
         JSONObject params = new JSONObject();
         try{ //personNumber, userToken, title, options, courseCode
             params.put("personNumber", personNumber);
@@ -160,7 +165,7 @@ void updateServerFCMToken(String fcmToken){
         makeRequest(params,"https://wd.dimensionalapps.com/survey/make_survey","Error survey creation");
     }
 
-    void closeSurvey(String courseCode){
+    public void closeSurvey(String courseCode){
         JSONObject params = new JSONObject();
         try{
             params.put("personNumber", personNumber);
@@ -171,7 +176,7 @@ void updateServerFCMToken(String fcmToken){
         }
         makeRequest(params,"https://wd.dimensionalapps.com/survey/close_survey","Error closing survey");
     }
-    void getSurveyResults(String courseCode){
+    public void getSurveyResults(String courseCode){
         JSONObject params = new JSONObject();
         try{
             params.put("personNumber", personNumber);
@@ -183,7 +188,7 @@ void updateServerFCMToken(String fcmToken){
         makeRequest(params,"https://wd.dimensionalapps.com/survey/get_results","Error getting survey results");
     }
 
-    void sendAnswer(String answer, String courseCode, String surveyType){
+    public void sendAnswer(String answer, String courseCode, String surveyType){
         JSONObject params = new JSONObject();
         try{
             params.put("personNumber", personNumber);
@@ -200,7 +205,7 @@ void updateServerFCMToken(String fcmToken){
 
 
 
-    void getSessions(String courseCode){
+    public void getSessions(String courseCode){
         JSONObject params = new JSONObject();
         try{
             params.put("personNumber", personNumber);
@@ -212,7 +217,7 @@ void updateServerFCMToken(String fcmToken){
         makeRequest(params,"https://wd.dimensionalapps.com/course/get_course","get_Session error");
     }
 
-    void addSession(String courseCode, JSONObject venue, String type, int Freq, String Occurence, String sType, int duration, JSONArray cancels){
+    public void addSession(String courseCode, JSONObject venue, String type, int Freq, String Occurence, String sType, int duration, JSONArray cancels){
         JSONObject params = new JSONObject();
 
         try{
@@ -237,7 +242,7 @@ void updateServerFCMToken(String fcmToken){
         makeRequest(params,"https://wd.dimensionalapps.com/course/add_session","add_session error");
     }
 
-void getCourse(String courseCode){
+public void getCourse(String courseCode){
         JSONObject params = new JSONObject();
 
         try {
@@ -251,7 +256,7 @@ void getCourse(String courseCode){
         makeRequest(params,"https://wd.dimensionalapps.com/course/get_course","Get course failed");
     }
 
-void linkCourse (String courseCode){
+public void linkCourse (String courseCode){
         JSONObject params = new JSONObject();
 
         try {
@@ -265,7 +270,7 @@ void linkCourse (String courseCode){
         makeRequest(params,"https://wd.dimensionalapps.com/course/link_course","Link course failed");
     }
 
-void updateCourse(String courseCode, String couseDesc, String courseName, String newKey){
+public void updateCourse(String courseCode, String couseDesc, String courseName, String newKey){
         JSONObject params = new JSONObject();
 
         try {
@@ -281,7 +286,7 @@ void updateCourse(String courseCode, String couseDesc, String courseName, String
         makeRequest(params,"https://wd.dimensionalapps.com/course/update_course","Update course failed");
     }
 
-    void editSessions(String courseCode, JSONArray sessions){
+    public void editSessions(String courseCode, JSONArray sessions){
         JSONObject params = new JSONObject();
 
         try {
@@ -384,7 +389,7 @@ void updateCourse(String courseCode, String couseDesc, String courseName, String
     }
 
 
-    void getVenues(){
+    public void getVenues(){
         JSONObject params = new JSONObject();
 
         try {
@@ -397,7 +402,7 @@ void updateCourse(String courseCode, String couseDesc, String courseName, String
         makeRequest(params,"https://wd.dimensionalapps.com/venue/get_venues ","Get venues failed");
     }
 
-    void getChatTypeMessages(String chatroomCode){
+    public void getChatTypeMessages(String chatroomCode){
         JSONObject params = new JSONObject();
 
         try {
@@ -411,13 +416,13 @@ void updateCourse(String courseCode, String couseDesc, String courseName, String
         makeRequest(params,"https://wd.dimensionalapps.com/chat/get_messages ","Get messages failed");
     }
 
-    void getPermissionCodes(){
+    public void getPermissionCodes(){
         JSONObject params = new JSONObject();
 
         makeRequest(params,"https://wd.dimensionalapps.com/permission/get_permission_codes ","get permissions failed");
     }
 
-    void serPermissions(JSONObject j){
+    public void serPermissions(JSONObject j){
         try {
             j.put("userToken", userToken);
             j.put("personNumber", personNumber);
@@ -427,7 +432,7 @@ void updateCourse(String courseCode, String couseDesc, String courseName, String
         makeRequest(j,"https://wd.dimensionalapps.com/permission/set_permissions ","Set permissions failed");
     }
 
-    void resync(String courseCode){
+    public void resync(String courseCode){
         JSONObject params = new JSONObject();
         try {
             params.put("userToken", userToken);

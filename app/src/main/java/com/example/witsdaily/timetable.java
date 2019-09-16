@@ -27,7 +27,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-public class timetable extends AppCompatActivity {
+public class timetable extends ToolbarActivity {
 
     String personNumber, user_token;
 
@@ -37,7 +37,7 @@ public class timetable extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timetable);
-
+        //setupAppBar();
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
         user_token = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
 
@@ -48,7 +48,7 @@ public class timetable extends AppCompatActivity {
         NetworkAccessor NA = new NetworkAccessor(this, personNumber, user_token) {
             @SuppressLint("SetTextI18n")
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 JSONArray sessions;
                 JSONObject tempBook;
                 try {

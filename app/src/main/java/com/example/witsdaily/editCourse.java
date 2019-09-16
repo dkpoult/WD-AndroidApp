@@ -25,7 +25,7 @@ public class editCourse extends AppCompatActivity {
 
         NetworkAccessor NA = new NetworkAccessor(this, personNumber, userToken) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 System.out.println(data.toString());
                 try {
                     if(data.getString("responseCode").equals("successful")){
@@ -55,7 +55,7 @@ public class editCourse extends AppCompatActivity {
         EditText CC = findViewById(R.id.edtCourseCode);
         NetworkAccessor NA = new NetworkAccessor(this, personNumber, userToken) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 String s;
                 try {
                     if(data.getString("responseCode").equals("successful")){

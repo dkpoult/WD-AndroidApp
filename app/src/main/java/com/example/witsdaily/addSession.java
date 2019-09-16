@@ -22,7 +22,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class addSession extends AppCompatActivity {
+public class addSession extends ToolbarActivity {
     String forumCode, user_token, personNumber;
     final TimePickerFragment tFrag = new TimePickerFragment();
     final DatePickerFragment dFrag = new DatePickerFragment();
@@ -34,13 +34,13 @@ public class addSession extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_session);
-
+        setupAppBar();
         adapter = new ArrayAdapter<>
                 (this, android.R.layout.select_dialog_item, buildings);
 
         NetworkAccessor NA = new NetworkAccessor(this, personNumber, user_token) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 System.out.println(data);
                 try {
                     if(data.getString("responseCode").equals("successful")){
@@ -204,7 +204,7 @@ public class addSession extends AppCompatActivity {
 
         NetworkAccessor NA = new NetworkAccessor(this, personNumber, user_token) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 try {
                     String s;
                     if(data.getString("responseCode").equals("successful")){
