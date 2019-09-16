@@ -25,7 +25,6 @@ public class CourseDisplay extends AppCompatActivity {
     int courseID;
     String courseCodeString;
     private static final long  lect = 128|64|32|16|8|4|2|1;
-    private static final long  student = 64|1;
     private static final long  tutor = 128|64|1;
     String user_token,personNumber;
     @Override

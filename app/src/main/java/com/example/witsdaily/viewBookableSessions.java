@@ -1,17 +1,9 @@
 package com.example.witsdaily;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -23,22 +15,22 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class viewBookableSessions extends AppCompatActivity {
 
     String personNumber, user_token, forumCode;
-    final TimePickerFragment tFrag = new TimePickerFragment();
-    final DatePickerFragment dFrag = new DatePickerFragment();
-    final DateSelector dfrag = new DateSelector();
-    final DateChooser dFfrag = new DateChooser();
+    TimePickerFragment tFrag;
+    DatePickerFragment dFrag;
+    DateSelector dfrag;
+    DateChooser dFfrag;
     ArrayList<String> buildings = new ArrayList<>();
 
     @Override
@@ -55,12 +47,12 @@ public class viewBookableSessions extends AppCompatActivity {
             @Override
             void getResponse(JSONObject data) {
                 try {
-                    if(data.getString("responseCode").equals("successful")){
+                    if (data.getString("responseCode").equals("successful")) {
                         JSONArray venues = data.getJSONArray("venues");
                         int size = venues.length();
-                        for(int i = 0; i < size; i ++){
+                        for (int i = 0; i < size; i++) {
                             JSONObject venue = venues.getJSONObject(i);
-                            if(!buildings.contains(venue.getString("buildingCode"))){
+                            if (!buildings.contains(venue.getString("buildingCode"))) {
                                 buildings.add(venue.getString("buildingCode"));
                             }
                         }
@@ -74,6 +66,7 @@ public class viewBookableSessions extends AppCompatActivity {
 
 
         NA = new NetworkAccessor(this, personNumber, user_token) {
+            @SuppressLint("SetTextI18n")
             @Override
             void getResponse(JSONObject data) {
                 System.out.println(data);
@@ -82,14 +75,13 @@ public class viewBookableSessions extends AppCompatActivity {
                         JSONArray r = data.getJSONArray("courses");
                         System.out.println(r.toString());
                         JSONObject sessionTemp = r.getJSONObject(0);
-                        JSONObject lecturer = sessionTemp.getJSONObject("lecturer");
                         JSONObject lecSessions = sessionTemp.getJSONObject("bookableSessions");
                         JSONArray sessions = lecSessions.getJSONArray(personNumber);
                         System.out.println("TESTING SESSIONS: " + sessions.toString());
 
                         LinearLayout mainLayout = findViewById(R.id.bookableLayout);
                         View LLayout;
-                        for(int i = 0; i < sessions.length(); i++) {
+                        for (int i = 0; i < sessions.length(); i++) {
                             LLayout = getLayoutInflater().inflate(R.layout.booking, mainLayout, false);
                             JSONObject session = sessions.getJSONObject(i);
                             System.out.println(session);
@@ -104,8 +96,8 @@ public class viewBookableSessions extends AppCompatActivity {
 
                             Spinner spinner = LLayout.findViewById(R.id.spinner);
                             Spinner sType = LLayout.findViewById(R.id.type);
-                            String[] sessionTypes = new String[]{"Meeting","Consultation"};
-                            String[] items = new String[]{"Daily", "Weekly", "Monthly", "Once"};
+                            String[] sessionTypes = new String[]{"MEETING", "CONSULTATION"};
+                            String[] items = new String[]{"DAILY", "WEEKLY", "MONTHLY", "ONCE"};
                             ArrayAdapter<String> ad = new ArrayAdapter<>(viewBookableSessions.this,
                                     android.R.layout.simple_spinner_item, items);
 
@@ -116,30 +108,45 @@ public class viewBookableSessions extends AppCompatActivity {
                             EditText repeatFrequency = LLayout.findViewById(R.id.repeat);
                             TextView cencels = LLayout.findViewById(R.id.cancellations);
                             TextView date = LLayout.findViewById(R.id.date);
-                            dFrag.setView(LLayout);
-                            date.setOnClickListener(view -> dFrag.show(getSupportFragmentManager(), "datePicker"));
+                            dFrag = new DatePickerFragment();
+                            date.setOnClickListener(view -> {
+                                dFrag.setView(view);
+                                dFrag.show(getSupportFragmentManager(), "datePicker");
+                            });
                             TextView time = LLayout.findViewById(R.id.time);
-                            tFrag.setView(LLayout);
-                            time.setOnClickListener(view -> tFrag.show(getSupportFragmentManager(), "timePicker"));
+                            tFrag = new TimePickerFragment();
+                            time.setOnClickListener(view -> {
+                                tFrag.setView(view);
+                                tFrag.show(getSupportFragmentManager(), "timePicker");
+                            });
                             TextView eDate = LLayout.findViewById(R.id.eDate);
-                            dFfrag.setView(LLayout);
-                            eDate.setOnClickListener(view -> dFfrag.show(getSupportFragmentManager(), "datePicker"));
+                            dFfrag = new DateChooser();
+                            eDate.setOnClickListener(view -> {
+                                dFfrag.setView(view);
+                                dFfrag.show(getSupportFragmentManager(), "datePicker");
+                            });
                             EditText duration = LLayout.findViewById(R.id.duration);
                             EditText slotCount = LLayout.findViewById(R.id.numSessions);
                             EditText slotGap = LLayout.findViewById(R.id.padding);
 
                             int freq = session.getInt("repeatGap");
                             String type = session.getString("repeatType");
-                            String pDate = session.getString("startDate");
                             String pType = session.getString("sessionType");
+                            ArrayList<String> tempTypeArray = new ArrayList<>(Arrays.asList(sessionTypes));
+                            int ind = tempTypeArray.indexOf(pType);
+                            System.out.println(ind + ": " + pType + " in tempTypeArray");
+                            sType.setSelection(ind);
+                            ArrayList<String> tempTArray = new ArrayList<>(Arrays.asList(items));
+                            spinner.setSelection(tempTArray.indexOf(type));
+                            String pDate = session.getString("startDate");
                             JSONArray cancel = session.getJSONArray("cancellations");
                             JSONObject ven = session.getJSONObject("venue");
                             String pVenue = ven.getString("buildingCode");
                             String pRoom = ven.getString("subCode");
                             String endDate;
-                            if(session.has("endDate")) {
+                            if (session.has("endDate")) {
                                 endDate = session.getString("endDate");
-                            }else{
+                            } else {
                                 endDate = "Not set";
                             }
                             int pDuration = session.getInt("duration");
@@ -148,13 +155,16 @@ public class viewBookableSessions extends AppCompatActivity {
 
 
                             TextView cancelDate = LLayout.findViewById(R.id.cancelDate);
-                            dfrag.setView(LLayout);
-                            cancelDate.setOnClickListener(view -> dfrag.show(getSupportFragmentManager(), "datePicker"));
+                            dfrag = new DateSelector();
+                            cancelDate.setOnClickListener(view -> {
+                                dfrag.setView(view);
+                                dfrag.show(getSupportFragmentManager(), "datePicker");
+                            });
                             final StringBuilder[] cancells = {new StringBuilder()};
                             ArrayList<String> cans = new ArrayList<>();
-                            for(int j = 0; j < cancel.length(); j++){
+                            for (int j = 0; j < cancel.length(); j++) {
                                 String s = cancel.getString(j);
-                                if(!cans.contains(s)&& s.charAt(0) != 'c') {
+                                if (!cans.contains(s) && s.charAt(0) != 'c') {
                                     cans.add(s);
                                     cancells[0].append(s).append("\n");
                                 }
@@ -163,8 +173,8 @@ public class viewBookableSessions extends AppCompatActivity {
 
                             Button addCancel = LLayout.findViewById(R.id.addCancellation);
                             addCancel.setOnClickListener(view -> {
-                                String s = ((TextView)findViewById(R.id.cancelDate)).getText().toString();
-                                if(!cans.contains(s) && s.charAt(0) != 'c') {
+                                String s = ((TextView) findViewById(R.id.cancelDate)).getText().toString();
+                                if (!cans.contains(s) && s.charAt(0) != 'c') {
                                     cancells[0].append("\n").append(s);
                                     cencels.setText(cancells[0]);
                                     cans.add(s);
@@ -185,23 +195,13 @@ public class viewBookableSessions extends AppCompatActivity {
 
                             venue.setText(pVenue);
                             room.setText(pRoom);
-
-                            String temp = type.toLowerCase();
-                            List<String> tList = Arrays.asList(items);
-                            int ind = tList.indexOf(temp);
-                            spinner.setSelection(ind);
-
-                            temp = pType.toLowerCase();
-                            tList = Arrays.asList(sessionTypes);
-                            ind = tList.indexOf(temp);
-                            sType.setSelection(ind);
                             System.out.println(freq);
                             repeatFrequency.setText(Integer.toString(freq));
 
                             date.setText(dateTime[0]);
                             eDate.setText(eDateTime[0]);
 
-                            time.setText(dateTime[1].substring(0, dateTime[1].length()-3));
+                            time.setText(dateTime[1].substring(0, dateTime[1].length() - 3));
 
                             duration.setText(Integer.toString(pDuration));
                             slotCount.setText(Integer.toString(pSlotCount));
@@ -211,7 +211,7 @@ public class viewBookableSessions extends AppCompatActivity {
                         }
                     } else {
                         String s = data.getString("responseCode");
-                        switch (s){
+                        switch (s) {
                             case "failed_unknown":
                                 s = "Failed to get course: ";
                                 Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
@@ -257,9 +257,10 @@ public class viewBookableSessions extends AppCompatActivity {
             Spinner sType = temp.findViewById(R.id.type);
             EditText repeatFrequency = temp.findViewById(R.id.repeat);
             TextView Cancellations = temp.findViewById(R.id.cancellations);
-            String[] c = Cancellations.getText().toString().split("\n");JSONArray cancels = new JSONArray();
-            for(String j: c){
-                if(!j.isEmpty()) {
+            String[] c = Cancellations.getText().toString().split("\n");
+            JSONArray cancels = new JSONArray();
+            for (String j : c) {
+                if (!j.isEmpty()) {
                     cancels.put(j);
                 }
             }
@@ -278,18 +279,18 @@ public class viewBookableSessions extends AppCompatActivity {
             String type = spinner.getSelectedItem().toString().toUpperCase();
             TextView t;
             boolean issue = false;
-            if(repeatFrequency.getText().toString().isEmpty()){
+            if (repeatFrequency.getText().toString().isEmpty()) {
                 t = temp.findViewById(R.id.textView3);
                 t.setTextColor(Color.RED);
                 issue = true;
             }
-            if(slotGap.getText().toString().isEmpty()){
+            if (slotGap.getText().toString().isEmpty()) {
                 t = temp.findViewById(R.id.textView13);
                 t.setTextColor(Color.RED);
                 issue = true;
 
             }
-            if(slotCount.getText().toString().isEmpty()){
+            if (slotCount.getText().toString().isEmpty()) {
                 t = temp.findViewById(R.id.textView11);
                 t.setTextColor(Color.RED);
                 issue = true;
@@ -297,36 +298,37 @@ public class viewBookableSessions extends AppCompatActivity {
             }
             String endDate;
             boolean isEnd = true;
-            if(eDate.getText().toString().equals("Date:") || eDate.getText().toString().equals("Not")){
+            if (eDate.getText().toString().equals("Date:") || eDate.getText().toString().equals("Not")) {
                 endDate = eDate.getText().toString();
                 isEnd = false;
 
-            }else{
+            } else {
                 endDate = eDate.getText().toString();
 
             }
-            if(date.getText().toString().equals("Date:")){
+            if (date.getText().toString().equals("Date:")) {
                 t = temp.findViewById(R.id.textView4);
                 t.setTextColor(Color.RED);
                 issue = true;
-            }if(duration.getText().toString().isEmpty()){
+            }
+            if (duration.getText().toString().isEmpty()) {
                 t = temp.findViewById(R.id.textView6);
                 t.setTextColor(Color.RED);
                 issue = true;
             }
-            if(time.getText().toString().equals("Time:")){
+            if (time.getText().toString().equals("Time:")) {
                 t = temp.findViewById(R.id.textView4);
                 t.setTextColor(Color.RED);
                 issue = true;
 
             }
-            if(venue.getText().toString().isEmpty()){
+            if (venue.getText().toString().isEmpty()) {
                 t = temp.findViewById(R.id.textView);
                 t.setTextColor(Color.RED);
                 issue = true;
 
             }
-            if(issue){
+            if (issue) {
                 return;
             }
             int freq = Integer.parseInt(repeatFrequency.getText().toString());
@@ -347,7 +349,7 @@ public class viewBookableSessions extends AppCompatActivity {
                 e.printStackTrace();
             }
             int pDuration = Integer.parseInt(duration.getText().toString());
-            if(pTime.length() == 5) {
+            if (pTime.length() == 5) {
                 pTime += ":00";
             }
 
@@ -361,14 +363,14 @@ public class viewBookableSessions extends AppCompatActivity {
                 jo.put("sessionType", pType);
                 jo.put("repeatGap", freq);
                 jo.put("startDate", pDate + " " + pTime);
-                if(isEnd){
+                if (isEnd) {
                     jo.put("endDate", endDate);
                 }
                 jo.put("cancellations", cancels);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            if(!cb.isChecked()) {
+            if (!cb.isChecked()) {
                 sessions.put(jo);
             }
         }
@@ -414,7 +416,7 @@ public class viewBookableSessions extends AppCompatActivity {
         NA.editBookables(forumCode, sessions);
     }
 
-    public void addBookableSession(View v){
+    public void addBookableSession(View v) {
         LinearLayout mainLayout = findViewById(R.id.bookableLayout);
         View LLayout = getLayoutInflater().inflate(R.layout.booking, mainLayout, false);
         AutoCompleteTextView venue = LLayout.findViewById(R.id.venue);
@@ -427,8 +429,8 @@ public class viewBookableSessions extends AppCompatActivity {
         TextView cencels = LLayout.findViewById(R.id.cancellations);
         Spinner spinner = LLayout.findViewById(R.id.spinner);
         Spinner sType = LLayout.findViewById(R.id.type);
-        String[] sessionTypes = new String[]{"Meeting","Consultation"};
-        String[] items = new String[]{"Daily", "Weekly", "Monthly", "Once"};
+        String[] sessionTypes = new String[]{"MEETING", "CONSULTATION"};
+        String[] items = new String[]{"DAILY", "WEEKLY", "MONTHLY", "ONCE"};
         ArrayAdapter<String> ad = new ArrayAdapter<>(viewBookableSessions.this,
                 android.R.layout.simple_spinner_item, items);
 
@@ -438,24 +440,35 @@ public class viewBookableSessions extends AppCompatActivity {
         sType.setAdapter(sessAdapter);
 
         TextView date = LLayout.findViewById(R.id.date);
-        dFrag.setView(LLayout);
-        date.setOnClickListener(view -> dFrag.show(getSupportFragmentManager(), "datePicker"));
+        dFrag = new DatePickerFragment();
+        date.setOnClickListener(view -> {
+            dFrag.setView(view);
+            dFrag.show(getSupportFragmentManager(), "datePicker");
+        });
         TextView time = LLayout.findViewById(R.id.time);
-        tFrag.setView(LLayout);
-        time.setOnClickListener(view -> tFrag.show(getSupportFragmentManager(), "timePicker"));
+        tFrag = new TimePickerFragment();
+        time.setOnClickListener(view -> {
+            tFrag.setView(view);
+            tFrag.show(getSupportFragmentManager(), "timePicker");
+        });
         TextView eDate = LLayout.findViewById(R.id.eDate);
-        dFfrag.setView(LLayout);
-        eDate.setOnClickListener(view -> dFfrag.show(getSupportFragmentManager(), "datePicker"));
+        dFfrag = new DateChooser();
+        eDate.setOnClickListener(view -> {
+            dFfrag.show(getSupportFragmentManager(), "datePicker");
+            dFfrag.setView(LLayout);
+        });
         TextView cancelDate = LLayout.findViewById(R.id.cancelDate);
-        dfrag.setView(LLayout);
-        cancelDate.setOnClickListener(view -> dfrag.show(getSupportFragmentManager(), "datePicker"));
+        cancelDate.setOnClickListener(view -> {
+            dfrag.setView(view);
+            dfrag.show(getSupportFragmentManager(), "datePicker");
+        });
 
         final StringBuilder[] cancells = {new StringBuilder()};
         ArrayList<String> cans = new ArrayList<>();
         Button addCancel = LLayout.findViewById(R.id.addCancellation);
         addCancel.setOnClickListener(view -> {
-            String s = ((TextView)findViewById(R.id.cancelDate)).getText().toString();
-            if(!cans.contains(s) && s.charAt(0) != 'c') {
+            String s = ((TextView) findViewById(R.id.cancelDate)).getText().toString();
+            if (!cans.contains(s) && s.charAt(0) != 'c') {
                 cancells[0].append("\n").append(s);
                 cencels.setText(cancells[0]);
                 cans.add(s);
@@ -473,16 +486,19 @@ public class viewBookableSessions extends AppCompatActivity {
         mainLayout.addView(LLayout);
     }
 
-    public void showTimePicker(View v){
+    public void showTimePicker(View v) {
         tFrag.show(getSupportFragmentManager(), "timePicker");
     }
-    public void showDatePicker(View v){
+
+    public void showDatePicker(View v) {
         dFrag.show(getSupportFragmentManager(), "datePicker");
     }
-    public void viewDatePicker(View v){
+
+    public void viewDatePicker(View v) {
         dFfrag.show(getSupportFragmentManager(), "datePicker");
     }
-    public void showDateSelector(View v){
+
+    public void showDateSelector(View v) {
         dfrag.show(getSupportFragmentManager(), "datePicker");
     }
 

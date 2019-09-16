@@ -1,5 +1,8 @@
 package com.example.witsdaily;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,6 +16,10 @@ public class Session implements Comparable<Session>{
     Date time;
     ArrayList<String> cancells = new ArrayList<>();
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    boolean isBookable;
+    JSONArray slotBookings;
+    int key = 0;
+    int numSlots = 0;
 
     public Session(String venue,String repeatType,int repeatGap,String nextDate,String sessionType,int duration, String course) throws ParseException {
         this.venue = venue;

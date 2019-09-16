@@ -4,12 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
-
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -60,7 +60,7 @@ public class VenueList extends AppCompatActivity {
             }
         };
         NA.getVenues();
-        AppCompatAutoCompleteTextView venue = findViewById(R.id.eText);
+        AutoCompleteTextView venue = findViewById(R.id.eText);
         venue.setThreshold(1); //will start working from first character
         venue.setAdapter(adapter);
     }
@@ -69,7 +69,7 @@ public class VenueList extends AppCompatActivity {
     public void viewOnMap(View v){
         // Create a Uri from an intent string. Use the result to create an Intent.
 
-        AppCompatAutoCompleteTextView venue = findViewById(R.id.eText);
+        AutoCompleteTextView venue = findViewById(R.id.eText);
         String ven = venue.getText().toString();
         if(!buildings.contains(ven.toUpperCase())){
             String s = "No venue found, no building with that name was found";

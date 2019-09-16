@@ -1,7 +1,6 @@
 package com.example.witsdaily;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,10 +31,8 @@ import java.util.Objects;
 
 public class bookActivity extends AppCompatActivity {
 
-    private static final long lect = 128 | 64 | 32 | 16 | 8 | 4 | 2 | 1;
-    private static final long student = 64 | 1;
-    private static final long tutor = 128 | 64 | 1;
     String user_token, personNumber, courseID, lecPNumber, jsonArray;
+    @SuppressLint("SimpleDateFormat")
     final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Override
@@ -58,6 +57,7 @@ public class bookActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     public void loadBookables(JSONArray bookables) throws JSONException, ParseException {
         LinearLayout mainLayout = findViewById(R.id.bookLLayout);
         View LLayout;
@@ -112,12 +112,12 @@ public class bookActivity extends AppCompatActivity {
             temp.setText(bookable.getString("slotGap"));
 
             JSONArray cans = bookable.getJSONArray("cancellations");
-            ArrayList<String> cancellations = new ArrayList<>();
+//            ArrayList<String> cancellations = new ArrayList<>();
             StringBuilder cancel = new StringBuilder();
             String tempString;
             for (int q = 0; q < cans.length(); q++) {
                 tempString = cans.getString(i);
-                cancellations.add(tempString);
+//                cancellations.add(tempString);
                 cancel.append(tempString).append("\n");
             }
             temp = LLayout.findViewById(R.id.cancellations);
@@ -127,9 +127,8 @@ public class bookActivity extends AppCompatActivity {
             HashMap<String, Pair<Integer, ArrayList<Integer>>> dateMap = new HashMap<>();
 
             Date d = dateFormat.parse(s);
-            Calendar c, k;
+            Calendar c;
             c = Calendar.getInstance();
-            k = Calendar.getInstance();
             int res = c.getActualMaximum(Calendar.DATE);
             c.set(Calendar.DATE, res);
             System.out.println(c.getTime());
@@ -189,7 +188,7 @@ public class bookActivity extends AppCompatActivity {
                     if (!spinner.getSelectedItem().equals("None") && !dateSelector.isEmpty()) {
                         System.out.println(spinner.getSelectedItem());
                         slotSelect.setVisibility(View.VISIBLE);
-                        ArrayList<Integer> newAdapter = dateMap.get(spinner.getSelectedItem().toString()).second;
+                        ArrayList<Integer> newAdapter = Objects.requireNonNull(dateMap.get(spinner.getSelectedItem().toString())).second;
                         ArrayAdapter<Integer> sessAdapter = new ArrayAdapter<>(bookActivity.this,
                                 android.R.layout.simple_spinner_item, newAdapter);
                         slotSelect.setAdapter(sessAdapter);
@@ -206,17 +205,6 @@ public class bookActivity extends AppCompatActivity {
         }
     }
 
-    public static boolean isDateInCurrentMonth(Date date) {
-        Calendar currentCalendar = Calendar.getInstance();
-        int month = currentCalendar.get(Calendar.MONTH);
-        int year = currentCalendar.get(Calendar.YEAR);
-        Calendar targetCalendar = Calendar.getInstance();
-        targetCalendar.setTime(date);
-        int targetMonth = targetCalendar.get(Calendar.MONTH);
-        int targetYear = targetCalendar.get(Calendar.YEAR);
-        return month == targetMonth && year == targetYear;
-    }
-
     public static List<Pair<Integer, Date>> getDatesBetween(
             Date startDate, Date endDate, String type, int repeatGap) {
         List<Pair<Integer, Date>> datesInRange = new ArrayList<>();
@@ -230,18 +218,21 @@ public class bookActivity extends AppCompatActivity {
             Date result = calendar.getTime();
             System.out.println(result.toString());
             datesInRange.add(new Pair<>(itt, result));
-            switch (type) {
-                case "WEEKLY":
-                    calendar.add(Calendar.DATE, 7*repeatGap);
-                    break;
-                case "MONTHLY":
-                    calendar.add(Calendar.MONTH, repeatGap);
-                    break;
-                case "DAILY":
-                    calendar.add(Calendar.DATE, repeatGap);
-                    break;
-            }
-            itt++;
+            if(!type.equals("ONCE")) {
+                switch (type) {
+                    case "WEEKLY":
+                        calendar.add(Calendar.DATE, 7 * repeatGap);
+                        break;
+                    case "MONTHLY":
+                        calendar.add(Calendar.MONTH, repeatGap);
+                        break;
+                    case "DAILY":
+                        calendar.add(Calendar.DATE, repeatGap);
+                        break;
+                }
+                itt++;
+            }else
+                break;
         }
         return datesInRange;
     }

@@ -4,16 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,10 +19,6 @@ import java.util.Random;
 
 public class makeBooking extends AppCompatActivity {
 
-    String courseCodeString;
-    private static final long  lect = 128|64|32|16|8|4|2|1;
-    private static final long  student = 64|1;
-    private static final long  tutor = 128|64|1;
     String user_token,personNumber, courseID;
 
     @Override
