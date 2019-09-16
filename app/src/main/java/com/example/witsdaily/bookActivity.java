@@ -241,7 +241,7 @@ public class bookActivity extends AppCompatActivity {
         LinearLayout LLayout = findViewById(R.id.bookLLayout);
         NetworkAccessor NA = new NetworkAccessor(this, personNumber,user_token) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 try {
                     String response = data.getString("responseCode");
                     String s;

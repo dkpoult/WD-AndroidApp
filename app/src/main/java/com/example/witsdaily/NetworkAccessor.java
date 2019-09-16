@@ -446,7 +446,7 @@ public void updateCourse(String courseCode, String couseDesc, String courseName,
 
     }
 
-    void editBookables(String courseCode, JSONArray sessions){
+    public void editBookables(String courseCode, JSONArray sessions){
         JSONObject params = new JSONObject();
 
         try {
@@ -461,7 +461,7 @@ public void updateCourse(String courseCode, String couseDesc, String courseName,
         makeRequest(params,"https://wd.dimensionalapps.com/course/update_bookable_sessions  ","Update bookable sessions failed");
     }
 
-    void makeBooking(int sessionId, String  repeatIndex, int slotIndex, String courseCode, String lecturerPersonNumber){JSONObject params = new JSONObject();
+    public void makeBooking(int sessionId, String  repeatIndex, int slotIndex, String courseCode, String lecturerPersonNumber){JSONObject params = new JSONObject();
 
         try {
             params.put("userToken", userToken);

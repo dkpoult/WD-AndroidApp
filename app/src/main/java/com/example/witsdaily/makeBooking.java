@@ -35,7 +35,7 @@ public class makeBooking extends AppCompatActivity {
     public void loadLecturersWithSessions(){
         NetworkAccessor NA = new NetworkAccessor(this, personNumber, user_token) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 try{
                     if (data.getString("responseCode").equals("successful")) {
                         JSONArray r = data.getJSONArray("courses");

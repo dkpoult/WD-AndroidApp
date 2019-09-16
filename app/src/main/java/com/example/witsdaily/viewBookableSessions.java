@@ -45,7 +45,7 @@ public class viewBookableSessions extends AppCompatActivity {
         System.out.println(forumCode);
         NetworkAccessor NA = new NetworkAccessor(this, personNumber, user_token) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 try {
                     if (data.getString("responseCode").equals("successful")) {
                         JSONArray venues = data.getJSONArray("venues");
@@ -68,7 +68,7 @@ public class viewBookableSessions extends AppCompatActivity {
         NA = new NetworkAccessor(this, personNumber, user_token) {
             @SuppressLint("SetTextI18n")
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 System.out.println(data);
                 try {
                     if (data.getString("responseCode").equals("successful")) {
@@ -378,7 +378,7 @@ public class viewBookableSessions extends AppCompatActivity {
 
         NetworkAccessor NA = new NetworkAccessor(this, personNumber, user_token) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 try {
                     String s = data.getString("responseCode");
                     if (s.equals("successful")) {

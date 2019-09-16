@@ -28,7 +28,7 @@ public class viewBookedSlots extends AppCompatActivity {
 //            int loopBound = Integer.parseInt(key);
             TextView t = findViewById(R.id.tViewSlots);
             JSONObject temp;
-            String s;
+            String s = "";
             if(ja.length()>0) {
                 for (int l = 0; l < ja.length(); l++) {
                     temp = (JSONObject) ja.get(l);
@@ -37,15 +37,14 @@ public class viewBookedSlots extends AppCompatActivity {
                     }else{
                         pNum = "Empty";
                     }
-                    s = l + ": " + pNum;
-                    t.setText(s);
+                    s += l + ": " + pNum + "\n";
                 }
             }else{
                 for (int l = 0; l < key; l++) {
-                    s = l + ": Empty";
-                    t.setText(s);
+                    s += l + ": Empty\n";
                 }
             }
+            t.setText(s);
         } catch (JSONException e) {
             e.printStackTrace();
         }

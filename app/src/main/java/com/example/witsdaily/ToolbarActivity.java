@@ -49,10 +49,9 @@ public class ToolbarActivity extends AppCompatActivity {
         userToken = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
         try {
-            AsyncGettingBitmapFromUrl changeAvatar = new AsyncGettingBitmapFromUrl() {
-            };
-            changeAvatar.execute("https://api.adorable.io/avatars/70/"+personNumber+".png");
-        }catch (Exception e){
+            AsyncGettingBitmapFromUrl changeAvatar = new AsyncGettingBitmapFromUrl() {};
+            changeAvatar.execute("https://api.adorable.io/avatars/128/"+personNumber+".png");
+        }catch (Exception ignored){
 
         }
         Calendar calendar = Calendar.getInstance();

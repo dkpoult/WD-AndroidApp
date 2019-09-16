@@ -23,6 +23,8 @@ import com.example.witsdaily.ToolbarActivity;
 import com.example.witsdaily.addTutors;
 import com.example.witsdaily.editCourse;
 import com.example.witsdaily.editSessions;
+import com.example.witsdaily.makeBooking;
+import com.example.witsdaily.viewBookableSessions;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -16,18 +16,37 @@
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:orientation="vertical"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:padding="@dimen/keyline_4">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/keyline_4">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/avatar"
+    <androidx.cardview.widget.CardView
+        android:layout_width="138dp"
+        android:layout_height="138dp"
+        android:layout_gravity="center"
         android:layout_marginTop="@dimen/keyline_1"
+        android:layout_marginBottom="@dimen/keyline_2"
+        app:cardCornerRadius="69dp"
+        app:cardBackgroundColor="@color/color_secondary">
 
-        android:layout_marginBottom="@dimen/keyline_2"/>
+        <androidx.cardview.widget.CardView
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_gravity="center"
+            app:cardCornerRadius="64dp"
+            app:cardBackgroundColor="@color/colorWhite">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/avatar"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:scaleType="centerCrop"/>
+
+        </androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
+
     <androidx.appcompat.widget.AppCompatTextView
       android:id="@+id/header_title"
       android:layout_width="wrap_content"
