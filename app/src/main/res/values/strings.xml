@@ -172,4 +172,20 @@
     <string name="room">Room</string>
     <string name="building">Building</string>
     <string name="venue">Venue:</string>
+    <string name="final_occurrence">Final Occurrence</string>
+    <string name="number_of_sessions">Number of sessions</string>
+    <string name="break_between_sessions">Break between sessions</string>
+    <string name="title_activity_add_booking">addBooking</string>
+    <string name="add_tutors_or_lecturers">Add Tutors or Lecturers</string>
+    <string name="edit_bookings">Edit Bookings</string>
+    <string name="title_activity_view_bookable_sessions">viewBookableSessions</string>
+    <string name="add_bookable">add bookable session</string>
+    <string name="update_bookable_sessions">update bookable sessions</string>
+    <string name="title_activity_make_booking">makeBooking</string>
+    <string name="make_booking">Make Booking</string>
+    <string name="book_a_consult_or_meeting">Book a consult or meeting</string>
+    <string name="choose_a_day_to_book">Choose a day to book</string>
+    <string name="choose_a_slot_to_book">Choose a slot to book</string>
+    <string name="first_occurance">First Occurance</string>
+    <string name="make_bookings">Make bookings</string>
 </resources>

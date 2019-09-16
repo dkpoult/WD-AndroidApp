@@ -8,11 +8,27 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/wits_logo"
-        android:roundIcon="@mipmap/wits_logo"
         android:label="@string/app_name"
         android:minSdkVersion="8"
+        android:roundIcon="@mipmap/wits_logo"
         android:supportsRtl="true"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name=".viewBookedSlots"
+            android:label="viewBookedSLots"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".bookActivity"
+            android:label="book"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".makeBooking"
+            android:label="@string/title_activity_make_booking"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".viewBookableSessions"
+            android:label="@string/title_activity_view_bookable_sessions"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".addTutors"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -95,6 +111,7 @@
             android:theme="@style/MyTheme.DayNight">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

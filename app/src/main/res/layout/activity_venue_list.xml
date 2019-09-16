@@ -26,7 +26,7 @@
                 android:layout_weight="1"
                 android:text="@string/venue_code" />
 
-            <android.support.v7.widget.AppCompatAutoCompleteTextView
+            <AutoCompleteTextView
                 android:id="@+id/eText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -1,5 +1,6 @@
 package com.example.witsdaily;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -71,6 +72,9 @@ public class addSession extends AppCompatActivity {
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
         mainLayout = findViewById(R.id.LLayout);
         inflate = getLayoutInflater().inflate(R.layout.session, mainLayout, false);
+        dFrag.setView(inflate);
+        tFrag.setView(inflate);
+        dfrag.setView(inflate);
         AppCompatAutoCompleteTextView venue = inflate.findViewById(R.id.venue);
         venue.setThreshold(1); //will start working from first character
         venue.setAdapter(adapter);
@@ -101,8 +105,8 @@ public class addSession extends AppCompatActivity {
                     c[0] = "";
                     cans.clear();
         });
-        String[] sessionTypes = new String[]{"Lecture", "Lab", "Tutorial", "Test", "Other"};
-        String[] items = new String[]{"Daily", "Weekly", "Monthly", "Once"};
+        String[] sessionTypes = new String[]{"LECTURE", "LAB", "TUTORIAL", "TEST", "OTHER"};
+        String[] items = new String[]{"DAILY", "WEEKLY", "MONTHLY", "ONCE"};
         ArrayAdapter<String> ad = new ArrayAdapter<>(addSession.this,
                 android.R.layout.simple_spinner_item, items);
 
@@ -112,6 +116,7 @@ public class addSession extends AppCompatActivity {
         sType.setAdapter(sessAdapter);
     }
 
+    @SuppressLint("SetTextI18n")
     public void addSesh(View v) {
         LinearLayout LLayout = ((LinearLayout) v.getParent()).findViewById(R.id.LLayout);
 //        TextView id = LLayout.findViewById(R.id.label);
