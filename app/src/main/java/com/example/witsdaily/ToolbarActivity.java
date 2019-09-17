@@ -40,6 +40,7 @@ public class ToolbarActivity extends AppCompatActivity {
 
         actionbar.setDisplayHomeAsUpEnabled(true);
     }
+
     private void configureNavigationDrawer() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navView = (NavigationView) findViewById(R.id.nav_layout);
@@ -101,6 +102,7 @@ public class ToolbarActivity extends AppCompatActivity {
         SharedPreferences.Editor settings = getSharedPreferences("com.wd", Context.MODE_PRIVATE).edit();
         settings.clear().apply();
         Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
     }
 

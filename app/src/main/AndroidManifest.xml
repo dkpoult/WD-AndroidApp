@@ -16,53 +16,68 @@
         <activity
             android:name=".viewBookedSlots"
             android:label="viewBookedSLots"
+            android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".bookActivity"
             android:label="book"
+            android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".makeBooking"
             android:label="@string/title_activity_make_booking"
+            android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".viewBookableSessions"
             android:label="@string/title_activity_view_bookable_sessions"
+            android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".addTutors"
+            android:launchMode="singleInstance"
             android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".LiveQuestions"
+            android:launchMode="singleInstance"
             android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".SettingsActivity"
+            android:launchMode="singleInstance"
             android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".Forum.ForumAddPost"
+            android:launchMode="singleInstance"
             android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".Forum.ViewForum"
+            android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Forum.LectureCourseForum"
+            android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".VenueList"
             android:label="@string/title_activity_venue_list"
+            android:launchMode="singleInstance"
             android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".Survey.SurveyAnswer"
+            android:launchMode="singleInstance"
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
             android:name=".Survey.SurveyCreator"
+            android:launchMode="singleInstance"
             android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".Survey.SurveyViewer"
+            android:launchMode="singleInstance"
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
             android:name=".ChatActivity"
             android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleInstance"
             android:windowSoftInputMode="adjustResize" />
 
         <service
@@ -75,36 +90,47 @@
 
         <activity
             android:name=".EnrollDialog"
+            android:launchMode="singleInstance"
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
             android:name=".AnnouncementSender"
+            android:launchMode="singleInstance"
             android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".Course.CourseDisplay"
+            android:launchMode="singleInstance"
             android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".Course.courseLink"
+            android:launchMode="singleInstance"
             android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".Course.CourseRegistration"
+            android:launchMode="singleInstance"
             android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".viewSession"
+            android:launchMode="singleInstance"
             android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".editSessions"
+            android:launchMode="singleInstance"
             android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".editCourse"
+            android:launchMode="singleInstance"
             android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".addSession"
+            android:launchMode="singleInstance"
             android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".timetable"
+            android:launchMode="singleInstance"
             android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".LoginActivity"
+            android:launchMode="singleInstance"
             android:theme="@style/MyTheme.DayNight">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -114,10 +140,12 @@
         </activity>
         <activity
             android:name=".UserRegistration"
+            android:launchMode="singleInstance"
             android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".HomeScreen"
             android:label="@string/title_activity_home_screen"
+            android:launchMode="singleInstance"
             android:theme="@style/MyTheme.DayNight" />
 
         <meta-data
