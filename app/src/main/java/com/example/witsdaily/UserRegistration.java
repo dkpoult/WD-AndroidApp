@@ -2,7 +2,7 @@ package com.example.witsdaily;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 public class UserRegistration extends AppCompatActivity {
 
-
+    String personIDValue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,7 +21,7 @@ public class UserRegistration extends AppCompatActivity {
     public void clickRegister(View v){
         final EditText personID = findViewById(R.id.edtPersonID);
         EditText personPassword = findViewById(R.id.edtPassword);
-        final String personIDValue = personID.getText().toString();
+        personIDValue = personID.getText().toString();
         final String passwordValue = personPassword.getText().toString();
 
         // When the user signs in this will execute
@@ -48,6 +48,7 @@ public class UserRegistration extends AppCompatActivity {
                 String user_token = response.getString("userToken");
                 Intent i = new Intent(UserRegistration.this, HomeScreen.class);
                 i.putExtra("user_token", user_token);
+                i.putExtra("person_number", user_token);
                 finish();
                 startActivity(i);
 

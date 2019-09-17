@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">WitsDaily</string>
     <string name="login">s\'identifier</string>
     <string name="register">registre</string>
     <string name="password">Mot de passe</string>

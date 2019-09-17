@@ -1,50 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.witsdaily">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="Wits Daily"
+        android:icon="@mipmap/wits_logo"
+        android:label="@string/app_name"
         android:minSdkVersion="8"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true">
+        android:roundIcon="@mipmap/wits_logo"
+        android:supportsRtl="true"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name=".viewBookedSlots"
+            android:label="viewBookedSLots"
+            android:launchMode="singleInstance"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".bookActivity"
+            android:label="book"
+            android:launchMode="singleInstance"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".makeBooking"
+            android:label="@string/title_activity_make_booking"
+            android:launchMode="singleInstance"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".viewBookableSessions"
+            android:label="@string/title_activity_view_bookable_sessions"
+            android:launchMode="singleInstance"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".addTutors"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:launchMode="singleInstance"
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".LiveQuestions"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:launchMode="singleInstance"
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".SettingsActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:launchMode="singleInstance"
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".Forum.ForumAddPost"
-            android:theme="@style/Theme.AppCompat.Dialog" />
+            android:launchMode="singleInstance"
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".Forum.ViewForum"
+            android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Forum.LectureCourseForum"
+            android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".VenueList"
             android:label="@string/title_activity_venue_list"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:launchMode="singleInstance"
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".Survey.SurveyAnswer"
+            android:launchMode="singleInstance"
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
             android:name=".Survey.SurveyCreator"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:launchMode="singleInstance"
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".Survey.SurveyViewer"
+            android:launchMode="singleInstance"
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
             android:name=".ChatActivity"
             android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleInstance"
             android:windowSoftInputMode="adjustResize" />
 
         <service
@@ -57,41 +90,48 @@
 
         <activity
             android:name=".EnrollDialog"
+            android:launchMode="singleInstance"
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
-            android:name=".UnregisteredCourses"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".AnnouncementSender"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:launchMode="singleInstance"
+            android:theme="@style/MyTheme.DayNight" />
         <activity
-            android:name=".CourseDisplay"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".Course.CourseDisplay"
+            android:launchMode="singleInstance"
+            android:theme="@style/MyTheme.DayNight" />
         <activity
-            android:name=".courseLink"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".Course.courseLink"
+            android:launchMode="singleInstance"
+            android:theme="@style/MyTheme.DayNight" />
         <activity
-            android:name=".CourseRegistration"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".Course.CourseRegistration"
+            android:launchMode="singleInstance"
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".viewSession"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:launchMode="singleInstance"
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".editSessions"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:launchMode="singleInstance"
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".editCourse"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:launchMode="singleInstance"
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".addSession"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:launchMode="singleInstance"
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".timetable"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:launchMode="singleInstance"
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".LoginActivity"
-            android:label="activity_login"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:launchMode="singleInstance"
+            android:theme="@style/MyTheme.DayNight">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -100,11 +140,13 @@
         </activity>
         <activity
             android:name=".UserRegistration"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:launchMode="singleInstance"
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".HomeScreen"
             android:label="@string/title_activity_home_screen"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:launchMode="singleInstance"
+            android:theme="@style/MyTheme.DayNight" />
 
         <meta-data
             android:name="firebase_messaging_auto_init_enabled"

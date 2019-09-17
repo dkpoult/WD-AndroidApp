@@ -3,7 +3,7 @@ package com.example.witsdaily;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -25,7 +25,7 @@ public class editCourse extends AppCompatActivity {
 
         NetworkAccessor NA = new NetworkAccessor(this, personNumber, userToken) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 System.out.println(data.toString());
                 try {
                     if(data.getString("responseCode").equals("successful")){
@@ -55,7 +55,7 @@ public class editCourse extends AppCompatActivity {
         EditText CC = findViewById(R.id.edtCourseCode);
         NetworkAccessor NA = new NetworkAccessor(this, personNumber, userToken) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 String s;
                 try {
                     if(data.getString("responseCode").equals("successful")){

@@ -3,8 +3,9 @@ package com.example.witsdaily;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import androidx.fragment.app.DialogFragment;
 import android.text.format.DateFormat;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -15,6 +16,7 @@ public final class TimePickerFragment extends DialogFragment
 
     int hour, minute;
     TextView edit;
+    View tView;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -31,7 +33,7 @@ public final class TimePickerFragment extends DialogFragment
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         hour = hourOfDay;
         this.minute = minute;
-        edit = getActivity().findViewById(R.id.time);
+        edit = tView.findViewById(R.id.time);
         edit.setText(returnTime());
 
     }
@@ -45,6 +47,10 @@ public final class TimePickerFragment extends DialogFragment
             minute = "0" + minute;
         }
         return hour + ":" + minute + ":00";
+    }
+
+    public void setView(View v) {
+        this.tView = v;
     }
 
 }

@@ -1,9 +1,11 @@
 package com.example.witsdaily;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatAutoCompleteTextView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
+
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,7 +22,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class addSession extends AppCompatActivity {
+public class addSession extends ToolbarActivity {
     String forumCode, user_token, personNumber;
     final TimePickerFragment tFrag = new TimePickerFragment();
     final DatePickerFragment dFrag = new DatePickerFragment();
@@ -32,13 +34,13 @@ public class addSession extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_session);
-
+        setupAppBar();
         adapter = new ArrayAdapter<>
                 (this, android.R.layout.select_dialog_item, buildings);
 
         NetworkAccessor NA = new NetworkAccessor(this, personNumber, user_token) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 System.out.println(data);
                 try {
                     if(data.getString("responseCode").equals("successful")){
@@ -70,6 +72,9 @@ public class addSession extends AppCompatActivity {
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
         mainLayout = findViewById(R.id.LLayout);
         inflate = getLayoutInflater().inflate(R.layout.session, mainLayout, false);
+        dFrag.setView(inflate);
+        tFrag.setView(inflate);
+        dfrag.setView(inflate);
         AppCompatAutoCompleteTextView venue = inflate.findViewById(R.id.venue);
         venue.setThreshold(1); //will start working from first character
         venue.setAdapter(adapter);
@@ -100,8 +105,8 @@ public class addSession extends AppCompatActivity {
                     c[0] = "";
                     cans.clear();
         });
-        String[] sessionTypes = new String[]{"Lecture", "Lab", "Tutorial", "Test", "Other"};
-        String[] items = new String[]{"Daily", "Weekly", "Monthly", "Once"};
+        String[] sessionTypes = new String[]{"LECTURE", "LAB", "TUTORIAL", "TEST", "OTHER"};
+        String[] items = new String[]{"DAILY", "WEEKLY", "MONTHLY", "ONCE"};
         ArrayAdapter<String> ad = new ArrayAdapter<>(addSession.this,
                 android.R.layout.simple_spinner_item, items);
 
@@ -111,6 +116,7 @@ public class addSession extends AppCompatActivity {
         sType.setAdapter(sessAdapter);
     }
 
+    @SuppressLint("SetTextI18n")
     public void addSesh(View v) {
         LinearLayout LLayout = ((LinearLayout) v.getParent()).findViewById(R.id.LLayout);
 //        TextView id = LLayout.findViewById(R.id.label);
@@ -198,7 +204,7 @@ public class addSession extends AppCompatActivity {
 
         NetworkAccessor NA = new NetworkAccessor(this, personNumber, user_token) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 try {
                     String s;
                     if(data.getString("responseCode").equals("successful")){

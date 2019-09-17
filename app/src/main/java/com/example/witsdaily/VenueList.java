@@ -4,11 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,7 +17,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class VenueList extends AppCompatActivity {
+public class VenueList extends ToolbarActivity {
 
     ArrayList<String> buildings = new ArrayList<>();
     ArrayAdapter<String> adapter;
@@ -28,7 +29,7 @@ public class VenueList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_venue_list);
-
+        setupAppBar();
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
         user_token = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
 
@@ -39,7 +40,7 @@ public class VenueList extends AppCompatActivity {
 
         NetworkAccessor NA = new NetworkAccessor(this, personNumber, user_token) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 try {
                     if(data.getString("responseCode").equals("successful")){
                         venues = data.getJSONArray("venues");
@@ -59,7 +60,7 @@ public class VenueList extends AppCompatActivity {
             }
         };
         NA.getVenues();
-        AppCompatAutoCompleteTextView venue = findViewById(R.id.eText);
+        AutoCompleteTextView venue = findViewById(R.id.eText);
         venue.setThreshold(1); //will start working from first character
         venue.setAdapter(adapter);
     }
@@ -68,7 +69,7 @@ public class VenueList extends AppCompatActivity {
     public void viewOnMap(View v){
         // Create a Uri from an intent string. Use the result to create an Intent.
 
-        AppCompatAutoCompleteTextView venue = findViewById(R.id.eText);
+        AutoCompleteTextView venue = findViewById(R.id.eText);
         String ven = venue.getText().toString();
         if(!buildings.contains(ven.toUpperCase())){
             String s = "No venue found, no building with that name was found";

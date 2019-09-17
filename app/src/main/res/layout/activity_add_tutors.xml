@@ -1,34 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".addTutors">
 
-    <LinearLayout
+
+<androidx.drawerlayout.widget.DrawerLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:id="@+id/drawer_layout"
+android:layout_width="match_parent"
+android:clipToPadding="false"
+
+android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_margin="10dp"
-        android:weightSum="40">
-
+        android:padding="10dp"
+        android:clipToPadding="false"
+        tools:context=".addTutors">
+<include layout="@layout/uniform_toolbar"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:id="@+id/inflatable"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_weight="37" />
 
-        <Button
-            android:id="@+id/addPerm"
-            android:onClick="changePerm"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:text="change"
-            android:background="@drawable/rounded_button"
-            android:textColor="@color/colorWhite"
-            android:layout_weight="3"/>
-    </LinearLayout>
+            android:weightSum="40">
 
-</android.support.constraint.ConstraintLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:id="@+id/inflatable"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:layout_weight="37" />
+
+            <Button
+                android:id="@+id/addPerm"
+                android:onClick="changePerm"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:text="change"
+                android:background="@drawable/rounded_button"
+                android:textColor="@color/colorWhite"
+                android:layout_weight="3"/>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+<com.google.android.material.navigation.NavigationView
+    android:id="@+id/nav_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_gravity="start|left"
+    app:headerLayout="@layout/drawer_header_layout"
+    app:menu="@menu/navigation_menu" />
+</androidx.drawerlayout.widget.DrawerLayout>

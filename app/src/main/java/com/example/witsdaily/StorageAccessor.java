@@ -2,7 +2,7 @@ package com.example.witsdaily;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.support.design.widget.TabLayout;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,7 +32,7 @@ public abstract class StorageAccessor{ // singleton class
     {
         NetworkAccessor networkAccessor = new NetworkAccessor(appContext, personNumber,userToken){
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 getData(data);
             }
         };
@@ -42,7 +42,7 @@ public abstract class StorageAccessor{ // singleton class
     public void updateServerFCMToken(String fcmToken){
         NetworkAccessor networkAccessor = new NetworkAccessor(appContext, personNumber,userToken){
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 getData(data);
             }
         };
@@ -51,7 +51,7 @@ public abstract class StorageAccessor{ // singleton class
     public void registerUser(String personIDNumber,String personPassword){
         NetworkAccessor networkAccessor = new NetworkAccessor(appContext, personNumber,userToken){
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 getData(data);
             }
         };
@@ -61,7 +61,7 @@ public abstract class StorageAccessor{ // singleton class
     {
         NetworkAccessor networkAccessor = new NetworkAccessor(appContext, personNumber,userToken){
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 getData(data);
             }
         };
@@ -71,7 +71,7 @@ public abstract class StorageAccessor{ // singleton class
     {
         NetworkAccessor networkAccessor = new NetworkAccessor(appContext, personNumber,userToken){
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 getData(data);
             }
         };
@@ -119,7 +119,7 @@ public abstract class StorageAccessor{ // singleton class
 
         NetworkAccessor networkAccessor = new NetworkAccessor(appContext, personNumber,userToken){
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 getData(data);
             }
         };
@@ -134,7 +134,7 @@ public abstract class StorageAccessor{ // singleton class
     {
         NetworkAccessor networkAccessor = new NetworkAccessor(appContext, personNumber,userToken){
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 getData(data);
             }
         };
@@ -144,7 +144,7 @@ public abstract class StorageAccessor{ // singleton class
     public void getSurvey(String courseCode){
         NetworkAccessor networkAccessor = new NetworkAccessor(appContext, personNumber,userToken) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 getData(data);
             }
         };
@@ -153,7 +153,7 @@ public abstract class StorageAccessor{ // singleton class
     public void makeSurvey(String courseCode,String title,JSONArray options,String surveyType){
         NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 getData(data);
             }
         };
@@ -163,7 +163,7 @@ public abstract class StorageAccessor{ // singleton class
     public void closeSurvey(String courseCode){
         NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken){
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 getData(data);
             }
         };
@@ -172,7 +172,7 @@ public abstract class StorageAccessor{ // singleton class
     public void getSurveyResults(String courseCode){
         NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken){
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 getData(data);
             }
         };
@@ -182,7 +182,7 @@ public abstract class StorageAccessor{ // singleton class
     public void sendAnswer(String answer, String courseCode,String surveyType){
         NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 getData(data);
             }
         };
@@ -191,7 +191,7 @@ public abstract class StorageAccessor{ // singleton class
     public void getPosts(String forumCode){
         NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 getData(data);
             }
         };
@@ -200,7 +200,7 @@ public abstract class StorageAccessor{ // singleton class
     public void getPost(String postCode){
         NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 getData(data);
             }
         };
@@ -209,7 +209,7 @@ public abstract class StorageAccessor{ // singleton class
     public void makePost(String forumCode,String title, String body){
         NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 getData(data);
             }
         };
@@ -218,7 +218,7 @@ public abstract class StorageAccessor{ // singleton class
     public void makeComment(String postCode, String body){
         NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 getData(data);
             }
         };
@@ -227,7 +227,7 @@ public abstract class StorageAccessor{ // singleton class
     public void makeVote(String postCode, String vote){
         NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 getData(data);
             }
         };
@@ -252,7 +252,7 @@ public abstract class StorageAccessor{ // singleton class
     public void setAnswer(String postCode, String commentCode){
         NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 getData(data);
             }
         };
@@ -262,7 +262,7 @@ public abstract class StorageAccessor{ // singleton class
     public void getChatTypeMessages(String chatroomCode,String socketType){
         NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
 
                 try {
                     if (!data.getString("responseCode").equals("successful")){

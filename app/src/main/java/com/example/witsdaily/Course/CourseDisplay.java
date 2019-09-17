@@ -1,10 +1,9 @@
-package com.example.witsdaily;
+package com.example.witsdaily.Course;
 
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,8 +11,20 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.witsdaily.AnnouncementSender;
+import com.example.witsdaily.ChatActivity;
 import com.example.witsdaily.Forum.LectureCourseForum;
+import com.example.witsdaily.LiveQuestions;
+import com.example.witsdaily.NetworkAccessor;
+import com.example.witsdaily.PhoneDatabaseHelper;
+import com.example.witsdaily.R;
 import com.example.witsdaily.Survey.SurveyCreator;
+import com.example.witsdaily.ToolbarActivity;
+import com.example.witsdaily.addTutors;
+import com.example.witsdaily.editCourse;
+import com.example.witsdaily.editSessions;
+import com.example.witsdaily.makeBooking;
+import com.example.witsdaily.viewBookableSessions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,17 +32,17 @@ import org.json.JSONObject;
 
 import static com.example.witsdaily.PhoneDatabaseContract.*;
 
-public class CourseDisplay extends AppCompatActivity {
+public class CourseDisplay extends ToolbarActivity {
     int courseID;
     String courseCodeString;
     private static final long  lect = 128|64|32|16|8|4|2|1;
-    private static final long  student = 64|1;
     private static final long  tutor = 128|64|1;
     String user_token,personNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_display);
+        setupAppBar();
         Intent i  = getIntent();
         courseID = Integer.parseInt(i.getStringExtra("courseID"));
         user_token = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
@@ -44,7 +55,7 @@ public class CourseDisplay extends AppCompatActivity {
     public void hideRelevantButtons(){
         NetworkAccessor NA = new NetworkAccessor(this, personNumber, user_token) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 try {
                     String s = data.getString("responseCode");
                     if (s.equals("successful")) {
@@ -56,18 +67,18 @@ public class CourseDisplay extends AppCompatActivity {
                         Button b2 = findViewById(R.id.addTutors);
                         Button b3 = findViewById(R.id.btnCreateSurvey);
                         Button b4 = findViewById(R.id.btnTutorChat);
+                        Button b5 = findViewById(R.id.editBookings);
                         b1.setVisibility(View.GONE);
                         b2.setVisibility(View.GONE);
                         b3.setVisibility(View.GONE);
                         b4.setVisibility(View.GONE);
+                        b5.setVisibility(View.GONE);
                         b.setVisibility(View.GONE);
 //                        System.out.println(personNumber);
                         long lecturer = course.getLong("permissions");
                         ImageButton IB = findViewById(R.id.imageButton);
                         IB.setVisibility(View.GONE);
-                        System.out.println(lecturer);
-                        System.out.println(lect);
-                        System.out.println(tutor);
+                        System.out.println(t.toString());
 //                        System.out.println(lecturer.getString("personNumber"));
                         if (lecturer == lect) {
                             b.setVisibility(View.VISIBLE);
@@ -75,10 +86,11 @@ public class CourseDisplay extends AppCompatActivity {
                             b2.setVisibility(View.VISIBLE);
                             b3.setVisibility(View.VISIBLE);
                             b4.setVisibility(View.VISIBLE);
+                            b5.setVisibility(View.VISIBLE);
                         } else if (lecturer == tutor) {
                             b4.setVisibility(View.VISIBLE);
                         }
-                        if(course.has("moodleId")){
+                        if(course.has("moodleId") && lecturer == lect){
                             IB.setVisibility(View.VISIBLE);
                         }
                     }else{
@@ -179,6 +191,18 @@ public class CourseDisplay extends AppCompatActivity {
         startActivity(i);
     }
 
+    public void editBookings(View v) {
+        Intent i = new Intent(CourseDisplay.this, viewBookableSessions.class);
+        i.putExtra("forumCode", courseCodeString);
+        startActivity(i);
+    }
+
+    public void makeBooking(View v) {
+        Intent i = new Intent(CourseDisplay.this, makeBooking.class);
+        i.putExtra("forumCode", courseCodeString);
+        startActivity(i);
+    }
+
     public void addTutors(View v) {
         Intent i = new Intent(CourseDisplay.this, addTutors.class);
         i.putExtra("courseCode", courseCodeString);
@@ -189,7 +213,7 @@ public class CourseDisplay extends AppCompatActivity {
     public void resyncData(View v){
         NetworkAccessor NA = new NetworkAccessor(this, personNumber, user_token) {
             @Override
-            void getResponse(JSONObject data) {
+            public void getResponse(JSONObject data) {
                 try {
                     String s = data.getString("responseCode");
                     switch (s){
@@ -224,6 +248,5 @@ public class CourseDisplay extends AppCompatActivity {
             }
         };
         NA.resync(courseCodeString);
-
     }
 }

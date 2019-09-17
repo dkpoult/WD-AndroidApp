@@ -3,7 +3,9 @@ package com.example.witsdaily;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import androidx.fragment.app.DialogFragment;
+
+import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
@@ -13,6 +15,7 @@ public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
     public int year, day, month;
     TextView edit;
+    View tView;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -34,7 +37,7 @@ public class DatePickerFragment extends DialogFragment
         this.month = month+1;
         this.day = day;
 
-        edit = getActivity().findViewById(R.id.date);
+        edit = tView.findViewById(R.id.date);
         edit.setText(returnDate());
     }
 
@@ -47,6 +50,10 @@ public class DatePickerFragment extends DialogFragment
             day = "0" + day;
         }
         return year + "-" + month + "-" + day;
+    }
+
+    public void setView(View v) {
+        this.tView = v;
     }
 }
 

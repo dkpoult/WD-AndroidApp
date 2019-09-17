@@ -1,14 +1,14 @@
-<resources>
-    <string name="app_name">WitsDaily</string>
-    <string name="login">login</string>
-    <string name="register">register</string>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name" tools:ignore="MissingTranslation">Wits Daily</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
     <string name="password">Password</string>
-    <string name="title_activity_home_screen">HomeScreen</string>
-    <string name="personid">PersonID</string>
-    <string name="title_activity_course_forum">courseForum</string>
-    <string name="view_unregistered_courses">view unregistered courses</string>
-    <string name="timetable">timetable</string>
-    <string name="logout">logout</string>
+    <string name="title_activity_home_screen">Home Screen</string>
+    <string name="personid">Person Number</string>
+    <string name="title_activity_course_forum">Course Forum</string>
+    <string name="view_unregistered_courses">View unregistered courses</string>
+    <string name="timetable">Timetable</string>
+    <string name="logout">Logout</string>
     <string name="course_name">Course Name</string>
     <string name="create_course">Create Course</string>
     <string name="course_description">Course Description</string>
@@ -127,19 +127,19 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_lecture_course_forum">LectureCourseForum</string>
+    <string name="title_activity_lecture_course_forum">Lecture Course Forum</string>
     <string name="title_activity_test">test</string>
 
-    <string name="title_activity_timetable">timetable</string>
-    <string name="title_activity_view_session">viewSession</string>
+    <string name="title_activity_timetable">Timetable</string>
+    <string name="title_activity_view_session">View Session</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_venue_list">VenueList</string>
-    <string name="error_pNumb_not_set_addTutors">Please type the person number whos permissions you would like to change</string>
+    <string name="title_activity_venue_list">Venue List</string>
+    <string name="error_pNumb_not_set_addTutors">Please type the person number whose permissions you would like to change</string>
     <string name="submit_answer">Submit Answer</string>
     <string name="apply_changes">Apply Changes</string>
-    <string name="enter_numerical_value">Enter Numerical Value</string>
+    <string name="enter_numerical_value">Enter Numeric Value</string>
     <string name="enter_text">Enter Text</string>
     <string name="disable_notifications">Disable Notifications</string>
     <string name="survey_title">Survey Title</string>
@@ -152,11 +152,11 @@
     <string name="end_get_results">End/Get Results</string>
     <string name="okay">Okay</string>
     <string name="view_on_map">View On Map</string>
-    <string name="venue_code">Venue Code:</string>
-    <string name="venue_code_here">type the venue code here</string>
+    <string name="venue_code">Venue Code</string>
+    <string name="venue_code_here">Type venue code here</string>
     <string name="enroll">Enroll</string>
     <string name="enrollment_key">Enrolement Key (If required)</string>
-    <string name="remove_cancellations">remove Cancellations</string>
+    <string name="remove_cancellations">Remove Cancellations</string>
     <string name="add">Add</string>
     <string name="delete">Delete</string>
     <string name="cancellations">Cancellations</string>
@@ -172,4 +172,20 @@
     <string name="room">Room</string>
     <string name="building">Building</string>
     <string name="venue">Venue:</string>
+    <string name="final_occurrence">Final Occurrence</string>
+    <string name="number_of_sessions">Number of sessions</string>
+    <string name="break_between_sessions">Break between sessions</string>
+    <string name="title_activity_add_booking">addBooking</string>
+    <string name="add_tutors_or_lecturers">Add Tutors or Lecturers</string>
+    <string name="edit_bookings">Edit Bookings</string>
+    <string name="title_activity_view_bookable_sessions">viewBookableSessions</string>
+    <string name="add_bookable">add bookable session</string>
+    <string name="update_bookable_sessions">update bookable sessions</string>
+    <string name="title_activity_make_booking">makeBooking</string>
+    <string name="make_booking">Make Booking</string>
+    <string name="book_a_consult_or_meeting">Book a consult or meeting</string>
+    <string name="choose_a_day_to_book">Choose a day to book</string>
+    <string name="choose_a_slot_to_book">Choose a slot to book</string>
+    <string name="first_occurance">First Occurance</string>
+    <string name="make_bookings">Make bookings</string>
 </resources>
