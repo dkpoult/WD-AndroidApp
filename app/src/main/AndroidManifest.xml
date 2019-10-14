@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".viewEventDetails"
+            android:theme="@style/MyTheme.DayNight" />
+        <activity
             android:name=".viewBookedSlots"
             android:label="viewBookedSLots"
             android:launchMode="singleInstance"
@@ -76,8 +79,8 @@
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
             android:name=".ChatActivity"
-            android:theme="@style/AppTheme.NoActionBar"
             android:launchMode="singleInstance"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
 
         <service
