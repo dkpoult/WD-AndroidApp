@@ -12,71 +12,17 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:padding="10dp"
+        android:paddingBottom="10dp"
         android:orientation="vertical">
 
-        <ScrollView
+        <include layout="@layout/uniform_toolbar" />
+
+        <ListView
+            android:id="@+id/lvBuildings"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            tools:context=".Venue.VenueList">
-
-            <LinearLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-
-                <include layout="@layout/uniform_toolbar" />
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@drawable/rounder_corner"
-                    android:paddingLeft="5dp">
-
-                    <TextView
-                        android:id="@+id/textView7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/venue_code" />
-
-                    <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                        android:id="@+id/eText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:completionThreshold="0"
-                        android:ems="10"
-                        android:hint="@string/venue_code_here"
-                        android:inputType="textPersonName"
-                        android:text="" />
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/btnViewOnMap"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/rounded_button"
-                    android:onClick="viewOnMap"
-                    android:text="@string/view_on_map"
-                    android:textColor="@color/colorWhite" />
-
-                <ListView
-                    android:id="@+id/lvBuildings"
-                    android:layout_width="match_parent"
-                    android:layout_height="500dp" />
-
-            </LinearLayout>
-
-
-        </ScrollView>
+            android:layout_height="500dp" />
 
 
     </LinearLayout>

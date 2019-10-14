@@ -87,6 +87,7 @@ public class VenueList extends ToolbarActivity {
                                 Intent j = new Intent(VenueList.this, RoomView.class);
                                 j.putExtra("coords",coordinates.get(i));
                                 j.putExtra("venueName",venueName);
+
                                 startActivity(j);
                             }
                         });

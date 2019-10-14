@@ -288,5 +288,14 @@ public abstract class StorageAccessor{ // singleton class
         };
         networkAccessor.getChatTypeMessages(chatroomCode);
     }
+    public void getVenueImage(String buildingCode, String subCode){
+        NetworkAccessor networkAccessor = new NetworkAccessor(appContext,personNumber,userToken) {
+            @Override
+            public void getResponse(JSONObject data) {
+                getData(data);
+            }
+        };
+        networkAccessor.getVenueImage(buildingCode,subCode);
+    }
 }
 

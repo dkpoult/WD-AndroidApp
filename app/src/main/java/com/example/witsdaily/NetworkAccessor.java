@@ -477,6 +477,21 @@ public void updateCourse(String courseCode, String couseDesc, String courseName,
 
         makeRequest(params,"https://wd.dimensionalapps.com/course/make_booking  ","Booking failed");
     }
+    public void getVenueImage(String buildingCode, String subCode){
+        JSONObject params = new JSONObject();
+
+        try {
+            params.put("userToken", userToken);
+            params.put("personNumber", personNumber);
+            params.put("buildingCode", buildingCode);
+            params.put("subCode", subCode);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        makeRequest(params,"https://wd.dimensionalapps.com/venue/get_venue_image  ","Venue image failed");
+    }
     
 }
 /*For MC, answer should be the zero-
