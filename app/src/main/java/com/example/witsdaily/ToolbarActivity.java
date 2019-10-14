@@ -18,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.witsdaily.Venue.VenueList;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.IOException;
@@ -36,7 +37,7 @@ public class ToolbarActivity extends AppCompatActivity {
         toolbar.setTitleTextColor(getResources().getColor(R.color.color_on_primary));
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
-        actionbar.setHomeAsUpIndicator(R.drawable.hamburger_white);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_hamburger);
 
         actionbar.setDisplayHomeAsUpEnabled(true);
     }
@@ -71,7 +72,7 @@ public class ToolbarActivity extends AppCompatActivity {
                     case "Home Screen": destination = new Intent(getApplicationContext(),HomeScreen.class);break;
                     case "Settings": destination = new Intent(getApplicationContext(),SettingsActivity.class);break;
                     case "Timetable":destination= new Intent(getApplicationContext(),timetable.class);break;
-                    case "Venue":destination= new Intent(getApplicationContext(),VenueList.class);break;
+                    case "Venue":destination= new Intent(getApplicationContext(), VenueList.class);break;
                     case "Logout":logout();return true;
                         default:return false;
                 }

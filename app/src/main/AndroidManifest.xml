@@ -14,6 +14,13 @@
         android:supportsRtl="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".Venue.RoomView"
+            android:label="roomView"
+            android:launchMode="singleInstance"
+            android:theme="@style/Theme.MaterialComponents.Dialog"/>
+
+
+        <activity
             android:name=".viewBookedSlots"
             android:label="viewBookedSLots"
             android:launchMode="singleInstance"
@@ -58,10 +65,14 @@
             android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".VenueList"
+            android:name=".Venue.VenueList"
             android:label="@string/title_activity_venue_list"
             android:launchMode="singleInstance"
-            android:theme="@style/MyTheme.DayNight" />
+            android:theme="@style/MyTheme.DayNight">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/venue_search"></meta-data>
+        </activity>
         <activity
             android:name=".Survey.SurveyAnswer"
             android:launchMode="singleInstance"
@@ -76,8 +87,8 @@
             android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
             android:name=".ChatActivity"
-            android:theme="@style/AppTheme.NoActionBar"
             android:launchMode="singleInstance"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
 
         <service

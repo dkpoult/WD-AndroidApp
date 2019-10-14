@@ -12,7 +12,7 @@
     android:fillViewport="true">
 
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -45,7 +45,7 @@
                 android:ems="10"
                 android:hint="@string/personid"
                 android:importantForAutofill="no"
-                android:inputType="textPersonName"
+                android:inputType="textPersonName|textAutoComplete"
                 android:paddingLeft="20dp"
                 android:textColor="#000000"
                 android:textColorHint="#A9A9A9"
@@ -66,11 +66,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_weight="1"
+                android:autoText="false"
                 android:background="@drawable/rounder_corner"
                 android:ems="10"
                 android:hint="@string/password"
                 android:importantForAutofill="no"
-                android:inputType="textPassword"
+                android:inputType="textPassword|textAutoComplete"
                 android:paddingLeft="20dp"
                 android:textColor="#000000"
                 android:textColorHint="#A9A9A9" />
