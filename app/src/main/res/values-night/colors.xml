@@ -3,16 +3,17 @@
     <color name="colorPrimary">#003a5e</color>
     <color name="colorPrimaryDark">#003a5e</color>
     <color name="colorAccent">#86724c</color>
-    <color name="colorWhite">#ffffff</color>
+    <color name="colorWhite">#636363</color>
 
     <color name="tutor">#b5daf0</color>
     <color name="lecturer">#f5acac</color>
     <color name="incoming">#f1d27c</color>
     <color name="outgoing">#dcf8c6</color>
-    <color name="course">#E9EBF0</color>
 
-    <color name="color_primary">#003a5e</color>
-    <color name="color_primary_variant">#0E5891</color>
+    <color name="course">#8B8B8B</color>
+
+    <color name="color_primary">#D38D00</color>
+    <color name="color_primary_variant">#0A0808</color>
     <color name="color_secondary">#9E7239</color>
     <color name="color_secondary_variant">#86724c</color>
 
@@ -20,16 +21,16 @@
     <!--background. colorSurface is mapped to the surface of components such as cards, sheets-->
     <!--and menus. colorError is used to indicate an error state for components such as-->
     <!--text fields.-->
-    <color name="color_background">#E9EBF0</color>
-    <color name="color_surface">#FFFFFF</color>
+    <color name="color_background">#313131</color>
+    <color name="color_surface">#1D1D1D</color>
     <color name="color_error">#b00020</color>
 
     <!--"On" colors define how text, icons and strokes are colored in relation to the surface-->
     <!--on which they appear.-->
     <color name="color_on_primary">#ffffff</color>
-    <color name="color_on_secondary">#000000</color>
-    <color name="color_on_background">#000000</color>
-    <color name="color_on_surface">#000000</color>
+    <color name="color_on_secondary">#FFFFFF</color>
+    <color name="color_on_background">#E0E0E0</color>
+    <color name="color_on_surface">#CFCFCF</color>
     <color name="color_on_error">#ffffff</color>
 
 

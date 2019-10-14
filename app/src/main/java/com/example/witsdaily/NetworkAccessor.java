@@ -31,18 +31,24 @@ public abstract class NetworkAccessor {
     private void makeRequest(JSONObject params, final String APIUrl, final String errorMessage){ // the bread and butter of all requests
         // check errors for params through specific requests
         final ProgressDialog progressBar = new ProgressDialog(context);
-        progressBar.setMessage("Loading");
-        progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressBar.setIndeterminate(true);
+
         try{
-        progressBar.show();}
+            progressBar.setMessage("Loading");
+            progressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressBar.setIndeterminate(true);
+            progressBar.show();
+        }
         catch(Exception e){
             System.out.println("Doesn't work with fragments for now");
         }
         final JsonObjectRequest request = new JsonObjectRequest(APIUrl, params,
                 response -> {
                     System.out.println("successfull "+APIUrl); // possible return, make function instead
-                    progressBar.dismiss();
+                    try {
+                        progressBar.dismiss();
+                    }catch (Exception e){
+                        //progressBar probably doesnt exist
+                    }
                     getResponse(response); // get for outer class
                 },
                 error -> {
