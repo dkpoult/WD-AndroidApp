@@ -483,6 +483,7 @@ public void updateCourse(String courseCode, String couseDesc, String courseName,
 
         makeRequest(params,"https://wd.dimensionalapps.com/course/make_booking  ","Booking failed");
     }
+  
     public void getVenueImage(String buildingCode, String subCode){
         JSONObject params = new JSONObject();
 
@@ -497,6 +498,11 @@ public void updateCourse(String courseCode, String couseDesc, String courseName,
         }
 
         makeRequest(params,"https://wd.dimensionalapps.com/venue/get_venue_image  ","Venue image failed");
+    }
+
+    public void getEvents(){
+        JSONObject params = new JSONObject();
+        makeRequest(params,"https://wd.dimensionalapps.com/event/get_events","Get events failed");
     }
     
 }
