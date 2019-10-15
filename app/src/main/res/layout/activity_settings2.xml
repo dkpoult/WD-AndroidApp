@@ -27,7 +27,15 @@
 
         android:text="@string/disable_notifications" />
 
-    <Spinner
+        <Switch
+
+            android:id="@+id/switchNightMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="changeNight"
+            android:text="Night Mode" />
+
+        <Spinner
         android:id="@+id/spnrLanguages"
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
@@ -35,7 +43,7 @@
         android:background="@drawable/forum_background"
         android:layout_height="wrap_content" />
 
-    <Button
+        <Button
         android:id="@+id/btnChangeLanguage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

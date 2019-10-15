@@ -14,25 +14,35 @@
         android:supportsRtl="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".Venue.RoomView"
+            android:label="roomView"
+            android:launchMode="singleInstance"
+            android:theme="@style/Theme.MaterialComponents.Dialog.Alert"/>
+
+        <activity
+            android:name=".viewEventDetails"
+            android:theme="@style/MyTheme.DayNight" />
+      
+        <activity
             android:name=".viewBookedSlots"
             android:label="viewBookedSLots"
             android:launchMode="singleInstance"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".bookActivity"
             android:label="book"
             android:launchMode="singleInstance"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".makeBooking"
             android:label="@string/title_activity_make_booking"
             android:launchMode="singleInstance"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".viewBookableSessions"
             android:label="@string/title_activity_view_bookable_sessions"
             android:launchMode="singleInstance"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".addTutors"
             android:launchMode="singleInstance"
@@ -52,20 +62,24 @@
         <activity
             android:name=".Forum.ViewForum"
             android:launchMode="singleInstance"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/MyTheme.DayNight" />
         <activity
             android:name=".Forum.LectureCourseForum"
             android:launchMode="singleInstance"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/MyTheme.DayNight" />
         <activity
-            android:name=".VenueList"
+            android:name=".Venue.VenueList"
             android:label="@string/title_activity_venue_list"
             android:launchMode="singleInstance"
-            android:theme="@style/MyTheme.DayNight" />
+            android:theme="@style/MyTheme.DayNight">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/venue_search"></meta-data>
+        </activity>
         <activity
             android:name=".Survey.SurveyAnswer"
             android:launchMode="singleInstance"
-            android:theme="@style/Theme.AppCompat.Dialog" />
+            android:theme="@style/Theme.MaterialComponents.Dialog.Alert" />
         <activity
             android:name=".Survey.SurveyCreator"
             android:launchMode="singleInstance"
@@ -73,11 +87,11 @@
         <activity
             android:name=".Survey.SurveyViewer"
             android:launchMode="singleInstance"
-            android:theme="@style/Theme.AppCompat.Dialog" />
+            android:theme="@style/Theme.MaterialComponents.Dialog.Alert" />
         <activity
             android:name=".ChatActivity"
-            android:theme="@style/AppTheme.NoActionBar"
             android:launchMode="singleInstance"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
 
         <service
@@ -91,7 +105,7 @@
         <activity
             android:name=".EnrollDialog"
             android:launchMode="singleInstance"
-            android:theme="@style/Theme.AppCompat.Dialog" />
+            android:theme="@style/Theme.MaterialComponents.Dialog.Alert" />
         <activity
             android:name=".AnnouncementSender"
             android:launchMode="singleInstance"

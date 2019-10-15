@@ -8,62 +8,24 @@
     android:clipToPadding="false"
     android:layout_height="match_parent"
     >
-    <ScrollView
-        android:layout_width="match_parent"
+
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        tools:context=".VenueList"
         android:clipToPadding="false"
-        >
+        android:padding="10dp"
+        android:paddingBottom="10dp"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <include layout="@layout/uniform_toolbar" />
 
+        <ListView
+            android:id="@+id/lvBuildings"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:padding="10dp"
-            android:orientation="vertical">
-
-            <include layout="@layout/uniform_toolbar" />
-            <LinearLayout
-                android:paddingLeft="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@drawable/rounder_corner">
-
-                <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/venue_code" />
-
-                <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                    android:id="@+id/eText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="@string/venue_code_here"
-                    android:inputType="textPersonName"
-                    android:text="" />
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/button1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/rounded_button"
-                android:onClick="viewOnMap"
-                android:text="@string/view_on_map"
-                android:textColor="@color/colorWhite" />
+            android:layout_height="500dp" />
 
 
-        </LinearLayout>
-
-
-    </ScrollView>
+    </LinearLayout>
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_layout"
         android:layout_width="wrap_content"

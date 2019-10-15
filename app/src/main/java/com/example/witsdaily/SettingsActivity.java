@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import org.json.JSONObject;
+
+import static android.app.UiModeManager.MODE_NIGHT_YES;
 
 public class SettingsActivity extends ToolbarActivity {
 String currentLanguage,userToken,personNumber;
@@ -77,6 +80,20 @@ int currentNotification;
     private void getCurrentNotificationSettings(){
         WitsDailySettings settings = new WitsDailySettings(personNumber,userToken,getBaseContext(),this);
         currentNotification = settings.getCurrentNotifications();
+    }
+    public void changeNight(View v){
+        Switch nightMode = (Switch)findViewById(R.id.switchNightMode);
+        try{
+            if (nightMode.isChecked()){
+
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+            }else{
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
+        }catch (Exception e){
+            //dont even know why
+        }
     }
 
 
