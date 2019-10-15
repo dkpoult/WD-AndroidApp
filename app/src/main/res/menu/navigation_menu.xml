@@ -7,6 +7,10 @@
 
 
 
+    <item android:id="@+id/nav_item_two"
+        android:title="Events"
+        android:icon="@drawable/ic_action_name"
+        />
     <item android:id="@+id/nav_item_three"
         android:title="Timetable"
         android:icon="@drawable/event"
