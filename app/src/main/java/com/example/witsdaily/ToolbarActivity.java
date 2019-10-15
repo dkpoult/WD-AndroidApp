@@ -18,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.witsdaily.Venue.VenueList;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.IOException;
@@ -36,7 +37,7 @@ public class ToolbarActivity extends AppCompatActivity {
         toolbar.setTitleTextColor(getResources().getColor(R.color.color_on_primary));
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
-        actionbar.setHomeAsUpIndicator(R.drawable.hamburger_white);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_hamburger);
 
         actionbar.setDisplayHomeAsUpEnabled(true);
     }
@@ -72,7 +73,7 @@ public class ToolbarActivity extends AppCompatActivity {
                     case "Events": destination = new Intent(getApplicationContext(),viewEventDetails.class);break;
                     case "Settings": destination = new Intent(getApplicationContext(),SettingsActivity.class);break;
                     case "Timetable":destination= new Intent(getApplicationContext(),timetable.class);break;
-                    case "Venue":destination= new Intent(getApplicationContext(),VenueList.class);break;
+                    case "Venue":destination= new Intent(getApplicationContext(), VenueList.class);break;
                     case "Logout":logout();return true;
                         default:return false;
                 }
@@ -103,7 +104,8 @@ public class ToolbarActivity extends AppCompatActivity {
         SharedPreferences.Editor settings = getSharedPreferences("com.wd", Context.MODE_PRIVATE).edit();
         settings.clear().apply();
         Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        finish();
+        i.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK );
         startActivity(i);
     }
 

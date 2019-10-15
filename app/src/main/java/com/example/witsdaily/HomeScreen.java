@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Environment;
@@ -40,6 +41,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES;
 import static com.example.witsdaily.PhoneDatabaseContract.*;
 
 public class HomeScreen extends ToolbarActivity {
@@ -54,6 +56,7 @@ public class HomeScreen extends ToolbarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     try {
         userToken = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
@@ -65,6 +68,8 @@ public class HomeScreen extends ToolbarActivity {
 
         loadSettings();
         setContentView(R.layout.activity_home_screen);
+
+
         setupAppBar();
         syncAccessor  = new StorageAccessor(this, personNumber,userToken){
             @Override
@@ -168,8 +173,11 @@ public class HomeScreen extends ToolbarActivity {
         dataAccessor.firebaseAuthenticate();
     }
     private void loadSettings(){
+
         WitsDailySettings settings = new WitsDailySettings(personNumber,userToken,getBaseContext(),this);
         settings.loadLanguage(personNumber);
+
+
         if (settings.getCurrentNotifications()==1){
             enableNotifications = false;
         }
