@@ -18,6 +18,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.witsdaily.Events.EventList;
+import com.example.witsdaily.Events.EventViewer;
 import com.example.witsdaily.Venue.VenueList;
 import com.google.android.material.navigation.NavigationView;
 
@@ -30,7 +32,7 @@ import java.util.Date;
 
 public class ToolbarActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
-    String userToken,personNumber;
+    public String userToken,personNumber;
 
     private void configureToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -70,10 +72,11 @@ public class ToolbarActivity extends AppCompatActivity {
 
                 switch (menuItem.toString()){
                     case "Home Screen": destination = new Intent(getApplicationContext(),HomeScreen.class);break;
-                    case "Events": destination = new Intent(getApplicationContext(),viewEventDetails.class);break;
+                    case "Events": destination = new Intent(getApplicationContext(), EventList.class);break;
                     case "Settings": destination = new Intent(getApplicationContext(),SettingsActivity.class);break;
                     case "Timetable":destination= new Intent(getApplicationContext(),timetable.class);break;
                     case "Venue":destination= new Intent(getApplicationContext(), VenueList.class);break;
+
                     case "Logout":logout();return true;
                         default:return false;
                 }

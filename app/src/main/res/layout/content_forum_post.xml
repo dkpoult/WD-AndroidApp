@@ -8,7 +8,7 @@
     android:padding="20dp">
 
     <TextView
-        android:id="@+id/tvPersonNumber"
+        android:id="@+id/tvStep"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="PersonNumber" />

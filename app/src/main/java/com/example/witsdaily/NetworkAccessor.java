@@ -504,6 +504,15 @@ public void updateCourse(String courseCode, String couseDesc, String courseName,
         JSONObject params = new JSONObject();
         makeRequest(params,"https://wd.dimensionalapps.com/event/get_events","Get events failed");
     }
+    public void getEvent(String eventCode){
+        JSONObject params = new JSONObject();
+        try {
+            params.put("eventCode",eventCode);
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        makeRequest(params,"https://wd.dimensionalapps.com/event/get_event","Get event failed");
+    }
     
 }
 /*For MC, answer should be the zero-
