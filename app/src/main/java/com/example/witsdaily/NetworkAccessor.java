@@ -497,14 +497,18 @@ public void updateCourse(String courseCode, String couseDesc, String courseName,
             e.printStackTrace();
         }
 
-        makeRequest(params,"https://wd.dimensionalapps.com/venue/get_venue_image  ","Venue image failed");
+        makeRequest(params,"https://wd.dimensionalapps.com/venue/get_venue_image  ","floorVenue image failed");
     }
 
     public void getEvents(){
         JSONObject params = new JSONObject();
         makeRequest(params,"https://wd.dimensionalapps.com/event/get_events","Get events failed");
     }
-    
+
+    public void getBuildings(){
+        JSONObject params = new JSONObject();
+        makeRequest(params, "https://wd.dimensionalapps.com/venue/get_buildings ","Get buildings failed");
+    }
 }
 /*For MC, answer should be the zero-
 based index of the selected option. For text and numeric the answer should simply be the user given answer.*/

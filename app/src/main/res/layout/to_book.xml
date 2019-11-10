@@ -23,8 +23,8 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/building"
-            android:labelFor="@+id/venue"/>
+            android:labelFor="@+id/venue"
+            android:text="@string/vens" />
 
         <TextView
             android:id="@+id/venue"

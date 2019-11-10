@@ -1,7 +1,5 @@
 package com.example.witsdaily.Venue;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,17 +9,12 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.witsdaily.R;
-import com.example.witsdaily.StorageAccessor;
-import com.example.witsdaily.ToolbarActivity;
-import com.google.android.material.navigation.NavigationView;
+import androidx.appcompat.app.AppCompatActivity;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.example.witsdaily.R;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,7 +22,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class RoomView extends AppCompatActivity {
-    String coords,venueName,userToken,personNumber;
+    String coords, venueName, floorName, userToken, personNumber;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,26 +31,38 @@ public class RoomView extends AppCompatActivity {
         Intent i = getIntent();
         coords = i.getStringExtra("coords");
         venueName = i.getStringExtra("venueName");
+        floorName = i.getStringExtra("floorName");
         userToken = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
-        setTitle(venueName);
+        System.out.println(coords);
+        System.out.println(venueName);
         String[] roomInfo = venueName.split(" ");
         String buildingName = roomInfo[0];
-        String roomNumber = roomInfo[1];
-
-        String imageUrl = "https://wd.dimensionalapps.com/venue/get_venue_image?buildingCode="+buildingName+"&subCode="+roomNumber;
+        String roomNumber = "";
+        String floor = "";
+        if (roomInfo.length > 1) {
+            floor += roomInfo[1];
+        }
+        if (roomInfo.length > 2) {
+            roomNumber += roomInfo[2];
+        }
+        setTitle(roomInfo[0] + " " + floorName + " " + (roomNumber.isEmpty() ? "":" " + roomNumber));
+        String imageUrl = "https://wd.dimensionalapps.com/venue/get_venue_image?buildingCode=" + buildingName + "&floor=" + floor + (roomNumber.isEmpty() ? "":"&venueCode=" + roomNumber);
+        System.out.println(imageUrl);
         try {
-            AsyncGettingBitmapFromUrl updateImage = new AsyncGettingBitmapFromUrl() {};
+            AsyncGettingBitmapFromUrl updateImage = new AsyncGettingBitmapFromUrl() {
+            };
             updateImage.execute(imageUrl);
-        }catch (Exception ignored){
+        } catch (Exception ignored) {
 
         }
 
 
     }
-    public void viewOnMap(View v){
 
-        if(coords.isEmpty()){
+    public void viewOnMap(View v) {
+
+        if (coords.isEmpty()) {
             String s = "No venue found, no coordinates available";
             Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
             return;
@@ -70,6 +76,7 @@ public class RoomView extends AppCompatActivity {
         }
 
     }
+
     public static Bitmap getBitmapFromURL(String src) {
         try {
             URL url = new URL(src);
@@ -100,9 +107,9 @@ public class RoomView extends AppCompatActivity {
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             ImageView buildingImage = findViewById(R.id.imgVenue);
-            if (bitmap!=null) {
+            if (bitmap != null) {
                 buildingImage.setImageBitmap(bitmap);
-            }else{
+            } else {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     buildingImage.setImageDrawable(getDrawable(R.drawable.no_image));
                 }

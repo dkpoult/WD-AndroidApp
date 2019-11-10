@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -73,7 +72,7 @@ public class timetable extends ToolbarActivity {
                             String venue, type, sType, startDate;
                             int duration, gap;
                             JSONObject ven = session.getJSONObject("venue");
-                            venue = ven.getString("buildingCode") + ven.getString("subCode");
+                            venue = ven.getString("buildingCode") + " " + (ven.has("venueCode") ? ven.getString("venueCode"):"") + " floor: " + ven.getInt("floor");
                             type = session.getString("repeatType");
                             sType = session.getString("sessionType");
 //                            System.out.println(sType);
@@ -108,7 +107,7 @@ public class timetable extends ToolbarActivity {
                             String venue, type, sType, startDate;
                             int duration, gap;
                             JSONObject ven = session.getJSONObject("venue");
-                            venue = ven.getString("buildingCode") + " " + ven.getString("subCode");
+                            venue = ven.getString("buildingCode") + " " + (ven.has("venueCode") ? ven.getString("venueCode"):"") + " floor: " + ven.getInt("floor");
                             type = session.getString("repeatType");
                             sType = session.getString("sessionType");
                             System.out.println(sType);
@@ -147,6 +146,8 @@ public class timetable extends ToolbarActivity {
                                 s.key = itt;
                                 System.out.println("THIS IS THE CURRENT DEBUG LINE" + session.getInt("slotCount"));
                                 s.numSlots = session.getInt("slotCount");
+
+                                System.out.println("ADDED SESSION TO LAYOUT _________________________________________________");
                                 seshs.add(s);
                                 itt++;
                             }
