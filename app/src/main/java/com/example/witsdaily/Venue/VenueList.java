@@ -21,6 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Objects;
@@ -189,7 +190,13 @@ public class VenueList extends ToolbarActivity {
                                     StringBuilder t = new StringBuilder();
                                     HashMap<String, String> attributes = buildings.get(buildingSpinner.getSelectedItem().toString()).getFloors().get(floorSpinner.getSelectedItem().toString()).getVenues().get(venueSpinner.getSelectedItem().toString()).getAttributes();
                                     for (String key : attributes.keySet()) {
-                                        t.append(key).append(" : ").append(attributes.get(key)).append("\n");
+                                        StringBuilder temp = new StringBuilder();
+                                        ArrayList<String> splitCamelCase = splitCamelCaseString(key);
+                                        for(String s: splitCamelCase){
+                                            temp.append(Character.toUpperCase(s.charAt(0))).append(s.substring(1)).append(" ");
+                                        }
+                                        System.out.println(temp);
+                                        t.append(temp).append(" : ").append(attributes.get(key)).append("\n");
                                     }
                                     text.setText(t.toString());
                                 }else{
@@ -217,6 +224,12 @@ public class VenueList extends ToolbarActivity {
         };
         SA.getBuildings();
 
+    }
+
+    public static ArrayList<String> splitCamelCaseString(String s){
+        ArrayList<String> result = new ArrayList<>();
+        Collections.addAll(result, s.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])"));
+        return result;
     }
 
     public void viewImage(View view) {
