@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/llBuildingInfo"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="50dp"
+    android:animateLayoutChanges="true"
+    android:background="@drawable/forum_background"
+    android:backgroundTint="@color/tutor"
+
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/tvBuildingCode"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:maxLines="100"
+        android:text="Building Code:"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/tvBuildingName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Building Name:" />
+
+    <TextView
+        android:id="@+id/tvFloorNum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Floor Num:" />
+
+    <Button
+        android:id="@+id/btnVisitVenue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Visit Venue" />
+
+    />
+
+</LinearLayout>

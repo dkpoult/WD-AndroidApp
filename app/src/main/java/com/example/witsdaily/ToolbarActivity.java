@@ -17,6 +17,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.witsdaily.Events.EventList;
+import com.example.witsdaily.Events.EventViewer;
 import com.example.witsdaily.Venue.VenueList;
 import com.google.android.material.navigation.NavigationView;
 
@@ -30,7 +32,7 @@ import java.util.Objects;
 
 public class ToolbarActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
-    String userToken,personNumber;
+    public String userToken,personNumber;
 
     private void configureToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);

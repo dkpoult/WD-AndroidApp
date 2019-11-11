@@ -18,7 +18,9 @@ public class TabAdapter extends FragmentStatePagerAdapter {
         return mFragmentList.get(position);
     }public void addFragment(Fragment fragment, String title) {
         mFragmentList.add(fragment);
+
         mFragmentTitleList.add(title);
+        notifyDataSetChanged();
     }@Nullable
     @Override
     public CharSequence getPageTitle(int position) {
