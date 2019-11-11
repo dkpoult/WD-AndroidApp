@@ -24,7 +24,7 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:maxLines="100"
-            android:text="PersonNumber"
+            android:text="Step"
             android:textSize="18dp" />
 
         <ImageButton
