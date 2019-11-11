@@ -88,6 +88,7 @@ public class viewBookableSessions extends AppCompatActivity {
 
                             AutoCompleteTextView venue = LLayout.findViewById(R.id.venue);
                             EditText room = LLayout.findViewById(R.id.room);
+                            EditText floor = LLayout.findViewById(R.id.floorValue);
 
                             ArrayAdapter<String> adapter = new ArrayAdapter<>
                                     (viewBookableSessions.this, android.R.layout.select_dialog_item, buildings);
@@ -142,7 +143,11 @@ public class viewBookableSessions extends AppCompatActivity {
                             JSONArray cancel = session.getJSONArray("cancellations");
                             JSONObject ven = session.getJSONObject("venue");
                             String pVenue = ven.getString("buildingCode");
-                            String pRoom = ven.getString("subCode");
+                            String pRoom = "";
+                            if(ven.has("venueCode")) {
+                                pRoom += ven.getString("venueCode");
+                            }
+                            String pFloor = ven.getString("floor");
                             String endDate;
                             if (session.has("endDate")) {
                                 endDate = session.getString("endDate");
@@ -195,6 +200,7 @@ public class viewBookableSessions extends AppCompatActivity {
 
                             venue.setText(pVenue);
                             room.setText(pRoom);
+                            floor.setText(pFloor);
                             System.out.println(freq);
                             repeatFrequency.setText(Integer.toString(freq));
 
@@ -340,11 +346,14 @@ public class viewBookableSessions extends AppCompatActivity {
             String pType = sType.getSelectedItem().toString().toUpperCase();
             String pVenue = venue.getText().toString();
             EditText room = temp.findViewById(R.id.room);
+            EditText floor = temp.findViewById(R.id.room);
             String pRoom = room.getText().toString();
+            String pFloor = room.getText().toString();
             JSONObject ven = new JSONObject();
             try {
                 ven.put("buildingCode", pVenue);
-                ven.put("subCode", pRoom);
+                ven.put("floor", pFloor);
+                ven.put("venueCode", pRoom);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

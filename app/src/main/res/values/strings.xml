@@ -188,4 +188,11 @@
     <string name="choose_a_slot_to_book">Choose a slot to book</string>
     <string name="first_occurance">First Occurance</string>
     <string name="make_bookings">Make bookings</string>
+    <string name="sync_calendar">sync Calendar</string>
+    <string name="selectBuild">Building:</string>
+    <string name="floor">Floor:</string>
+    <string name="selectRoom">Room:</string>
+    <string name="vens">venue</string>
+    <string name="viewimage">ViewImage</string>
+    <string name="view_image">view image</string>
 </resources>
