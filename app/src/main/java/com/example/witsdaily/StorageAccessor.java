@@ -318,5 +318,15 @@ public abstract class StorageAccessor { // singleton class
         };
         networkAccessor.getVenueImage(buildingCode,subCode);
     }
+
+    public void getBuildings(){
+        NetworkAccessor NA = new NetworkAccessor(appContext, personNumber, userToken) {
+            @Override
+            public void getResponse(JSONObject data) {
+                getData(data);
+            }
+        };
+        NA.getBuildings();
+    }
 }
 
