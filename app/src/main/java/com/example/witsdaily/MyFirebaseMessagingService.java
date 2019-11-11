@@ -70,6 +70,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
                     Intent i = new Intent(this, SurveyAnswer.class);// hope this works
                     i.putExtra("courseCode",courseCode);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(i);
                 }
 

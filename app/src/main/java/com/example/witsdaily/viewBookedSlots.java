@@ -33,7 +33,11 @@ public class viewBookedSlots extends AppCompatActivity {
                 for (int l = 0; l < ja.length(); l++) {
                     temp = (JSONObject) ja.get(l);
                     if(temp.getBoolean("allocated")) {
-                        pNum = temp.getString("personNumber");
+                        if(temp.has("personNumber")) {
+                            pNum = temp.getString("personNumber");
+                        } else {
+                            pNum = "Allocated";
+                        }
                     }else{
                         pNum = "Empty";
                     }

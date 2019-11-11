@@ -123,86 +123,107 @@ public class EventStage extends Fragment {
         Button venueButton = newVenue.findViewById(R.id.btnVisitVenue);
 
         newVenue.setTag(venue);
-        // yes i know this looks awful
-        try {
-            tvBuildingCode.setText("Building Code: "+venue.getString("buildingCode"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        try {
-            tvBuildingName.setText("Venue Code: "+venue.getString("venueCode"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        try {
-            floorNum.setText("Floor Number: "+venue.getInt("floor"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
-        venueButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                StorageAccessor SA = new StorageAccessor(getContext(), personNumber, user_token) {
+        boolean setValues = true;
+
+        try {
+            if (venue.has("buildingCode") && venue.getString("buildingCode").length() > 0) {
+                venueButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void getData(JSONObject data) {
-                        System.out.println(data);
-                        try {
-                            if (data.getString("responseCode").equals("successful")) {
-                                JSONArray jBuildings = data.getJSONArray("venues");
-                                int numBuildings = jBuildings.length();
-                                int numFloors, numVens;
-                                for (int i = 0; i < numBuildings; i++) {
-                                    JSONObject jBuilding = jBuildings.getJSONObject(i);
-                                    if(!jBuilding.getString("buildingCode").equals(venue.getString("buildingCode"))) {
-                                        continue;
-                                    }
+                    public void onClick(View view) {
+                        StorageAccessor SA = new StorageAccessor(getContext(), personNumber, user_token) {
+                            @Override
+                            public void getData(JSONObject data) {
+                                System.out.println(data);
+                                try {
+                                    if (data.getString("responseCode").equals("successful")) {
+                                        JSONArray jBuildings = data.getJSONArray("venues");
+                                        int numBuildings = jBuildings.length();
+                                        int numFloors, numVens;
+                                        for (int i = 0; i < numBuildings; i++) {
+                                            JSONObject jBuilding = jBuildings.getJSONObject(i);
+                                            if(!jBuilding.getString("buildingCode").equals(venue.getString("buildingCode"))) {
+                                                continue;
+                                            }
 
-                                    String coordinates = null;
-                                    if (jBuilding.has("coordinates")) {
-                                        JSONObject coords = jBuilding.getJSONObject("coordinates");
-                                        coordinates = coords.getDouble("lat") + "," + coords.getDouble("lng");
-                                    }
-                                    JSONArray jFloors = jBuilding.getJSONArray("floors");
+                                            String coordinates = null;
+                                            if (jBuilding.has("coordinates")) {
+                                                JSONObject coords = jBuilding.getJSONObject("coordinates");
+                                                coordinates = coords.getDouble("lat") + "," + coords.getDouble("lng");
+                                            }
+                                            JSONArray jFloors = jBuilding.getJSONArray("floors");
 
-                                    JSONObject floor = jFloors.getJSONObject(venue.getInt("floor"));
+                                            JSONObject floor = jFloors.getJSONObject(venue.getInt("floor"));
 
-                                    JSONArray venues = floor.getJSONArray("venues");
-                                    numVens = venues.length();
-                                    for (int k = 0; k < numVens; k++) {
-                                        JSONObject jVenue = venues.getJSONObject(k);
+                                            JSONArray venues = floor.getJSONArray("venues");
+                                            numVens = venues.length();
+                                            for (int k = 0; k < numVens; k++) {
+                                                JSONObject jVenue = venues.getJSONObject(k);
 
-                                        if(!jVenue.getString("venueCode").equals(venue.getString("venueCode"))) {
-                                            continue;
+                                                if(!jVenue.getString("venueCode").equals(venue.getString("venueCode"))) {
+                                                    continue;
+                                                }
+
+                                                JSONObject subCoords;
+                                                String venueCoords = null;
+                                                if (jVenue.has("coordinates")) {
+                                                    subCoords = jVenue.getJSONObject("coordinates");
+                                                    venueCoords = subCoords.getDouble("x") + "," + subCoords.getDouble("y");
+                                                }
+
+                                                Intent intent = new Intent(getContext(), RoomView.class);
+                                                intent.putExtra("coords", coordinates);
+                                                intent.putExtra("venueName", jBuilding.getString("buildingCode") + " " + venue.getInt("floor") + " "
+                                                        + jVenue.getString("venueCode"));
+                                                intent.putExtra("floorName", floor.getString("floorName"));
+
+                                                startActivity(intent);
+                                            }
                                         }
-
-                                        JSONObject subCoords;
-                                        String venueCoords = null;
-                                        if (jVenue.has("coordinates")) {
-                                            subCoords = jVenue.getJSONObject("coordinates");
-                                            venueCoords = subCoords.getDouble("x") + "," + subCoords.getDouble("y");
-                                        }
-
-                                        Intent intent = new Intent(getContext(), RoomView.class);
-                                        intent.putExtra("coords", coordinates);
-                                        intent.putExtra("venueName", jBuilding.getString("buildingCode") + " " + venue.getInt("floor") + " "
-                                                + jVenue.getString("venueCode"));
-                                        intent.putExtra("floorName", floor.getString("floorName"));
-
-                                        startActivity(intent);
                                     }
+                                } catch (JSONException jsex) {
+                                    System.out.println("Get fuckt lol");
+                                    jsex.printStackTrace();
                                 }
                             }
-                        } catch (JSONException jsex) {
-                            System.out.println("Get fuckt lol");
-                            jsex.printStackTrace();
-                        }
-                    }
-                };
+                        };
 
-                SA.getBuildings();
+                        SA.getBuildings();
+                    }
+                });
+            } else {
+                venueButton.setEnabled(false);
+                tvBuildingCode.setText("This step has no associated location.");
+                tvBuildingName.setVisibility(View.INVISIBLE);
+                floorNum.setVisibility(View.INVISIBLE);
+                setValues = false;
             }
-        });
+        } catch (JSONException jsex) {
+            venueButton.setEnabled(false);
+            tvBuildingCode.setText("This step has no associated location.");
+            tvBuildingName.setVisibility(View.INVISIBLE);
+            floorNum.setVisibility(View.INVISIBLE);
+            setValues = false;
+        }
+        // yes i know this looks awful
+
+        if(setValues) {
+            try {
+                tvBuildingCode.setText("Building Code: " + venue.getString("buildingCode"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                tvBuildingName.setText("Venue Code: " + venue.getString("venueCode"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                floorNum.setText("Floor Number: " + venue.getInt("floor"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
 
         layout.addView(newVenue);
     }
