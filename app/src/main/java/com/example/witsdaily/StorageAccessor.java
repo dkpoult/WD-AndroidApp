@@ -254,19 +254,6 @@ public abstract class StorageAccessor { // singleton class
         NetworkAccessor NA = new NetworkAccessor(appContext, personNumber, userToken) {
             @Override
             public void getResponse(JSONObject data) {
-                JSONObject fakeData = new JSONObject();
-                try {
-                    fakeData.put("startDate","10 Nov");
-                    fakeData.put("endDate","15 Nov");
-                    fakeData.put("eventDescription","Fake description for testing");
-                    fakeData.put("eventName","The best event");
-                    fakeData.put("eventCode","code001");
-                    JSONArray events =  data.getJSONArray("events");
-                    events.put(fakeData);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
                 getData(data);
             }
         };

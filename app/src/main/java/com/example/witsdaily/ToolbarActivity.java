@@ -70,7 +70,7 @@ public class ToolbarActivity extends AppCompatActivity {
 
             switch (menuItem.toString()){
                 case "Home Screen": destination = new Intent(getApplicationContext(),HomeScreen.class);break;
-                case "Events": destination = new Intent(getApplicationContext(),viewEventDetails.class);break;
+                case "Events": destination = new Intent(getApplicationContext(),EventList.class);break;
                 case "Settings": destination = new Intent(getApplicationContext(),SettingsActivity.class);break;
                 case "Timetable":destination= new Intent(getApplicationContext(),timetable.class);break;
                 case "Venue":destination= new Intent(getApplicationContext(), VenueList.class);break;

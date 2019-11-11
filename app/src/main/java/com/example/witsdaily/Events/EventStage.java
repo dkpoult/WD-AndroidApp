@@ -1,6 +1,7 @@
 package com.example.witsdaily.Events;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -15,12 +16,20 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.witsdaily.Building;
+import com.example.witsdaily.Floor;
 import com.example.witsdaily.R;
+import com.example.witsdaily.StorageAccessor;
+import com.example.witsdaily.Venue.RoomView;
+import com.example.witsdaily.floorVenue;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
+
+import java.util.HashMap;
+import java.util.Iterator;
 
 
 public class EventStage extends Fragment {
@@ -35,6 +44,8 @@ public class EventStage extends Fragment {
         steps = pSteps;
     }
 
+    String personNumber, user_token;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -44,6 +55,10 @@ public class EventStage extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_event_stage, container, false);
         params.topMargin=10;
+
+        personNumber = getContext().getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
+        user_token = getContext().getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("userToken", null);
+
         addSteps(v);
         return v;
     }
@@ -100,11 +115,13 @@ public class EventStage extends Fragment {
 
         }
     }
-    private void addVenue(JSONObject venue,LinearLayout layout){
+    private void addVenue(final JSONObject venue,LinearLayout layout){
         View newVenue = getLayoutInflater().inflate(R.layout.content_event_building,null);
         TextView tvBuildingCode = newVenue.findViewById(R.id.tvBuildingCode);
         TextView tvBuildingName =  newVenue.findViewById(R.id.tvBuildingName);
         TextView floorNum = newVenue.findViewById(R.id.tvFloorNum);
+        Button venueButton = newVenue.findViewById(R.id.btnVisitVenue);
+
         newVenue.setTag(venue);
         // yes i know this looks awful
         try {
@@ -113,7 +130,7 @@ public class EventStage extends Fragment {
             e.printStackTrace();
         }
         try {
-            tvBuildingName.setText("Building Name: "+venue.getString("buildingName"));
+            tvBuildingName.setText("Venue Code: "+venue.getString("venueCode"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -123,7 +140,69 @@ public class EventStage extends Fragment {
             e.printStackTrace();
         }
 
-        //have a click event for new Venue
+        venueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                StorageAccessor SA = new StorageAccessor(getContext(), personNumber, user_token) {
+                    @Override
+                    public void getData(JSONObject data) {
+                        System.out.println(data);
+                        try {
+                            if (data.getString("responseCode").equals("successful")) {
+                                JSONArray jBuildings = data.getJSONArray("venues");
+                                int numBuildings = jBuildings.length();
+                                int numFloors, numVens;
+                                for (int i = 0; i < numBuildings; i++) {
+                                    JSONObject jBuilding = jBuildings.getJSONObject(i);
+                                    if(!jBuilding.getString("buildingCode").equals(venue.getString("buildingCode"))) {
+                                        continue;
+                                    }
+
+                                    String coordinates = null;
+                                    if (jBuilding.has("coordinates")) {
+                                        JSONObject coords = jBuilding.getJSONObject("coordinates");
+                                        coordinates = coords.getDouble("lat") + "," + coords.getDouble("lng");
+                                    }
+                                    JSONArray jFloors = jBuilding.getJSONArray("floors");
+
+                                    JSONObject floor = jFloors.getJSONObject(venue.getInt("floor"));
+
+                                    JSONArray venues = floor.getJSONArray("venues");
+                                    numVens = venues.length();
+                                    for (int k = 0; k < numVens; k++) {
+                                        JSONObject jVenue = venues.getJSONObject(k);
+
+                                        if(!jVenue.getString("venueCode").equals(venue.getString("venueCode"))) {
+                                            continue;
+                                        }
+
+                                        JSONObject subCoords;
+                                        String venueCoords = null;
+                                        if (jVenue.has("coordinates")) {
+                                            subCoords = jVenue.getJSONObject("coordinates");
+                                            venueCoords = subCoords.getDouble("x") + "," + subCoords.getDouble("y");
+                                        }
+
+                                        Intent intent = new Intent(getContext(), RoomView.class);
+                                        intent.putExtra("coords", coordinates);
+                                        intent.putExtra("venueName", jBuilding.getString("buildingCode") + " " + venue.getInt("floor") + " "
+                                                + jVenue.getString("venueCode"));
+                                        intent.putExtra("floorName", floor.getString("floorName"));
+
+                                        startActivity(intent);
+                                    }
+                                }
+                            }
+                        } catch (JSONException jsex) {
+                            System.out.println("Get fuckt lol");
+                            jsex.printStackTrace();
+                        }
+                    }
+                };
+
+                SA.getBuildings();
+            }
+        });
 
         layout.addView(newVenue);
     }
