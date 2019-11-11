@@ -12,17 +12,24 @@
         android:minSdkVersion="8"
         android:roundIcon="@mipmap/wits_logo"
         android:supportsRtl="true"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        android:fullBackupContent="true">
+        <activity
+            android:name=".Events.EventList"
+            android:theme="@style/MyTheme.DayNight"/>
+
+
+        <activity
+            android:name=".Events.EventViewer"
+            android:theme="@style/MyTheme.DayNight"/>
         <activity
             android:name=".Venue.RoomView"
             android:label="roomView"
             android:launchMode="singleInstance"
-            android:theme="@style/Theme.MaterialComponents.Dialog.Alert"/>
-
+            android:theme="@style/Theme.MaterialComponents.Dialog.Alert" />
         <activity
             android:name=".viewEventDetails"
             android:theme="@style/MyTheme.DayNight" />
-      
         <activity
             android:name=".viewBookedSlots"
             android:label="viewBookedSLots"
@@ -74,7 +81,7 @@
             android:theme="@style/MyTheme.DayNight">
             <meta-data
                 android:name="android.app.searchable"
-                android:resource="@xml/venue_search"></meta-data>
+                android:resource="@xml/venue_search" />
         </activity>
         <activity
             android:name=".Survey.SurveyAnswer"
@@ -161,6 +168,7 @@
             android:label="@string/title_activity_home_screen"
             android:launchMode="singleInstance"
             android:theme="@style/MyTheme.DayNight" />
+        <activity android:name=".ToolbarActivity" />
 
         <meta-data
             android:name="firebase_messaging_auto_init_enabled"

@@ -49,7 +49,7 @@ public class CourseDisplay extends ToolbarActivity {
         personNumber = getSharedPreferences("com.wd", Context.MODE_PRIVATE).getString("personNumber", null);
         updateFields();
         hideRelevantButtons();
-        
+
     }
 
     public void hideRelevantButtons(){
@@ -68,11 +68,13 @@ public class CourseDisplay extends ToolbarActivity {
                         Button b3 = findViewById(R.id.btnCreateSurvey);
                         Button b4 = findViewById(R.id.btnTutorChat);
                         Button b5 = findViewById(R.id.editBookings);
+                        Button b6 = findViewById(R.id.btnAnnouncement);
                         b1.setVisibility(View.GONE);
                         b2.setVisibility(View.GONE);
                         b3.setVisibility(View.GONE);
                         b4.setVisibility(View.GONE);
                         b5.setVisibility(View.GONE);
+                        b6.setVisibility(View.GONE);
                         b.setVisibility(View.GONE);
 //                        System.out.println(personNumber);
                         long lecturer = course.getLong("permissions");
@@ -87,6 +89,7 @@ public class CourseDisplay extends ToolbarActivity {
                             b3.setVisibility(View.VISIBLE);
                             b4.setVisibility(View.VISIBLE);
                             b5.setVisibility(View.VISIBLE);
+                            b6.setVisibility(View.VISIBLE);
                         } else if (lecturer == tutor) {
                             b4.setVisibility(View.VISIBLE);
                         }

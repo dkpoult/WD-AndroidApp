@@ -86,6 +86,7 @@ public class editSessions extends AppCompatActivity {
                             venue.setThreshold(1); //will start working from first character
                             venue.setAdapter(adapter);
                             EditText room = LLayout.findViewById(R.id.room);
+                            EditText floor = LLayout.findViewById(R.id.floorValue);
                             Spinner spinner = LLayout.findViewById(R.id.spinner);
                             Spinner sType = LLayout.findViewById(R.id.type);
                             String[] sessionTypes = new String[]{"LECTURE", "LAB", "TUTORIAL", "TEST", "OTHER"};
@@ -154,7 +155,6 @@ public class editSessions extends AppCompatActivity {
 
                             JSONObject ven = session.getJSONObject("venue");
                             String pVenue = ven.getString("buildingCode");
-                            String pRoom = ven.getString("subCode");
 //                            JSONArray cancellations = session.getJSONArray("cancellations");
 //                            System.out.println(cancellations);
                             int pDuration = session.getInt("duration");
@@ -163,7 +163,11 @@ public class editSessions extends AppCompatActivity {
                             String[] dateTime = pDate.split(" ");
 
                             venue.setText(pVenue);
-                            room.setText(pRoom);
+                            if(ven.has("venueCode")) {
+                                String pRoom = ven.getString("venueCode");
+                                room.setText(pRoom);
+                            }
+                            floor.setText(ven.getString("floor"));
                             ArrayList<String> tempTypeArray = new ArrayList<>(Arrays.asList(sessionTypes));
                             int ind = tempTypeArray.indexOf(pType);
                             System.out.println(ind + ": " + pType + " in tempTypeArray");
@@ -247,11 +251,14 @@ public class editSessions extends AppCompatActivity {
             String pType = sType.getSelectedItem().toString().toUpperCase();
             String pVenue = venue.getText().toString();
             EditText room = temp.findViewById(R.id.room);
+            EditText floor = temp.findViewById(R.id.floorValue);
+            String pFloor = room.getText().toString();
             String pRoom = room.getText().toString();
             JSONObject ven = new JSONObject();
             try {
                 ven.put("buildingCode", pVenue);
-                ven.put("subCode", pRoom);
+                ven.put("venueCode", pRoom);
+                ven.put("floor", pRoom);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -3,9 +3,6 @@ package com.example.witsdaily;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
-
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.widget.AppCompatAutoCompleteTextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -147,11 +146,14 @@ public class addSession extends ToolbarActivity {
         String pType = sType.getSelectedItem().toString().toUpperCase();
         String pVenue = venue.getText().toString();
         EditText room = LLayout.findViewById(R.id.room);
+        EditText floor = LLayout.findViewById(R.id.floorValue);
         String pRoom = room.getText().toString();
+        String pFloor = floor.getText().toString();
         JSONObject ven = new JSONObject();
         try {
             ven.put("buildingCode", pVenue);
-            ven.put("subCode", pRoom);
+            ven.put("venueCode", pRoom);
+            ven.put("floor", pFloor);
             ven.put("coordinated", "0.0000,0.0000");
         } catch (JSONException e) {
             e.printStackTrace();

@@ -77,7 +77,7 @@ public class bookActivity extends AppCompatActivity {
             JSONObject building = bookable.getJSONObject("venue");
             temp = LLayout.findViewById(R.id.venue);
             temp.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
-            String tempVenue = building.getString("buildingCode") + " " + building.getString("subCode");
+            String tempVenue = building.getString("buildingCode") + " " + building.getString("venueCode") + " floor: " + building.getInt("floor");
             temp.setText(tempVenue);
 
             String repeatType = bookable.getString("repeatType");
